@@ -31,8 +31,8 @@
       "serving": "500ml",
       "cal": 205,
       "carb": 14,
-      "sugar": 5,
-      "protein": 0,
+      "sugar": 0,
+      "protein": 1.5,
       "fat": 0,
       "sodium": 0,
       "alcohol": 25,
@@ -79,5 +79,5 @@
       }
     ]
   },
-  "updatedAt": 1785229881157
+  "updatedAt": 1785229944334
 }
