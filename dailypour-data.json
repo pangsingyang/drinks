@@ -50,8 +50,21 @@
         "alcohol": 0.2,
         "qty": 1,
         "color": "var(--wine)"
+      },
+      {
+        "name": "Heineken 0.0",
+        "serving": "330ml",
+        "cal": 69,
+        "carb": 15.8,
+        "sugar": 4.3,
+        "protein": 0,
+        "fat": 0,
+        "sodium": 23,
+        "alcohol": 0,
+        "qty": 1,
+        "color": "var(--amber)"
       }
     ]
   },
-  "updatedAt": 1785227126603
+  "updatedAt": 1785227143251
 }
