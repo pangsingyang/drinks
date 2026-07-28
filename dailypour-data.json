@@ -74,7 +74,7 @@
         "fat": 0,
         "sodium": 23,
         "alcohol": 0,
-        "qty": 6,
+        "qty": 5,
         "color": "var(--amber)"
       },
       {
@@ -92,5 +92,5 @@
       }
     ]
   },
-  "updatedAt": 1785229968539
+  "updatedAt": 1785230281952
 }
