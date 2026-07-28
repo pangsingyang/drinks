@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Pour — Drink Counter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EEF3F1;
+    --paper-raised:#FFFFFF;
+    --ink:#1E2A28;
+    --ink-soft:#5C6B67;
+    --line:#D8E0DC;
+    --amber:#E2A33B;
+    --teal:#2F7D7B;
+    --wine:#8A3446;
+    --cream:#F1D9A0;
+    --danger:#B24C4C;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:920px;margin:0 auto;padding:28px 20px 80px;}
+
+  /* Header */
+  header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:22px;flex-wrap:wrap;}
+  .brand h1{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:34px;
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+  .brand p{margin:4px 0 0;color:var(--ink-soft);font-size:13.5px;}
+  .date-nav{display:flex;align-items:center;gap:10px;background:var(--paper-raised);border:1px solid var(--line);border-radius:999px;padding:6px 8px;}
+  .date-nav button{
+    border:none;background:none;cursor:pointer;width:28px;height:28px;border-radius:50%;
+    color:var(--ink);font-size:16px;display:flex;align-items:center;justify-content:center;
+  }
+  .date-nav button:hover{background:var(--paper);}
+  .date-nav .date-label{font-size:13.5px;font-weight:600;min-width:118px;text-align:center;}
+  .date-nav .today-btn{font-size:11px;color:var(--teal);cursor:pointer;font-weight:600;padding:0 4px;}
+
+  .icon-btn{
+    border:1px solid var(--line);background:var(--paper-raised);border-radius:10px;width:38px;height:38px;
+    display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink-soft);
+  }
+  .icon-btn:hover{color:var(--ink);border-color:var(--ink-soft);}
+
+  .sync-badge{
+    border:1px solid var(--line);border-radius:999px;padding:0 12px;height:38px;font-size:11.5px;font-weight:600;
+    cursor:pointer;display:flex;align-items:center;gap:6px;background:var(--paper-raised);color:var(--ink-soft);
+    white-space:nowrap;
+  }
+  .sync-badge::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ink-soft);flex:0 0 auto;}
+  .sync-badge.sync-off::before{background:var(--ink-soft);}
+  .sync-badge.sync-ok{color:var(--teal);border-color:var(--teal);}
+  .sync-badge.sync-ok::before{background:var(--teal);}
+  .sync-badge.sync-busy{color:var(--amber);border-color:var(--amber);}
+  .sync-badge.sync-busy::before{background:var(--amber);animation:pulse 1s ease-in-out infinite;}
+  .sync-badge.sync-err{color:var(--danger);border-color:var(--danger);}
+  .sync-badge.sync-err::before{background:var(--danger);}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+
+  /* Summary panel */
+  .summary{
+    display:grid;grid-template-columns:150px 1fr;gap:26px;
+    background:var(--paper-raised);border:1px solid var(--line);border-radius:var(--radius);
+    padding:22px;margin-bottom:24px;
+  }
+  @media (max-width:560px){.summary{grid-template-columns:1fr;}}
+
+  .glass-col{display:flex;flex-direction:column;align-items:center;gap:8px;}
+  .glass-col svg{width:96px;height:132px;}
+  .target-note{font-size:11px;color:var(--ink-soft);text-align:center;}
+
+  .stats{display:flex;flex-direction:column;justify-content:center;gap:14px;}
+  .stat-row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;}
+  .stat-num{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:30px;line-height:1;}
+  .stat-num.small{font-size:22px;}
+  .stat-label{font-size:12.5px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em;}
+  .stat-of{font-size:12.5px;color:var(--ink-soft);}
+  .bar-track{height:6px;border-radius:4px;background:var(--paper);overflow:hidden;margin-top:4px;}
+  .bar-fill{height:100%;border-radius:4px;transition:width .4s ease;}
+  .stat-block{width:100%;}
+
+  .mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px 22px;margin-top:14px;}
+  .mini-stat{width:100%;}
+  .mini-row{display:flex;align-items:baseline;gap:6px;}
+  .mini-label{font-size:11px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em;flex:1;}
+  .mini-num{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:14.5px;}
+  .mini-of{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--ink-soft);}
+  .mini-bar{height:4px;margin-top:4px;}
+
+  /* Category tabs */
+  .tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:14px;}
+  .tab{
+    flex:0 0 auto;padding:8px 14px;border-radius:999px;border:1px solid var(--line);
+    background:var(--paper-raised);font-size:12.5px;font-weight:600;color:var(--ink-soft);cursor:pointer;
+    white-space:nowrap;
+  }
+  .tab.active{background:var(--ink);color:var(--paper-raised);border-color:var(--ink);}
+
+  /* Drink grid */
+  .drink-grid{
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:26px;
+  }
+  .drink-card{
+    background:var(--paper-raised);border:1px solid var(--line);border-radius:12px;padding:34px 12px 10px;
+    cursor:pointer;text-align:left;position:relative;transition:border-color .15s, transform .1s;
+  }
+  .drink-card:hover{border-color:var(--ink-soft);}
+  .drink-card:active{transform:scale(0.98);}
+  .drink-card .name{font-weight:600;font-size:13.5px;margin-bottom:2px;}
+  .drink-card .serving{font-size:11.5px;color:var(--ink-soft);margin-bottom:8px;}
+  .drink-card .macros{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink);display:flex;gap:8px;}
+  .drink-card .macros span b{font-weight:600;}
+  .drink-card .add-plus{
+    position:absolute;top:10px;right:10px;width:20px;height:20px;border-radius:50%;
+    background:var(--paper);color:var(--ink-soft);display:flex;align-items:center;justify-content:center;font-size:14px;
+  }
+  .drink-card .edit-btn{
+    position:absolute;top:10px;left:10px;width:22px;height:22px;border-radius:50%;
+    border:1px solid var(--line);background:var(--paper-raised);color:var(--ink-soft);
+    display:flex;align-items:center;justify-content:center;font-size:11px;cursor:pointer;padding:0;
+  }
+  .drink-card .edit-btn:hover{color:var(--teal);border-color:var(--teal);}
+  .add-custom-card{
+    display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;
+    border:1.5px dashed var(--line);background:transparent;color:var(--ink-soft);font-size:12px;font-weight:600;
+    padding:12px !important;
+  }
+  .add-custom-card:hover{color:var(--teal);border-color:var(--teal);}
+
+  /* Log */
+  .log-section h2{font-family:'Fraunces',serif;font-size:19px;font-weight:600;margin:0 0 10px;}
+  .empty-log{color:var(--ink-soft);font-size:13.5px;background:var(--paper-raised);border:1px dashed var(--line);border-radius:12px;padding:22px;text-align:center;}
+  .log-item{
+    display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--paper-raised);border:1px solid var(--line);
+    border-radius:12px;padding:10px 12px;margin-bottom:8px;
+  }
+  .log-item .full-macros{
+    flex-basis:100%;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-soft);
+    padding-left:20px;opacity:0.85;
+  }
+  .log-item .dot{width:8px;height:8px;border-radius:50%;flex:0 0 auto;}
+  .log-item .info{flex:1;min-width:0;}
+  .log-item .info .n{font-weight:600;font-size:13.5px;}
+  .log-item .info .s{font-size:11.5px;color:var(--ink-soft);}
+  .qty-ctrl{display:flex;align-items:center;gap:6px;}
+  .qty-ctrl button{
+    width:22px;height:22px;border-radius:50%;border:1px solid var(--line);background:var(--paper-raised);
+    cursor:pointer;font-size:13px;color:var(--ink-soft);display:flex;align-items:center;justify-content:center;
+  }
+  .qty-ctrl button:hover{color:var(--ink);}
+  .qty-ctrl .q{font-family:'IBM Plex Mono',monospace;font-size:12.5px;min-width:14px;text-align:center;}
+  .log-item .macros{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--ink-soft);text-align:right;min-width:150px;}
+  .log-item .rm{border:none;background:none;color:var(--ink-soft);cursor:pointer;font-size:16px;padding:2px 4px;}
+  .log-item .rm:hover{color:var(--danger);}
+
+  /* Modal */
+  .overlay{
+    position:fixed;inset:0;background:rgba(20,26,24,0.4);display:none;align-items:center;justify-content:center;
+    padding:20px;z-index:50;
+  }
+  .overlay.show{display:flex;}
+  .modal{
+    background:var(--paper-raised);border-radius:16px;padding:24px;width:100%;max-width:380px;
+    max-height:88vh;overflow-y:auto;
+  }
+  .modal.modal-wide{max-width:680px;}
+  .filter-row{display:flex;gap:10px;align-items:flex-end;}
+  .modal h3{font-family:'Fraunces',serif;font-size:19px;margin:0 0 14px;}
+
+  .summary-table{width:100%;border-collapse:collapse;font-family:'IBM Plex Mono',monospace;font-size:12px;}
+  .summary-table th{
+    text-align:right;font-family:'Inter',sans-serif;font-size:10.5px;text-transform:uppercase;letter-spacing:.04em;
+    color:var(--ink-soft);font-weight:600;padding:0 8px 8px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--paper-raised);
+  }
+  .summary-table th:first-child, .summary-table td:first-child{text-align:left;}
+  .summary-table td{text-align:right;padding:8px;border-bottom:1px solid var(--line);white-space:nowrap;}
+  .summary-table tbody tr{cursor:pointer;}
+  .summary-table tbody tr:hover{background:var(--paper);}
+  .summary-table td:first-child{font-family:'Inter',sans-serif;font-weight:600;font-size:12.5px;}
+  .summary-table tfoot td{
+    border-bottom:none;border-top:2px solid var(--ink);font-weight:600;color:var(--ink);padding-top:10px;
+  }
+  .field{margin-bottom:12px;}
+  .field label{display:block;font-size:11.5px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px;}
+  .field input{
+    width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:8px;font-size:14px;
+    font-family:'Inter',sans-serif;background:var(--paper);
+  }
+  .field input:focus{outline:2px solid var(--teal);outline-offset:-1px;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+  .modal-actions{display:flex;gap:8px;margin-top:18px;}
+  .btn{
+    flex:1;padding:10px 14px;border-radius:9px;border:none;font-weight:600;font-size:13.5px;cursor:pointer;
+  }
+  .btn.primary{background:var(--ink);color:var(--paper-raised);}
+  .btn.ghost{background:var(--paper);color:var(--ink);}
+  .btn.primary:hover{background:#0f1615;}
+
+  .toast{
+    position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(10px);
+    background:var(--ink);color:var(--paper-raised);padding:9px 16px;border-radius:999px;font-size:12.5px;
+    opacity:0;pointer-events:none;transition:opacity .25s, transform .25s;z-index:60;
+  }
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  /* ---------- Mobile portrait optimizations ---------- */
+  @media (max-width:600px){
+    .wrap{padding:16px 12px 90px;}
+
+    header{gap:10px;margin-bottom:16px;}
+    .brand h1{font-size:26px;}
+    .brand p{font-size:12.5px;}
+    header > div:last-child{width:100%;justify-content:space-between;flex-wrap:wrap;row-gap:8px;}
+    .date-nav{flex:1 1 100%;justify-content:space-between;order:1;}
+    .date-nav .date-label{min-width:0;flex:1;}
+    .icon-btn{width:40px;height:40px;flex:0 0 auto;order:2;}
+    .sync-badge{order:3;margin-left:auto;font-size:11px;padding:0 10px;height:34px;}
+
+    .summary{padding:16px;gap:16px;}
+    .glass-col svg{width:76px;height:104px;}
+    .stat-num{font-size:26px;}
+    .stat-num.small{font-size:19px;}
+    .stats{gap:10px;}
+
+    #extraStats{
+      margin-top:0;gap:10px 16px;font-size:11.5px;
+    }
+
+    .log-section h2{font-size:17px;}
+
+    .drink-grid{grid-template-columns:repeat(2,1fr);gap:8px;}
+    .drink-card{padding:32px 10px 10px;}
+    .add-custom-card{padding:12px !important;}
+    .drink-card .name{font-size:13px;}
+    .drink-card .macros{font-size:10.5px;flex-wrap:wrap;row-gap:2px;}
+
+    .log-item{padding:10px;gap:8px;}
+    .log-item .info .n{font-size:13px;}
+    .log-item .macros{min-width:0;font-size:11px;text-align:left;flex-basis:100%;order:3;}
+    .log-item .full-macros{font-size:10.5px;padding-left:0;order:4;}
+    .qty-ctrl button{width:28px;height:28px;font-size:15px;}
+    .log-item .rm{font-size:20px;padding:4px 6px;}
+
+    .overlay{padding:0;align-items:flex-end;}
+    .modal, .modal.modal-wide{
+      max-width:100%;width:100%;border-radius:18px 18px 0 0;max-height:92vh;
+      padding:20px 16px calc(20px + env(safe-area-inset-bottom));
+    }
+    .summary-table{font-size:10.5px;}
+    .summary-table th, .summary-table td{padding:6px 5px;}
+    .filter-row{flex-wrap:wrap;}
+    .filter-row .field{flex:1 1 45%;min-width:120px;}
+    .three-col{grid-template-columns:1fr 1fr 1fr;gap:6px;}
+    .field label{font-size:11px;}
+    .field input{padding:11px 10px;font-size:16px;} /* 16px avoids iOS zoom-on-focus */
+    .modal-actions{position:sticky;bottom:0;background:var(--paper-raised);padding-top:10px;}
+
+    .toast{bottom:16px;max-width:90%;text-align:center;}
+  }
+
+  @media (max-width:380px){
+    .three-col{grid-template-columns:1fr 1fr;}
+    .drink-grid{grid-template-columns:1fr 1fr;}
+    .brand h1{font-size:23px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="brand">
+      <h1>Daily Pour</h1>
+      <p>Track calories &amp; carbs, one drink at a time</p>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <div class="date-nav">
+        <button id="prevDay">‹</button>
+        <span class="date-label" id="dateLabel">Today</span>
+        <button id="nextDay">›</button>
+      </div>
+      <button class="icon-btn" id="historyBtn" title="History">📅</button>
+      <button class="icon-btn" id="settingsBtn" title="Targets">⚙</button>
+      <button id="syncBadge" class="sync-badge sync-off" title="Tap to connect a GitHub repo for cross-device sync">Sync off</button>
+    </div>
+  </header>
+
+  <div class="summary">
+    <div class="glass-col">
+      <svg viewBox="0 0 100 140">
+        <defs>
+          <clipPath id="glassClip">
+            <path d="M22 8 L78 8 L70 128 Q50 136 30 128 Z"/>
+          </clipPath>
+        </defs>
+        <path d="M22 8 L78 8 L70 128 Q50 136 30 128 Z" fill="none" stroke="var(--line)" stroke-width="3"/>
+        <g clip-path="url(#glassClip)">
+          <rect id="liquid" x="0" y="140" width="100" height="0" fill="var(--amber)"/>
+        </g>
+        <path d="M22 8 L78 8 L70 128 Q50 136 30 128 Z" fill="none" stroke="var(--ink)" stroke-width="1.5" opacity="0.5"/>
+      </svg>
+      <div class="target-note" id="glassNote">0% of goal</div>
+    </div>
+    <div class="stats">
+      <div class="stat-block">
+        <div class="stat-row">
+          <span class="stat-num" id="calNum">0</span>
+          <span class="stat-label">kcal</span>
+          <span class="stat-of" id="calOf"></span>
+        </div>
+        <div class="bar-track"><div class="bar-fill" id="calBar" style="background:var(--amber);width:0%"></div></div>
+      </div>
+
+      <div class="mini-grid">
+        <div class="mini-stat">
+          <div class="mini-row"><span class="mini-label">Carbs</span><span class="mini-num" id="carbNum">0</span><span class="mini-of" id="carbOf"></span></div>
+          <div class="bar-track mini-bar"><div class="bar-fill" id="carbBar" style="background:var(--teal);width:0%"></div></div>
+        </div>
+        <div class="mini-stat">
+          <div class="mini-row"><span class="mini-label">Sugar</span><span class="mini-num" id="sugarNum">0</span><span class="mini-of" id="sugarOf"></span></div>
+          <div class="bar-track mini-bar"><div class="bar-fill" id="sugarBar" style="background:var(--wine);width:0%"></div></div>
+        </div>
+        <div class="mini-stat">
+          <div class="mini-row"><span class="mini-label">Protein</span><span class="mini-num" id="proteinNum">0</span><span class="mini-of" id="proteinOf"></span></div>
+          <div class="bar-track mini-bar"><div class="bar-fill" id="proteinBar" style="background:var(--cream);width:0%"></div></div>
+        </div>
+        <div class="mini-stat">
+          <div class="mini-row"><span class="mini-label">Fat</span><span class="mini-num" id="fatNum">0</span><span class="mini-of" id="fatOf"></span></div>
+          <div class="bar-track mini-bar"><div class="bar-fill" id="fatBar" style="background:var(--ink-soft);width:0%"></div></div>
+        </div>
+        <div class="mini-stat">
+          <div class="mini-row"><span class="mini-label">Sodium</span><span class="mini-num" id="sodiumNum">0</span><span class="mini-of" id="sodiumOf"></span></div>
+          <div class="bar-track mini-bar"><div class="bar-fill" id="sodiumBar" style="background:#7A8CA8;width:0%"></div></div>
+        </div>
+        <div class="mini-stat">
+          <div class="mini-row"><span class="mini-label">Alcohol</span><span class="mini-num" id="alcoholNum">0</span><span class="mini-of" id="alcoholOf"></span></div>
+          <div class="bar-track mini-bar"><div class="bar-fill" id="alcoholBar" style="background:var(--wine);width:0%"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+    <h2 style="font-family:'Fraunces',serif;font-size:19px;font-weight:600;margin:0;">My drinks</h2>
+  </div>
+  <div class="drink-grid" id="drinkGrid"></div>
+
+  <div class="log-section">
+    <h2>Today's log</h2>
+    <div id="logList"></div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- Add custom drink modal -->
+<div class="overlay" id="customOverlay">
+  <div class="modal">
+    <h3 id="customModalTitle">Add your own drink</h3>
+    <div class="field"><label>Name</label><input id="cName" placeholder="e.g. Kopi-O"></div>
+
+    <div class="field" id="modeToggleWrap">
+      <label>How do you want to enter it?</label>
+      <div class="tabs" style="margin:0;padding:0;">
+        <button type="button" class="tab active" id="modeServing">Full serving</button>
+        <button type="button" class="tab" id="modePer100">Per 100ml</button>
+      </div>
+    </div>
+
+    <div id="servingFields">
+      <div class="two-col">
+        <div class="field"><label>Volume (ml)</label><input id="cVolume" type="number" min="0" placeholder="250"></div>
+        <div class="field"><label>Label <span style="opacity:.6;">(optional)</span></label><input id="cServing" placeholder="e.g. 1 can"></div>
+      </div>
+      <div class="three-col">
+        <div class="field"><label>Calories</label><input id="cCal" type="number" min="0" placeholder="0"></div>
+        <div class="field"><label>Carbs (g)</label><input id="cCarb" type="number" min="0" placeholder="0"></div>
+        <div class="field"><label>Sugar (g)</label><input id="cSugar" type="number" min="0" placeholder="0"></div>
+      </div>
+      <div class="three-col">
+        <div class="field"><label>Protein (g)</label><input id="cProtein" type="number" min="0" placeholder="0"></div>
+        <div class="field"><label>Fat (g)</label><input id="cFat" type="number" min="0" placeholder="0"></div>
+        <div class="field"><label>ABV (%)</label><input id="cABV" type="number" min="0" step="0.1" placeholder="0"></div>
+      </div>
+      <div class="field"><label>Sodium (mg)</label><input id="cSodium" type="number" min="0" placeholder="0"></div>
+      <div class="target-note" id="servingPreview" style="text-align:left;line-height:1.5;"></div>
+    </div>
+
+    <div id="per100Fields" style="display:none;">
+      <div class="two-col">
+        <div class="field"><label>Volume (ml)</label><input id="cVolume100" type="number" min="0" placeholder="250"></div>
+        <div class="field"><label>Label <span style="opacity:.6;">(optional)</span></label><input id="cServing100" placeholder="e.g. 1 can"></div>
+      </div>
+      <div class="three-col">
+        <div class="field"><label>Calories / 100ml</label><input id="cCal100" type="number" min="0" placeholder="0"></div>
+        <div class="field"><label>Carbs / 100ml</label><input id="cCarb100" type="number" min="0" placeholder="0"></div>
+        <div class="field"><label>Sugar / 100ml</label><input id="cSugar100" type="number" min="0" placeholder="0"></div>
+      </div>
+      <div class="three-col">
+        <div class="field"><label>Protein / 100ml</label><input id="cProtein100" type="number" min="0" placeholder="0"></div>
+        <div class="field"><label>Fat / 100ml</label><input id="cFat100" type="number" min="0" placeholder="0"></div>
+        <div class="field"><label>ABV (%)</label><input id="cABV100" type="number" min="0" step="0.1" placeholder="0"></div>
+      </div>
+      <div class="field"><label>Sodium / 100ml (mg)</label><input id="cSodium100" type="number" min="0" placeholder="0"></div>
+      <div class="target-note" id="per100Preview" style="text-align:left;line-height:1.5;"></div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn ghost" id="cCancel">Cancel</button>
+      <button class="btn primary" id="cSave">Save drink</button>
+    </div>
+    <button id="cDelete" style="display:none;width:100%;margin-top:10px;background:none;border:none;color:var(--danger);font-size:12.5px;font-weight:600;cursor:pointer;padding:6px;">Delete this drink</button>
+  </div>
+</div>
+
+<!-- History modal -->
+<div class="overlay" id="historyOverlay">
+  <div class="modal modal-wide">
+    <h3>History</h3>
+    <p style="font-size:12px;color:var(--ink-soft);margin:-8px 0 12px;">Tap a row to jump to that day.</p>
+
+    <div class="filter-row">
+      <div class="field" style="margin-bottom:0;flex:1;"><label>From</label><input id="hFrom" type="date"></div>
+      <div class="field" style="margin-bottom:0;flex:1;"><label>To</label><input id="hTo" type="date"></div>
+      <button class="btn ghost" id="hClearFilter" style="flex:0 0 auto;align-self:flex-end;">Clear</button>
+    </div>
+
+    <div id="historyList" style="max-height:48vh;overflow:auto;margin-top:14px;"></div>
+    <div class="modal-actions">
+      <button class="btn ghost" id="hClose">Close</button>
+      <button class="btn primary" id="hExport">Download CSV</button>
+    </div>
+  </div>
+</div>
+
+<!-- Targets modal -->
+<div class="overlay" id="targetOverlay">
+  <div class="modal">
+    <h3>Daily targets</h3>
+    <div class="three-col">
+      <div class="field"><label>Calories (kcal)</label><input id="tCal" type="number" min="0"></div>
+      <div class="field"><label>Carbs (g)</label><input id="tCarb" type="number" min="0"></div>
+      <div class="field"><label>Sugar (g)</label><input id="tSugar" type="number" min="0"></div>
+    </div>
+    <div class="three-col">
+      <div class="field"><label>Protein (g)</label><input id="tProtein" type="number" min="0"></div>
+      <div class="field"><label>Fat (g)</label><input id="tFat" type="number" min="0"></div>
+      <div class="field"><label>Sodium (mg)</label><input id="tSodium" type="number" min="0"></div>
+    </div>
+    <div class="field"><label>Alcohol (ml pure alcohol)</label><input id="tAlcohol" type="number" min="0"></div>
+    <div class="modal-actions">
+      <button class="btn ghost" id="tCancel">Cancel</button>
+      <button class="btn primary" id="tSave">Save targets</button>
+    </div>
+  </div>
+</div>
+
+<!-- Sync modal -->
+<div class="overlay" id="syncOverlay">
+  <div class="modal">
+    <h3>Sync across devices</h3>
+    <p style="font-size:12px;color:var(--ink-soft);line-height:1.5;margin:-4px 0 14px;">
+      Connect a private GitHub repo and this data will sync between every device you open it on.
+      Your token is stored only in this browser and never leaves it except to talk to GitHub directly.
+    </p>
+    <div class="field"><label>GitHub username / org</label><input id="ghOwner" placeholder="e.g. sing"></div>
+    <div class="field"><label>Repository name</label><input id="ghRepo" placeholder="e.g. daily-pour-data"></div>
+    <div class="field"><label>File path</label><input id="ghPath" placeholder="dailypour-data.json"></div>
+    <div class="field"><label>Branch <span style="opacity:.6;">(optional, defaults to repo default)</span></label><input id="ghBranch" placeholder="main"></div>
+    <div class="field">
+      <label>Personal access token</label>
+      <input id="ghToken" type="password" placeholder="ghp_...">
+    </div>
+    <p style="font-size:11px;color:var(--ink-soft);line-height:1.5;margin:-2px 0 4px;">
+      Use a fine-grained token scoped to just this repo with read/write access to "Contents".
+    </p>
+    <div class="modal-actions">
+      <button class="btn ghost" id="syncCancel">Cancel</button>
+      <button class="btn primary" id="ghSave">Connect &amp; sync</button>
+    </div>
+    <button id="ghDisconnect" style="display:none;width:100%;margin-top:10px;background:none;border:none;color:var(--danger);font-size:12.5px;font-weight:600;cursor:pointer;padding:6px;">Disconnect this device</button>
+  </div>
+</div>
+
+<script>
+(function(){
+
+  // ---------- Palette used to color user-added drinks ----------
+  const PALETTE = ["var(--wine)","var(--amber)","var(--teal)","var(--ink)","var(--cream)"];
+
+  // Round to a max of 1 decimal place (used everywhere numbers are stored or displayed)
+  const r1 = (n)=> Math.round(n*10)/10;
+
+  // ---------- State ----------
+  let currentDate = todayStr();
+  let customDrinks = [];
+  const DEFAULT_TARGETS = {cal:2000, carb:135, sugar:25, protein:105, fat:70, sodium:2300, alcohol:20};
+  let targets = Object.assign({}, DEFAULT_TARGETS);
+  let log = []; // entries for currentDate
+
+  function todayStr(){
+    const d = new Date();
+    return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+  }
+  function fmtDateLabel(dstr){
+    const [y,m,d] = dstr.split("-").map(Number);
+    const dateObj = new Date(y, m-1, d);
+    if(dstr === todayStr()) return "Today";
+    const yest = new Date(); yest.setDate(yest.getDate()-1);
+    if(dstr === yest.getFullYear()+"-"+String(yest.getMonth()+1).padStart(2,"0")+"-"+String(yest.getDate()).padStart(2,"0")) return "Yesterday";
+    return dateObj.toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"});
+  }
+
+  // ---------- Local storage (works in any browser, no server needed) ----------
+  const LS_PREFIX = "dailypour:";
+  function lsRead(key){
+    try{ return localStorage.getItem(LS_PREFIX+key); } catch(e){ return null; }
+  }
+  function lsWrite(key,val){
+    try{ localStorage.setItem(LS_PREFIX+key,val); } catch(e){ console.error("localStorage write failed",key,e); }
+  }
+  function lsDelete(key){
+    try{ localStorage.removeItem(LS_PREFIX+key); } catch(e){}
+  }
+  function lsListKeys(prefix){
+    const out = [];
+    for(let i=0;i<localStorage.length;i++){
+      const k = localStorage.key(i);
+      if(k && k.indexOf(LS_PREFIX)===0){
+        const bare = k.slice(LS_PREFIX.length);
+        if(bare.indexOf(prefix)===0) out.push(bare);
+      }
+    }
+    return out;
+  }
+
+  async function safeGet(key){
+    return lsRead(key);
+  }
+  async function safeSet(key,val){
+    lsWrite(key,val);
+    lsWrite("meta:updatedAt", String(Date.now()));
+    markDirty();
+  }
+
+  async function loadAll(){
+    const c = await safeGet("custom-drinks");
+    customDrinks = c ? JSON.parse(c) : [];
+    const t = await safeGet("targets");
+    targets = t ? Object.assign({}, DEFAULT_TARGETS, JSON.parse(t)) : Object.assign({}, DEFAULT_TARGETS);
+    await loadLog();
+  }
+  async function loadLog(){
+    const l = await safeGet("log:"+currentDate);
+    log = l ? JSON.parse(l) : [];
+  }
+  async function saveLog(){
+    await safeSet("log:"+currentDate, JSON.stringify(log));
+  }
+  async function saveCustom(){
+    await safeSet("custom-drinks", JSON.stringify(customDrinks));
+  }
+  async function saveTargets(){
+    await safeSet("targets", JSON.stringify(targets));
+  }
+
+  // ---------- Rendering ----------
+  const gridEl = document.getElementById("drinkGrid");
+  const logEl = document.getElementById("logList");
+  const dateLabel = document.getElementById("dateLabel");
+
+  function renderGrid(){
+    gridEl.innerHTML = "";
+
+    const addCard = document.createElement("div");
+    addCard.className = "drink-card add-custom-card";
+    addCard.innerHTML = `<div style="font-size:20px;">+</div><div>Add a drink</div>`;
+    addCard.onclick = openCustomModal;
+    gridEl.appendChild(addCard);
+
+    if(customDrinks.length === 0){
+      const hint = document.createElement("div");
+      hint.style.cssText = "grid-column:1/-1;color:var(--ink-soft);font-size:12.5px;padding:8px 2px;";
+      hint.textContent = "No drinks saved yet — add your first one to start logging.";
+      gridEl.appendChild(hint);
+      return;
+    }
+
+    customDrinks.forEach((item,idx)=>{
+      const card = document.createElement("div");
+      card.className = "drink-card";
+      card.innerHTML = `
+        <button class="edit-btn" title="Edit drink">✎</button>
+        <div class="add-plus">+</div>
+        <div class="name">${escapeHtml(item.name)}</div>
+        <div class="serving">${escapeHtml(item.serving)}</div>
+        <div class="macros"><span><b>${item.cal}</b> kcal</span><span><b>${item.carb}</b>g carb</span></div>
+        ${secondaryMacroLine(item) ? `<div class="macros" style="margin-top:3px;opacity:0.75;">${secondaryMacroLine(item)}</div>` : ""}
+      `;
+      card.onclick = ()=> addToLog(item);
+      card.querySelector(".edit-btn").onclick = (e)=>{
+        e.stopPropagation();
+        openEditModal(idx);
+      };
+      gridEl.appendChild(card);
+    });
+  }
+
+  function renderLog(){
+    dateLabel.textContent = fmtDateLabel(currentDate);
+    logEl.innerHTML = "";
+    if(log.length === 0){
+      logEl.innerHTML = `<div class="empty-log">Nothing logged yet — tap a drink above to add it.</div>`;
+    } else {
+      log.forEach(entry=>{
+        const row = document.createElement("div");
+        row.className = "log-item";
+        row.innerHTML = `
+          <div class="dot" style="background:${entry.color||'var(--ink-soft)'}"></div>
+          <div class="info">
+            <div class="n">${escapeHtml(entry.name)}</div>
+            <div class="s">${escapeHtml(entry.serving)}</div>
+          </div>
+          <div class="qty-ctrl">
+            <button class="minus">–</button>
+            <span class="q">${entry.qty}</span>
+            <button class="plus">+</button>
+          </div>
+          <div class="macros">${Math.round(entry.cal*entry.qty)} kcal · ${r1(entry.carb*entry.qty)}g carb</div>
+          <button class="rm">×</button>
+          <div class="full-macros">${fullMacroLine(entry)}</div>
+        `;
+        row.querySelector(".plus").onclick = ()=>{ entry.qty++; commitLog(); };
+        row.querySelector(".minus").onclick = ()=>{
+          entry.qty--;
+          if(entry.qty<=0){ log = log.filter(e=>e!==entry); }
+          commitLog();
+        };
+        row.querySelector(".rm").onclick = ()=>{ log = log.filter(e=>e!==entry); commitLog(); };
+        logEl.appendChild(row);
+      });
+    }
+    renderSummary();
+  }
+
+  function renderSummary(){
+    const totalCal = Math.round(log.reduce((s,e)=>s+e.cal*e.qty,0));
+    const totalCarb = r1(log.reduce((s,e)=>s+e.carb*e.qty,0));
+    const totalSugar = r1(log.reduce((s,e)=>s+(e.sugar||0)*e.qty,0));
+    const totalProtein = r1(log.reduce((s,e)=>s+(e.protein||0)*e.qty,0));
+    const totalFat = r1(log.reduce((s,e)=>s+(e.fat||0)*e.qty,0));
+    const totalSodium = Math.round(log.reduce((s,e)=>s+(e.sodium||0)*e.qty,0));
+    const totalAlcohol = r1(log.reduce((s,e)=>s+(e.alcohol||0)*e.qty,0));
+
+    const setStat = (key, total, unit, targetKey)=>{
+      document.getElementById(key+"Num").textContent = total;
+      const t = targets[targetKey];
+      document.getElementById(key+"Of").textContent = t ? `of ${t}${unit}` : "";
+      const pct = t ? Math.min(100,(total/t)*100) : 0;
+      document.getElementById(key+"Bar").style.width = pct+"%";
+      return pct;
+    };
+
+    document.getElementById("calNum").textContent = totalCal;
+    document.getElementById("calOf").textContent = targets.cal ? `of ${targets.cal}` : "";
+    const calPct = targets.cal ? Math.min(100,(totalCal/targets.cal)*100) : 0;
+    document.getElementById("calBar").style.width = calPct+"%";
+
+    setStat("carb", totalCarb, "g", "carb");
+    setStat("sugar", totalSugar, "g", "sugar");
+    setStat("protein", totalProtein, "g", "protein");
+    setStat("fat", totalFat, "g", "fat");
+    setStat("sodium", totalSodium, "mg", "sodium");
+    setStat("alcohol", totalAlcohol, "ml", "alcohol");
+
+    const liquid = document.getElementById("liquid");
+    const fillPct = targets.cal ? Math.min(100,(totalCal/targets.cal)*100) : 0;
+    const glassHeight = 130; // approx usable height in viewBox
+    const y = 140 - (fillPct/100)*glassHeight;
+    liquid.setAttribute("y", y);
+    liquid.setAttribute("height", 140-y);
+    liquid.setAttribute("fill", fillPct>=100 ? "var(--wine)" : "var(--amber)");
+    document.getElementById("glassNote").textContent = Math.round(fillPct)+"% of goal";
+  }
+
+  function commitLog(){
+    saveLog();
+    renderLog();
+  }
+
+  function addToLog(item){
+    const existing = log.find(e=>e.name===item.name && e.serving===item.serving);
+    if(existing){ existing.qty++; }
+    else {
+      log.push({
+        name:item.name, serving:item.serving, cal:item.cal, carb:item.carb, sugar:item.sugar||0,
+        protein:item.protein||0, fat:item.fat||0, sodium:item.sodium||0, alcohol:item.alcohol||0,
+        qty:1, color: item.color || "var(--ink-soft)"
+      });
+    }
+    commitLog();
+    showToast(`Added ${item.name}`);
+  }
+
+  function fullMacroLine(entry){
+    const q = entry.qty;
+    const parts = [`${r1((entry.sugar||0)*q)}g sugar`];
+    if(entry.protein) parts.push(`${r1(entry.protein*q)}g protein`);
+    if(entry.fat) parts.push(`${r1(entry.fat*q)}g fat`);
+    if(entry.sodium) parts.push(`${Math.round(entry.sodium*q)}mg sodium`);
+    if(entry.alcohol) parts.push(`${r1(entry.alcohol*q)}ml alcohol`);
+    return parts.join(" · ");
+  }
+
+  function secondaryMacroLine(item){
+    const parts = [];
+    if(item.sugar) parts.push(`<span><b>${item.sugar}</b>g sugar</span>`);
+    if(item.protein) parts.push(`<span><b>${item.protein}</b>g protein</span>`);
+    if(item.fat) parts.push(`<span><b>${item.fat}</b>g fat</span>`);
+    if(item.sodium) parts.push(`<span><b>${item.sodium}</b>mg Na</span>`);
+    if(item.alcohol) parts.push(`<span><b>${item.alcohol}</b>ml alc</span>`);
+    return parts.join("");
+  }
+
+  function escapeHtml(str){
+    const d = document.createElement("div");
+    d.textContent = str;
+    return d.innerHTML;
+  }
+
+  function showToast(msg){
+    const t = document.getElementById("toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    clearTimeout(showToast._h);
+    showToast._h = setTimeout(()=>t.classList.remove("show"), 1400);
+  }
+
+  // ---------- Date navigation ----------
+  document.getElementById("prevDay").onclick = async ()=>{
+    currentDate = shiftDate(currentDate,-1);
+    await loadLog();
+    renderLog();
+  };
+  document.getElementById("nextDay").onclick = async ()=>{
+    currentDate = shiftDate(currentDate,1);
+    await loadLog();
+    renderLog();
+  };
+  function shiftDate(dstr,delta){
+    const [y,m,d] = dstr.split("-").map(Number);
+    const dt = new Date(y,m-1,d);
+    dt.setDate(dt.getDate()+delta);
+    return dt.getFullYear()+"-"+String(dt.getMonth()+1).padStart(2,"0")+"-"+String(dt.getDate()).padStart(2,"0");
+  }
+
+  // ---------- Custom drink modal ----------
+  const customOverlay = document.getElementById("customOverlay");
+  const modeServingBtn = document.getElementById("modeServing");
+  const modePer100Btn = document.getElementById("modePer100");
+  const servingFields = document.getElementById("servingFields");
+  const per100Fields = document.getElementById("per100Fields");
+  let addMode = "serving";
+
+  function setAddMode(mode){
+    addMode = mode;
+    modeServingBtn.classList.toggle("active", mode==="serving");
+    modePer100Btn.classList.toggle("active", mode==="per100");
+    servingFields.style.display = mode==="serving" ? "" : "none";
+    per100Fields.style.display = mode==="per100" ? "" : "none";
+  }
+  modeServingBtn.onclick = ()=> setAddMode("serving");
+  modePer100Btn.onclick = ()=> setAddMode("per100");
+
+  const numVal = (id)=> parseFloat(document.getElementById(id).value) || 0;
+
+  // Full-serving mode: values are entered as totals already; ABV + volume derive alcohol in ml.
+  function updateServingPreview(){
+    const vol = numVal("cVolume");
+    const abv = numVal("cABV");
+    const alcoholMl = r1(vol * (abv/100));
+    document.getElementById("servingPreview").textContent =
+      alcoholMl > 0 ? `= ${alcoholMl}ml pure alcohol in this serving` : "";
+  }
+  ["cVolume","cABV"].forEach(id=>{
+    document.getElementById(id).addEventListener("input", updateServingPreview);
+  });
+
+  // Per-100ml mode: values scale with volume; ABV is a concentration so it does NOT scale.
+  function updatePer100Preview(){
+    const vol = numVal("cVolume100");
+    const mult = vol/100;
+    const cal = Math.round(numVal("cCal100") * mult);
+    const carb = r1(numVal("cCarb100") * mult);
+    const sugar = r1(numVal("cSugar100") * mult);
+    const protein = r1(numVal("cProtein100") * mult);
+    const fat = r1(numVal("cFat100") * mult);
+    const sodium = Math.round(numVal("cSodium100") * mult);
+    const abv = numVal("cABV100");
+    const alcoholMl = r1(vol * (abv/100));
+    document.getElementById("per100Preview").textContent =
+      `= ${cal} kcal · ${carb}g carb (${sugar}g sugar) · ${protein}g protein · ${fat}g fat · ${sodium}mg sodium` +
+      (alcoholMl > 0 ? ` · ${alcoholMl}ml alcohol` : "") + ` for this serving`;
+  }
+  ["cVolume100","cCal100","cCarb100","cSugar100","cProtein100","cFat100","cSodium100","cABV100"].forEach(id=>{
+    document.getElementById(id).addEventListener("input", updatePer100Preview);
+  });
+
+  const CUSTOM_FIELD_IDS = ["cName","cVolume","cServing","cCal","cCarb","cSugar","cProtein","cFat","cSodium","cABV",
+    "cVolume100","cServing100","cCal100","cCarb100","cSugar100","cProtein100","cFat100","cSodium100","cABV100"];
+
+  function openCustomModal(){
+    editingIndex = null;
+    CUSTOM_FIELD_IDS.forEach(id=> document.getElementById(id).value = "");
+    document.getElementById("customModalTitle").textContent = "Add your own drink";
+    document.getElementById("cSave").textContent = "Save drink";
+    document.getElementById("modeToggleWrap").style.display = "";
+    document.getElementById("cDelete").style.display = "none";
+    updateServingPreview();
+    updatePer100Preview();
+    setAddMode("serving");
+    customOverlay.classList.add("show");
+  }
+
+  let editingIndex = null;
+  const modeToggleWrap = document.getElementById("modeToggleWrap");
+  const cDeleteBtn = document.getElementById("cDelete");
+
+  function openEditModal(idx){
+    editingIndex = idx;
+    const item = customDrinks[idx];
+    CUSTOM_FIELD_IDS.forEach(id=> document.getElementById(id).value = "");
+
+    document.getElementById("customModalTitle").textContent = "Edit drink";
+    document.getElementById("cSave").textContent = "Save changes";
+    modeToggleWrap.style.display = "none";
+    cDeleteBtn.style.display = "block";
+    setAddMode("serving");
+
+    document.getElementById("cName").value = item.name;
+    document.getElementById("cVolume").value = item.volume || "";
+    document.getElementById("cServing").value = item.serving || "";
+    document.getElementById("cCal").value = item.cal || "";
+    document.getElementById("cCarb").value = item.carb || "";
+    document.getElementById("cSugar").value = item.sugar || "";
+    document.getElementById("cProtein").value = item.protein || "";
+    document.getElementById("cFat").value = item.fat || "";
+    document.getElementById("cSodium").value = item.sodium || "";
+    const abv = (item.volume && item.alcohol) ? r1((item.alcohol / item.volume) * 100) : "";
+    document.getElementById("cABV").value = abv;
+    updateServingPreview();
+
+    customOverlay.classList.add("show");
+  }
+
+  document.getElementById("cCancel").onclick = ()=> customOverlay.classList.remove("show");
+  document.getElementById("cDelete").onclick = async ()=>{
+    if(editingIndex === null) return;
+    customDrinks.splice(editingIndex, 1);
+    await saveCustom();
+    customOverlay.classList.remove("show");
+    renderGrid();
+    showToast("Drink deleted");
+  };
+  document.getElementById("cSave").onclick = async ()=>{
+    const name = document.getElementById("cName").value.trim();
+    if(!name){ showToast("Give it a name first"); return; }
+
+    let serving, cal, carb, sugar, protein, fat, sodium, alcohol, volume;
+
+    if(addMode === "serving"){
+      const vol = numVal("cVolume");
+      const label = document.getElementById("cServing").value.trim();
+      serving = label || (vol ? `${vol}ml` : "1 serving");
+      volume = vol;
+      cal = Math.round(numVal("cCal"));
+      carb = r1(numVal("cCarb"));
+      sugar = r1(numVal("cSugar"));
+      protein = r1(numVal("cProtein"));
+      fat = r1(numVal("cFat"));
+      sodium = Math.round(numVal("cSodium"));
+      alcohol = r1(vol * (numVal("cABV")/100));
+    } else {
+      const vol = numVal("cVolume100");
+      if(!vol){ showToast("Enter the serving volume in ml"); return; }
+      const mult = vol/100;
+      const label = document.getElementById("cServing100").value.trim();
+      serving = label || `${vol}ml`;
+      volume = vol;
+      cal = Math.round(numVal("cCal100") * mult);
+      carb = r1(numVal("cCarb100") * mult);
+      sugar = r1(numVal("cSugar100") * mult);
+      protein = r1(numVal("cProtein100") * mult);
+      fat = r1(numVal("cFat100") * mult);
+      sodium = Math.round(numVal("cSodium100") * mult);
+      alcohol = r1(vol * (numVal("cABV100")/100));
+    }
+
+    if(sugar > carb){ showToast("Sugar can't exceed carbs — check your numbers"); return; }
+
+    if(editingIndex !== null){
+      const color = customDrinks[editingIndex].color;
+      customDrinks[editingIndex] = {name, serving, cal, carb, sugar, protein, fat, sodium, alcohol, volume, color};
+      showToast("Drink updated");
+    } else {
+      const color = PALETTE[customDrinks.length % PALETTE.length];
+      customDrinks.push({name, serving, cal, carb, sugar, protein, fat, sodium, alcohol, volume, color});
+      showToast("Drink saved");
+    }
+    await saveCustom();
+    customOverlay.classList.remove("show");
+    renderGrid();
+  };
+
+  // ---------- Targets modal ----------
+  const targetOverlay = document.getElementById("targetOverlay");
+  const TARGET_FIELD_MAP = {tCal:"cal", tCarb:"carb", tSugar:"sugar", tProtein:"protein", tFat:"fat", tSodium:"sodium", tAlcohol:"alcohol"};
+  document.getElementById("settingsBtn").onclick = ()=>{
+    Object.keys(TARGET_FIELD_MAP).forEach(id=>{
+      document.getElementById(id).value = targets[TARGET_FIELD_MAP[id]];
+    });
+    targetOverlay.classList.add("show");
+  };
+  document.getElementById("tCancel").onclick = ()=> targetOverlay.classList.remove("show");
+  document.getElementById("tSave").onclick = async ()=>{
+    Object.keys(TARGET_FIELD_MAP).forEach(id=>{
+      targets[TARGET_FIELD_MAP[id]] = parseFloat(document.getElementById(id).value) || 0;
+    });
+    await saveTargets();
+    targetOverlay.classList.remove("show");
+    renderSummary();
+  };
+
+  [customOverlay,targetOverlay].forEach(ov=>{
+    ov.addEventListener("click",(e)=>{ if(e.target===ov) ov.classList.remove("show"); });
+  });
+
+  // ---------- History ----------
+  const historyOverlay = document.getElementById("historyOverlay");
+  const historyList = document.getElementById("historyList");
+  const hFrom = document.getElementById("hFrom");
+  const hTo = document.getElementById("hTo");
+
+  document.getElementById("historyBtn").onclick = async ()=>{
+    historyList.innerHTML = `<div style="color:var(--ink-soft);font-size:13px;">Loading…</div>`;
+    historyOverlay.classList.add("show");
+    await loadAllHistoryDays();
+    renderHistoryTable();
+  };
+  document.getElementById("hClose").onclick = ()=> historyOverlay.classList.remove("show");
+  historyOverlay.addEventListener("click",(e)=>{ if(e.target===historyOverlay) historyOverlay.classList.remove("show"); });
+
+  let allHistoryDays = [];   // every logged day, unfiltered
+  let lastHistoryDays = [];  // currently filtered/displayed set (used for CSV export)
+
+  async function loadAllHistoryDays(){
+    let keys = [];
+    try{ keys = lsListKeys("log:"); } catch(e){ keys = []; }
+
+    const days = [];
+    for(const k of keys){
+      const dstr = k.replace("log:","");
+      const val = await safeGet(k);
+      const entries = val ? JSON.parse(val) : [];
+      const count = entries.reduce((s,e)=>s+e.qty,0);
+      const carb = r1(entries.reduce((s,e)=>s+e.carb*e.qty,0));
+      const sugar = r1(entries.reduce((s,e)=>s+(e.sugar||0)*e.qty,0));
+      const protein = r1(entries.reduce((s,e)=>s+(e.protein||0)*e.qty,0));
+      const fat = r1(entries.reduce((s,e)=>s+(e.fat||0)*e.qty,0));
+      const sodium = Math.round(entries.reduce((s,e)=>s+(e.sodium||0)*e.qty,0));
+      const alcohol = r1(entries.reduce((s,e)=>s+(e.alcohol||0)*e.qty,0));
+      days.push({dstr, count, carb, sugar, protein, fat, sodium, alcohol});
+    }
+    days.sort((a,b)=> b.dstr.localeCompare(a.dstr));
+    allHistoryDays = days;
+  }
+
+  function filteredHistoryDays(){
+    const from = hFrom.value; // "" or "YYYY-MM-DD"
+    const to = hTo.value;
+    return allHistoryDays.filter(d=>{
+      if(from && d.dstr < from) return false;
+      if(to && d.dstr > to) return false;
+      return true;
+    });
+  }
+
+  function renderHistoryTable(){
+    const days = filteredHistoryDays();
+    lastHistoryDays = days;
+
+    if(allHistoryDays.length === 0){
+      historyList.innerHTML = `<div style="color:var(--ink-soft);font-size:13px;">No days logged yet.</div>`;
+      return;
+    }
+    if(days.length === 0){
+      historyList.innerHTML = `<div style="color:var(--ink-soft);font-size:13px;">No days in that range.</div>`;
+      return;
+    }
+
+    const n = days.length;
+    const sum = (key)=> r1(days.reduce((s,d)=>s+d[key],0));
+    const sumCount = days.reduce((s,d)=>s+d.count,0);
+    const avg = (key)=> r1(sum(key)/n);
+    const avgCount = r1(sumCount/n);
+
+    const rowsHtml = days.map(d=>`
+      <tr data-date="${d.dstr}">
+        <td>${escapeHtml(fmtDateLabel(d.dstr))}</td>
+        <td>${d.count}</td>
+        <td>${d.carb}</td>
+        <td>${d.sugar}</td>
+        <td>${d.protein}</td>
+        <td>${d.fat}</td>
+        <td>${d.sodium}</td>
+        <td>${d.alcohol}</td>
+      </tr>
+    `).join("");
+
+    historyList.innerHTML = `
+      <table class="summary-table">
+        <thead>
+          <tr>
+            <th>Date</th><th># Drinks</th><th>Carbs (g)</th><th>Sugar (g)</th>
+            <th>Protein (g)</th><th>Fat (g)</th><th>Sodium (mg)</th><th>Alcohol (ml)</th>
+          </tr>
+        </thead>
+        <tbody>${rowsHtml}</tbody>
+        <tfoot>
+          <tr>
+            <td>Sum</td>
+            <td>${sumCount}</td>
+            <td>${sum("carb")}</td>
+            <td>${sum("sugar")}</td>
+            <td>${sum("protein")}</td>
+            <td>${sum("fat")}</td>
+            <td>${sum("sodium")}</td>
+            <td>${sum("alcohol")}</td>
+          </tr>
+          <tr>
+            <td>Daily average</td>
+            <td>${avgCount}</td>
+            <td>${avg("carb")}</td>
+            <td>${avg("sugar")}</td>
+            <td>${avg("protein")}</td>
+            <td>${avg("fat")}</td>
+            <td>${avg("sodium")}</td>
+            <td>${avg("alcohol")}</td>
+          </tr>
+        </tfoot>
+      </table>
+    `;
+
+    historyList.querySelectorAll("tbody tr").forEach(row=>{
+      row.onclick = async ()=>{
+        currentDate = row.getAttribute("data-date");
+        await loadLog();
+        renderLog();
+        historyOverlay.classList.remove("show");
+      };
+    });
+  }
+
+  hFrom.addEventListener("change", renderHistoryTable);
+  hTo.addEventListener("change", renderHistoryTable);
+  document.getElementById("hClearFilter").onclick = ()=>{
+    hFrom.value = "";
+    hTo.value = "";
+    renderHistoryTable();
+  };
+
+  function downloadHistoryCsv(){
+    if(lastHistoryDays.length === 0){ showToast("Nothing to export yet"); return; }
+    const header = ["Date","Number of drinks","Total carbs (g)","Total sugar (g)","Total protein (g)","Total fat (g)","Total sodium (mg)","Total alcohol (ml)"];
+    const csvEscape = (v)=>{
+      const s = String(v);
+      return /[",\n]/.test(s) ? `"${s.replace(/"/g,'""')}"` : s;
+    };
+    const rows = lastHistoryDays.map(d=>[d.dstr, d.count, d.carb, d.sugar, d.protein, d.fat, d.sodium, d.alcohol]);
+    const n = lastHistoryDays.length;
+    const sum = (key)=> r1(lastHistoryDays.reduce((s,d)=>s+d[key],0));
+    const sumCount = lastHistoryDays.reduce((s,d)=>s+d.count,0);
+    const avg = (key)=> r1(sum(key)/n);
+    const sumRow = ["Sum", sumCount, sum("carb"), sum("sugar"), sum("protein"), sum("fat"), sum("sodium"), sum("alcohol")];
+    const avgRow = ["Daily average", r1(sumCount/n), avg("carb"), avg("sugar"), avg("protein"), avg("fat"), avg("sodium"), avg("alcohol")];
+    const csv = [header, ...rows, sumRow, avgRow].map(r=> r.map(csvEscape).join(",")).join("\r\n");
+    const blob = new Blob([csv], {type:"text/csv;charset=utf-8;"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `daily-pour-summary-${todayStr()}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+  document.getElementById("hExport").onclick = downloadHistoryCsv;
+
+  // ---------- GitHub sync (optional — lets you use this on multiple devices) ----------
+  const GH_CONFIG_KEY = "dailypour-gh-config"; // kept out of LS_PREFIX namespace deliberately, never synced
+
+  function getGhConfig(){
+    try{ const raw = localStorage.getItem(GH_CONFIG_KEY); return raw ? JSON.parse(raw) : null; }
+    catch(e){ return null; }
+  }
+  function setGhConfig(cfg){
+    try{ localStorage.setItem(GH_CONFIG_KEY, JSON.stringify(cfg)); } catch(e){}
+  }
+  function clearGhConfig(){
+    try{ localStorage.removeItem(GH_CONFIG_KEY); } catch(e){}
+    ghSha = null;
+  }
+
+  let ghSha = null;          // last known remote file sha (needed to update without conflict)
+  let syncTimer = null;
+  let syncing = false;
+
+  function setSyncBadge(state, detail){
+    const badge = document.getElementById("syncBadge");
+    if(!badge) return;
+    const map = {
+      off:   {text:"Sync off",  cls:"sync-off"},
+      ok:    {text:"Synced",    cls:"sync-ok"},
+      busy:  {text:"Syncing…",  cls:"sync-busy"},
+      err:   {text:"Sync error",cls:"sync-err"},
+    };
+    const s = map[state] || map.off;
+    badge.textContent = s.text;
+    badge.className = "sync-badge " + s.cls;
+    badge.title = detail || (state==="off" ? "Tap to connect a GitHub repo for cross-device sync" : "");
+  }
+
+  function markDirty(){
+    const cfg = getGhConfig();
+    if(!cfg || !cfg.token){ setSyncBadge("off"); return; }
+    clearTimeout(syncTimer);
+    syncTimer = setTimeout(pushToGitHub, 1500);
+  }
+
+  function allLogsSnapshot(){
+    const out = {};
+    lsListKeys("log:").forEach(k=>{
+      const dstr = k.replace("log:","");
+      const raw = lsRead(k);
+      if(raw) out[dstr] = JSON.parse(raw);
+    });
+    return out;
+  }
+
+  function buildSyncPayload(){
+    return {
+      customDrinks,
+      targets,
+      logs: allLogsSnapshot(),
+      updatedAt: Date.now()
+    };
+  }
+
+  async function applyPayload(payload){
+    customDrinks = payload.customDrinks || [];
+    targets = Object.assign({}, DEFAULT_TARGETS, payload.targets || {});
+    lsWrite("custom-drinks", JSON.stringify(customDrinks));
+    lsWrite("targets", JSON.stringify(targets));
+    lsListKeys("log:").forEach(k=> lsDelete(k));
+    Object.keys(payload.logs || {}).forEach(dstr=>{
+      lsWrite("log:"+dstr, JSON.stringify(payload.logs[dstr]));
+    });
+    lsWrite("meta:updatedAt", String(payload.updatedAt || Date.now()));
+    await loadLog();
+  }
+
+  function b64EncodeUtf8(str){ return btoa(unescape(encodeURIComponent(str))); }
+  function b64DecodeUtf8(str){ return decodeURIComponent(escape(atob(str.replace(/\n/g,"")))); }
+
+  async function githubGet(){
+    const cfg = getGhConfig();
+    const url = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${encodeURIComponent(cfg.path)}` +
+      (cfg.branch ? `?ref=${encodeURIComponent(cfg.branch)}` : "");
+    return fetch(url, {
+      headers:{ "Authorization":"token "+cfg.token, "Accept":"application/vnd.github+json" }
+    });
+  }
+  async function githubPut(body){
+    const cfg = getGhConfig();
+    const url = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${encodeURIComponent(cfg.path)}`;
+    return fetch(url, {
+      method:"PUT",
+      headers:{
+        "Authorization":"token "+cfg.token,
+        "Accept":"application/vnd.github+json",
+        "Content-Type":"application/json"
+      },
+      body: JSON.stringify(body)
+    });
+  }
+
+  async function pullFromGitHub(){
+    const cfg = getGhConfig();
+    if(!cfg || !cfg.token){ setSyncBadge("off"); return; }
+    if(syncing) return;
+    syncing = true;
+    setSyncBadge("busy");
+    try{
+      const res = await githubGet();
+      if(res.status === 200){
+        const data = await res.json();
+        ghSha = data.sha;
+        const payload = JSON.parse(b64DecodeUtf8(data.content));
+        const localUpdatedAt = parseInt(lsRead("meta:updatedAt")||"0",10);
+        if((payload.updatedAt||0) > localUpdatedAt){
+          await applyPayload(payload);
+          renderGrid();
+          renderLog();
+        } else if((payload.updatedAt||0) < localUpdatedAt){
+          syncing = false;
+          await pushToGitHub();
+          return;
+        }
+        setSyncBadge("ok");
+      } else if(res.status === 404){
+        syncing = false;
+        await pushToGitHub(true);
+        return;
+      } else {
+        throw new Error("GitHub responded "+res.status);
+      }
+    } catch(e){
+      console.error("pullFromGitHub failed", e);
+      setSyncBadge("err", String(e.message||e));
+    }
+    syncing = false;
+  }
+
+  async function pushToGitHub(isCreate){
+    const cfg = getGhConfig();
+    if(!cfg || !cfg.token){ setSyncBadge("off"); return; }
+    if(syncing) return;
+    syncing = true;
+    setSyncBadge("busy");
+    try{
+      const payload = buildSyncPayload();
+      lsWrite("meta:updatedAt", String(payload.updatedAt));
+      const body = {
+        message: "Update Daily Pour data — "+new Date(payload.updatedAt).toISOString(),
+        content: b64EncodeUtf8(JSON.stringify(payload, null, 2))
+      };
+      if(cfg.branch) body.branch = cfg.branch;
+      if(!isCreate && ghSha) body.sha = ghSha;
+      const res = await githubPut(body);
+      if(res.ok){
+        const data = await res.json();
+        ghSha = data.content && data.content.sha;
+        setSyncBadge("ok");
+      } else if(res.status === 409){
+        syncing = false;
+        await pullFromGitHub();
+        return;
+      } else {
+        throw new Error("GitHub responded "+res.status);
+      }
+    } catch(e){
+      console.error("pushToGitHub failed", e);
+      setSyncBadge("err", String(e.message||e));
+    }
+    syncing = false;
+  }
+
+  // ---------- Sync setup modal ----------
+  const syncOverlay = document.getElementById("syncOverlay");
+  document.getElementById("syncBadge").onclick = ()=>{
+    const cfg = getGhConfig() || {};
+    document.getElementById("ghOwner").value = cfg.owner || "";
+    document.getElementById("ghRepo").value = cfg.repo || "";
+    document.getElementById("ghPath").value = cfg.path || "dailypour-data.json";
+    document.getElementById("ghBranch").value = cfg.branch || "";
+    document.getElementById("ghToken").value = cfg.token || "";
+    document.getElementById("ghDisconnect").style.display = cfg.token ? "block" : "none";
+    syncOverlay.classList.add("show");
+  };
+  document.getElementById("syncCancel").onclick = ()=> syncOverlay.classList.remove("show");
+  syncOverlay.addEventListener("click",(e)=>{ if(e.target===syncOverlay) syncOverlay.classList.remove("show"); });
+  document.getElementById("ghDisconnect").onclick = ()=>{
+    clearGhConfig();
+    syncOverlay.classList.remove("show");
+    setSyncBadge("off");
+    showToast("Disconnected from GitHub");
+  };
+  document.getElementById("ghSave").onclick = async ()=>{
+    const owner = document.getElementById("ghOwner").value.trim();
+    const repo = document.getElementById("ghRepo").value.trim();
+    const path = document.getElementById("ghPath").value.trim() || "dailypour-data.json";
+    const branch = document.getElementById("ghBranch").value.trim();
+    const token = document.getElementById("ghToken").value.trim();
+    if(!owner || !repo || !token){ showToast("Fill in owner, repo, and token"); return; }
+    setGhConfig({owner, repo, path, branch, token});
+    ghSha = null;
+    syncOverlay.classList.remove("show");
+    showToast("Connected — syncing now");
+    await pullFromGitHub();
+  };
+
+  // ---------- Init ----------
+  (async function init(){
+    await loadAll();
+    renderGrid();
+    renderLog();
+    const cfg = getGhConfig();
+    if(cfg && cfg.token){ pullFromGitHub(); }
+    else { setSyncBadge("off"); }
+  })();
+
+})();
+</script>
+</body>
+</html>
