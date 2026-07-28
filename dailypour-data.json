@@ -23,6 +23,22 @@
     "sodium": 2300,
     "alcohol": 20
   },
-  "logs": {},
-  "updatedAt": 1785227047239
+  "logs": {
+    "2026-07-28": [
+      {
+        "name": "Carlsberg Pilsner 0.0",
+        "serving": "330ml",
+        "cal": 64,
+        "carb": 13.9,
+        "sugar": 0.2,
+        "protein": 1.1,
+        "fat": 0,
+        "sodium": 7,
+        "alcohol": 0.2,
+        "qty": 1,
+        "color": "var(--wine)"
+      }
+    ]
+  },
+  "updatedAt": 1785227054771
 }
