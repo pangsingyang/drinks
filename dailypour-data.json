@@ -29,8 +29,8 @@
     {
       "name": "Asahi Super Dry",
       "serving": "500ml",
-      "cal": 350,
-      "carb": 25,
+      "cal": 205,
+      "carb": 14,
       "sugar": 5,
       "protein": 0,
       "fat": 0,
@@ -79,5 +79,5 @@
       }
     ]
   },
-  "updatedAt": 1785229780555
+  "updatedAt": 1785229881157
 }
