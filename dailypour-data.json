@@ -9,7 +9,7 @@
       "protein": 1.1,
       "fat": 0,
       "sodium": 7,
-      "alcohol": 0.2,
+      "alcohol": 0.3,
       "volume": 330,
       "color": "var(--wine)"
     },
@@ -66,5 +66,5 @@
       }
     ]
   },
-  "updatedAt": 1785227219765
+  "updatedAt": 1785229645074
 }
