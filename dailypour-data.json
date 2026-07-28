@@ -1,0 +1,14 @@
+{
+  "customDrinks": [],
+  "targets": {
+    "cal": 2000,
+    "carb": 135,
+    "sugar": 25,
+    "protein": 105,
+    "fat": 70,
+    "sodium": 2300,
+    "alcohol": 20
+  },
+  "logs": {},
+  "updatedAt": 1785226968398
+}
