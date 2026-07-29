@@ -38,6 +38,19 @@
       "alcohol": 25,
       "volume": 500,
       "color": "var(--teal)"
+    },
+    {
+      "name": "Sapporo",
+      "serving": "500ml",
+      "cal": 210,
+      "carb": 16,
+      "sugar": 1.5,
+      "protein": 2.5,
+      "fat": 0,
+      "sodium": 0,
+      "alcohol": 25,
+      "volume": 500,
+      "color": "var(--ink)"
     }
   ],
   "targets": {
@@ -120,5 +133,5 @@
       }
     ]
   },
-  "updatedAt": 1785298626253
+  "updatedAt": 1785309648709
 }
