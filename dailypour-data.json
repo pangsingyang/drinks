@@ -90,7 +90,35 @@
         "qty": 4,
         "color": "var(--teal)"
       }
+    ],
+    "2026-07-29": [
+      {
+        "name": "Asahi Super Dry",
+        "serving": "500ml",
+        "cal": 205,
+        "carb": 14,
+        "sugar": 0,
+        "protein": 1.5,
+        "fat": 0,
+        "sodium": 0,
+        "alcohol": 25,
+        "qty": 1,
+        "color": "var(--teal)"
+      },
+      {
+        "name": "Heineken 0.0",
+        "serving": "330ml",
+        "cal": 69,
+        "carb": 15.8,
+        "sugar": 4.3,
+        "protein": 0,
+        "fat": 0,
+        "sodium": 23,
+        "alcohol": 0,
+        "qty": 1,
+        "color": "var(--amber)"
+      }
     ]
   },
-  "updatedAt": 1785242483387
+  "updatedAt": 1785290293812
 }
