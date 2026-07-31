@@ -63,6 +63,21 @@
     "alcohol": 20
   },
   "logs": {
+    "2026-07-31": [
+      {
+        "name": "Heineken 0.0",
+        "serving": "330ml",
+        "cal": 69,
+        "carb": 15.8,
+        "sugar": 4.3,
+        "protein": 0,
+        "fat": 0,
+        "sodium": 23,
+        "alcohol": 0,
+        "qty": 2,
+        "color": "var(--amber)"
+      }
+    ],
     "2026-07-28": [
       {
         "name": "Carlsberg Pilsner 0.0",
@@ -174,5 +189,5 @@
       }
     ]
   },
-  "updatedAt": 1785415231399
+  "updatedAt": 1785462270097
 }
