@@ -61,7 +61,7 @@
       "protein": 2,
       "fat": 0,
       "sodium": 50,
-      "alcohol": 0,
+      "alcohol": 19,
       "volume": 500,
       "color": "var(--cream)"
     }
@@ -202,5 +202,5 @@
       }
     ]
   },
-  "updatedAt": 1785464907080
+  "updatedAt": 1785464932396
 }
