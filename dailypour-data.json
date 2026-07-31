@@ -186,6 +186,21 @@
         "color": "var(--amber)"
       }
     ],
+    "2026-08-01": [
+      {
+        "name": "Heineken 0.0",
+        "serving": "330ml",
+        "cal": 69,
+        "carb": 15.8,
+        "sugar": 4.3,
+        "protein": 0,
+        "fat": 0,
+        "sodium": 23,
+        "alcohol": 0,
+        "qty": 1,
+        "color": "var(--amber)"
+      }
+    ],
     "2026-07-29": [
       {
         "name": "Asahi Super Dry",
@@ -228,5 +243,5 @@
       }
     ]
   },
-  "updatedAt": 1785503908588
+  "updatedAt": 1785541304014
 }
