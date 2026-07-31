@@ -102,6 +102,19 @@
         "alcohol": 19,
         "qty": 2,
         "color": "var(--cream)"
+      },
+      {
+        "name": "Asahi Super Dry",
+        "serving": "500ml",
+        "cal": 205,
+        "carb": 14,
+        "sugar": 0,
+        "protein": 1.5,
+        "fat": 0,
+        "sodium": 0,
+        "alcohol": 25,
+        "qty": 1,
+        "color": "var(--teal)"
       }
     ],
     "2026-07-28": [
@@ -215,5 +228,5 @@
       }
     ]
   },
-  "updatedAt": 1785483688193
+  "updatedAt": 1785483691957
 }
