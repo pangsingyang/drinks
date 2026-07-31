@@ -51,6 +51,19 @@
       "alcohol": 25,
       "volume": 500,
       "color": "var(--ink)"
+    },
+    {
+      "name": "Anchor",
+      "serving": "500ml",
+      "cal": 165,
+      "carb": 13,
+      "sugar": 0,
+      "protein": 2,
+      "fat": 0,
+      "sodium": 50,
+      "alcohol": 0,
+      "volume": 500,
+      "color": "var(--cream)"
     }
   ],
   "targets": {
@@ -189,5 +202,5 @@
       }
     ]
   },
-  "updatedAt": 1785462270097
+  "updatedAt": 1785464868568
 }
