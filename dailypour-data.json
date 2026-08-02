@@ -64,6 +64,20 @@
       "alcohol": 19,
       "volume": 500,
       "color": "var(--cream)"
+    },
+    {
+      "name": "Strong Zero",
+      "serving": "500ml",
+      "cal": 249,
+      "carb": 0,
+      "sugar": 0,
+      "fiber": 0,
+      "protein": 0,
+      "fat": 0,
+      "sodium": 0,
+      "alcohol": 45,
+      "volume": 500,
+      "color": "var(--wine)"
     }
   ],
   "customFoods": [
@@ -586,5 +600,5 @@
       }
     ]
   },
-  "updatedAt": 1785663331467
+  "updatedAt": 1785663457384
 }
