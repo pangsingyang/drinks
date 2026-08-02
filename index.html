@@ -180,7 +180,7 @@
   .filter-row{display:flex;gap:10px;align-items:flex-end;}
   .modal h3{font-family:'Fraunces',serif;font-size:19px;margin:0 0 14px;}
 
-  .summary-table{width:100%;border-collapse:collapse;font-family:'IBM Plex Mono',monospace;font-size:12px;}
+  .summary-table{width:100%;min-width:640px;border-collapse:collapse;font-family:'IBM Plex Mono',monospace;font-size:12px;}
   .summary-table th{
     text-align:right;font-family:'Inter',sans-serif;font-size:10.5px;text-transform:uppercase;letter-spacing:.04em;
     color:var(--ink-soft);font-weight:600;padding:0 8px 8px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--paper-raised);
@@ -335,6 +335,10 @@
           <div class="bar-track mini-bar"><div class="bar-fill" id="sugarBar" style="background:var(--wine);width:0%"></div></div>
         </div>
         <div class="mini-stat">
+          <div class="mini-row"><span class="mini-label">Fiber</span><span class="mini-num" id="fiberNum">0</span><span class="mini-of" id="fiberOf"></span></div>
+          <div class="bar-track mini-bar"><div class="bar-fill" id="fiberBar" style="background:#8A9A5B;width:0%"></div></div>
+        </div>
+        <div class="mini-stat">
           <div class="mini-row"><span class="mini-label">Protein</span><span class="mini-num" id="proteinNum">0</span><span class="mini-of" id="proteinOf"></span></div>
           <div class="bar-track mini-bar"><div class="bar-fill" id="proteinBar" style="background:var(--cream);width:0%"></div></div>
         </div>
@@ -355,7 +359,11 @@
   </div>
 
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-    <h2 style="font-family:'Fraunces',serif;font-size:19px;font-weight:600;margin:0;">My drinks</h2>
+    <h2 style="font-family:'Fraunces',serif;font-size:19px;font-weight:600;margin:0;" id="itemsSectionTitle">My drinks</h2>
+    <div class="tabs" style="margin:0;padding:0;">
+      <button type="button" class="tab active" id="kindDrinkTab">Drinks</button>
+      <button type="button" class="tab" id="kindFoodTab">Food</button>
+    </div>
   </div>
   <div class="drink-grid" id="drinkGrid"></div>
 
@@ -368,7 +376,7 @@
 
 <div class="toast" id="toast"></div>
 
-<!-- Add custom drink modal -->
+<!-- Add custom drink/food modal -->
 <div class="overlay" id="customOverlay">
   <div class="modal">
     <h3 id="customModalTitle">Add your own drink</h3>
@@ -378,13 +386,13 @@
       <label>How do you want to enter it?</label>
       <div class="tabs" style="margin:0;padding:0;">
         <button type="button" class="tab active" id="modeServing">Full serving</button>
-        <button type="button" class="tab" id="modePer100">Per 100ml</button>
+        <button type="button" class="tab" id="modePer100"><span class="unit-label" data-ml="Per 100ml" data-g="Per 100g">Per 100ml</span></button>
       </div>
     </div>
 
     <div id="servingFields">
       <div class="two-col">
-        <div class="field"><label>Volume (ml)</label><input id="cVolume" type="number" min="0" placeholder="250"></div>
+        <div class="field"><label><span class="unit-label" data-ml="Volume (ml)" data-g="Weight (g)">Volume (ml)</span></label><input id="cVolume" type="number" min="0" placeholder="250"></div>
         <div class="field"><label>Label <span style="opacity:.6;">(optional)</span></label><input id="cServing" placeholder="e.g. 1 can"></div>
       </div>
       <div class="three-col">
@@ -395,7 +403,8 @@
       <div class="three-col">
         <div class="field"><label>Protein (g)</label><input id="cProtein" type="number" min="0" placeholder="0"></div>
         <div class="field"><label>Fat (g)</label><input id="cFat" type="number" min="0" placeholder="0"></div>
-        <div class="field"><label>ABV (%)</label><input id="cABV" type="number" min="0" step="0.1" placeholder="0"></div>
+        <div class="field" id="abvFieldWrap"><label>ABV (%)</label><input id="cABV" type="number" min="0" step="0.1" placeholder="0"></div>
+        <div class="field" id="fiberFieldWrap" style="display:none;"><label>Fiber (g)</label><input id="cFiber" type="number" min="0" placeholder="0"></div>
       </div>
       <div class="field"><label>Sodium (mg)</label><input id="cSodium" type="number" min="0" placeholder="0"></div>
       <div class="target-note" id="servingPreview" style="text-align:left;line-height:1.5;"></div>
@@ -403,20 +412,21 @@
 
     <div id="per100Fields" style="display:none;">
       <div class="two-col">
-        <div class="field"><label>Volume (ml)</label><input id="cVolume100" type="number" min="0" placeholder="250"></div>
+        <div class="field"><label><span class="unit-label" data-ml="Volume (ml)" data-g="Weight (g)">Volume (ml)</span></label><input id="cVolume100" type="number" min="0" placeholder="250"></div>
         <div class="field"><label>Label <span style="opacity:.6;">(optional)</span></label><input id="cServing100" placeholder="e.g. 1 can"></div>
       </div>
       <div class="three-col">
-        <div class="field"><label>Calories / 100ml</label><input id="cCal100" type="number" min="0" placeholder="0"></div>
-        <div class="field"><label>Carbs / 100ml</label><input id="cCarb100" type="number" min="0" placeholder="0"></div>
-        <div class="field"><label>Sugar / 100ml</label><input id="cSugar100" type="number" min="0" placeholder="0"></div>
+        <div class="field"><label><span class="unit-label" data-ml="Calories / 100ml" data-g="Calories / 100g">Calories / 100ml</span></label><input id="cCal100" type="number" min="0" placeholder="0"></div>
+        <div class="field"><label><span class="unit-label" data-ml="Carbs / 100ml" data-g="Carbs / 100g">Carbs / 100ml</span></label><input id="cCarb100" type="number" min="0" placeholder="0"></div>
+        <div class="field"><label><span class="unit-label" data-ml="Sugar / 100ml" data-g="Sugar / 100g">Sugar / 100ml</span></label><input id="cSugar100" type="number" min="0" placeholder="0"></div>
       </div>
       <div class="three-col">
-        <div class="field"><label>Protein / 100ml</label><input id="cProtein100" type="number" min="0" placeholder="0"></div>
-        <div class="field"><label>Fat / 100ml</label><input id="cFat100" type="number" min="0" placeholder="0"></div>
-        <div class="field"><label>ABV (%)</label><input id="cABV100" type="number" min="0" step="0.1" placeholder="0"></div>
+        <div class="field"><label><span class="unit-label" data-ml="Protein / 100ml" data-g="Protein / 100g">Protein / 100ml</span></label><input id="cProtein100" type="number" min="0" placeholder="0"></div>
+        <div class="field"><label><span class="unit-label" data-ml="Fat / 100ml" data-g="Fat / 100g">Fat / 100ml</span></label><input id="cFat100" type="number" min="0" placeholder="0"></div>
+        <div class="field" id="abvFieldWrap100"><label>ABV (%)</label><input id="cABV100" type="number" min="0" step="0.1" placeholder="0"></div>
+        <div class="field" id="fiberFieldWrap100" style="display:none;"><label><span class="unit-label" data-ml="Fiber / 100ml" data-g="Fiber / 100g">Fiber / 100ml</span></label><input id="cFiber100" type="number" min="0" placeholder="0"></div>
       </div>
-      <div class="field"><label>Sodium / 100ml (mg)</label><input id="cSodium100" type="number" min="0" placeholder="0"></div>
+      <div class="field"><label><span class="unit-label" data-ml="Sodium / 100ml (mg)" data-g="Sodium / 100g (mg)">Sodium / 100ml (mg)</span></label><input id="cSodium100" type="number" min="0" placeholder="0"></div>
       <div class="target-note" id="per100Preview" style="text-align:left;line-height:1.5;"></div>
     </div>
 
@@ -458,11 +468,14 @@
       <div class="field"><label>Sugar (g)</label><input id="tSugar" type="number" min="0"></div>
     </div>
     <div class="three-col">
+      <div class="field"><label>Fiber (g)</label><input id="tFiber" type="number" min="0"></div>
       <div class="field"><label>Protein (g)</label><input id="tProtein" type="number" min="0"></div>
       <div class="field"><label>Fat (g)</label><input id="tFat" type="number" min="0"></div>
-      <div class="field"><label>Sodium (mg)</label><input id="tSodium" type="number" min="0"></div>
     </div>
-    <div class="field"><label>Alcohol (ml pure alcohol)</label><input id="tAlcohol" type="number" min="0"></div>
+    <div class="two-col">
+      <div class="field"><label>Sodium (mg)</label><input id="tSodium" type="number" min="0"></div>
+      <div class="field"><label>Alcohol (ml pure alcohol)</label><input id="tAlcohol" type="number" min="0"></div>
+    </div>
     <div class="modal-actions">
       <button class="btn ghost" id="tCancel">Cancel</button>
       <button class="btn primary" id="tSave">Save targets</button>
@@ -503,13 +516,42 @@
   // ---------- Palette used to color user-added drinks ----------
   const PALETTE = ["var(--wine)","var(--amber)","var(--teal)","var(--ink)","var(--cream)"];
 
+  // Starter foods, seeded into "My food" the first time the app is used (per 100g unless noted).
+  // Values are standard reference estimates (cooked/lean where applicable) — edit any of them to match your source.
+  const DEFAULT_FOODS = [
+    {name:"Chicken breast", serving:"100g", volume:100, cal:165, carb:0,    sugar:0,   fiber:0,   protein:31,   fat:3.6,  sodium:74},
+    {name:"Chicken thigh",  serving:"100g", volume:100, cal:209, carb:0,    sugar:0,   fiber:0,   protein:26,   fat:10.9, sodium:90},
+    {name:"Sirloin steak",  serving:"100g", volume:100, cal:183, carb:0,    sugar:0,   fiber:0,   protein:30.9, fat:6.5,  sodium:56},
+    {name:"Ribeye steak",   serving:"100g", volume:100, cal:271, carb:0,    sugar:0,   fiber:0,   protein:25,   fat:19,   sodium:59},
+    {name:"Edamame",        serving:"100g", volume:100, cal:121, carb:10,   sugar:2.2, fiber:5,   protein:12,   fat:5,    sodium:6},
+    {name:"Firm tofu",      serving:"100g", volume:100, cal:144, carb:2.8,  sugar:0.6, fiber:2.3, protein:15.7, fat:8.7,  sodium:14},
+    {name:"Pork loin",      serving:"100g", volume:100, cal:147, carb:0,    sugar:0,   fiber:0,   protein:26.5, fat:4.3,  sodium:55},
+    {name:"Potato",         serving:"100g", volume:100, cal:93,  carb:21,   sugar:1.2, fiber:2.2, protein:2.5,  fat:0.1,  sodium:6},
+    {name:"Rice noodle",    serving:"100g", volume:100, cal:109, carb:24.9, sugar:0.1, fiber:1,   protein:0.9,  fat:0.2,  sodium:5},
+    {name:"Pasta",          serving:"100g", volume:100, cal:131, carb:25,   sugar:0.6, fiber:1.8, protein:5,    fat:1.1,  sodium:1},
+    {name:"Parmesan cheese",serving:"100g", volume:100, cal:431, carb:4.1,  sugar:0.9, fiber:0,   protein:38,   fat:29,   sodium:1529},
+    {name:"Mozzarella cheese",serving:"100g", volume:100, cal:254, carb:2.8, sugar:1,  fiber:0,   protein:24,   fat:16,   sodium:486},
+    {name:"Salmon",    serving:"100g", volume:100, cal:206, carb:0,   sugar:0, fiber:0, protein:22.1, fat:12.4, sodium:61},
+    {name:"Sardine",   serving:"100g", volume:100, cal:208, carb:0,   sugar:0, fiber:0, protein:24.6, fat:11.5, sodium:307},
+    {name:"Barramundi",serving:"100g", volume:100, cal:124, carb:0,   sugar:0, fiber:0, protein:20,   fat:4,    sodium:70},
+    {name:"Pomfret",   serving:"100g", volume:100, cal:130, carb:0,   sugar:0, fiber:0, protein:19,   fat:5.5,  sodium:65},
+    {name:"Grouper",   serving:"100g", volume:100, cal:118, carb:0,   sugar:0, fiber:0, protein:25.5, fat:1.3,  sodium:53},
+    {name:"Shrimp",    serving:"100g", volume:100, cal:99,  carb:0.2, sugar:0, fiber:0, protein:20.9, fat:0.3,  sodium:111},
+    {name:"Squid",     serving:"100g", volume:100, cal:92,  carb:3.1, sugar:0, fiber:0, protein:15.6, fat:1.4,  sodium:44},
+    {name:"Egg",             serving:"1 egg",             volume:50,  cal:72,  carb:0.4, sugar:0.2, fiber:0,   protein:6.3, fat:4.8,  sodium:71},
+    {name:"Avocado (small)", serving:"1 small avocado",   volume:100, cal:160, carb:8.5, sugar:0.7, fiber:6.7, protein:2,   fat:14.7, sodium:7},
+    {name:"Avocado (large)", serving:"1 large avocado",   volume:200, cal:320, carb:17,  sugar:1.4, fiber:13.4,protein:4,   fat:29.4, sodium:14},
+  ];
+
   // Round to a max of 1 decimal place (used everywhere numbers are stored or displayed)
   const r1 = (n)=> Math.round(n*10)/10;
 
   // ---------- State ----------
   let currentDate = todayStr();
   let customDrinks = [];
-  const DEFAULT_TARGETS = {cal:2000, carb:135, sugar:25, protein:105, fat:70, sodium:2300, alcohol:20};
+  let customFoods = [];
+  let activeKind = "drink"; // which tab ("drink" | "food") is currently shown in the item grid
+  const DEFAULT_TARGETS = {cal:2000, carb:135, sugar:25, fiber:25, protein:105, fat:70, sodium:2300, alcohol:20};
   let targets = Object.assign({}, DEFAULT_TARGETS);
   let log = []; // entries for currentDate
 
@@ -561,6 +603,30 @@
   async function loadAll(){
     const c = await safeGet("custom-drinks");
     customDrinks = c ? JSON.parse(c) : [];
+
+    const f = await safeGet("custom-foods");
+    customFoods = f ? JSON.parse(f) : [];
+
+    // Track which starter foods have already been offered, so newly-added presets
+    // (e.g. a later seafood batch) show up for existing users too — without ever
+    // resurrecting a starter item someone deliberately deleted.
+    const seededRaw = await safeGet("seeded-food-names");
+    let seededNames = seededRaw ? JSON.parse(seededRaw) : [];
+    let foodsChanged = false;
+    DEFAULT_FOODS.forEach(item=>{
+      if(!seededNames.includes(item.name)){
+        if(!customFoods.some(x=> x.name === item.name)){
+          customFoods.push(Object.assign({color: PALETTE[customFoods.length % PALETTE.length]}, item));
+        }
+        seededNames.push(item.name);
+        foodsChanged = true;
+      }
+    });
+    if(foodsChanged){
+      await saveFoods();
+      await safeSet("seeded-food-names", JSON.stringify(seededNames));
+    }
+
     const t = await safeGet("targets");
     targets = t ? Object.assign({}, DEFAULT_TARGETS, JSON.parse(t)) : Object.assign({}, DEFAULT_TARGETS);
     await loadLog();
@@ -575,8 +641,14 @@
   async function saveCustom(){
     await safeSet("custom-drinks", JSON.stringify(customDrinks));
   }
+  async function saveFoods(){
+    await safeSet("custom-foods", JSON.stringify(customFoods));
+  }
   async function saveTargets(){
     await safeSet("targets", JSON.stringify(targets));
+  }
+  function activeItems(){
+    return activeKind === "drink" ? customDrinks : customFoods;
   }
 
   // ---------- Rendering ----------
@@ -586,46 +658,58 @@
 
   function renderGrid(){
     gridEl.innerHTML = "";
+    const items = activeItems();
+    const noun = activeKind === "drink" ? "drink" : "food";
 
     const addCard = document.createElement("div");
     addCard.className = "drink-card add-custom-card";
-    addCard.innerHTML = `<div style="font-size:20px;">+</div><div>Add a drink</div>`;
+    addCard.innerHTML = `<div style="font-size:20px;">+</div><div>Add a ${noun}</div>`;
     addCard.onclick = openCustomModal;
     gridEl.appendChild(addCard);
 
-    if(customDrinks.length === 0){
+    if(items.length === 0){
       const hint = document.createElement("div");
       hint.style.cssText = "grid-column:1/-1;color:var(--ink-soft);font-size:12.5px;padding:8px 2px;";
-      hint.textContent = "No drinks saved yet — add your first one to start logging.";
+      hint.textContent = `No ${noun}s saved yet — add your first one to start logging.`;
       gridEl.appendChild(hint);
       return;
     }
 
-    customDrinks.forEach((item,idx)=>{
+    items.forEach((item,idx)=>{
       const card = document.createElement("div");
       card.className = "drink-card";
       card.innerHTML = `
-        <button class="edit-btn" title="Edit drink">✎</button>
+        <button class="edit-btn" title="Edit ${noun}">✎</button>
         <div class="add-plus">+</div>
         <div class="name">${escapeHtml(item.name)}</div>
         <div class="serving">${escapeHtml(item.serving)}</div>
         <div class="macros"><span><b>${item.cal}</b> kcal</span><span><b>${item.carb}</b>g carb</span></div>
         ${secondaryMacroLine(item) ? `<div class="macros" style="margin-top:3px;opacity:0.75;">${secondaryMacroLine(item)}</div>` : ""}
       `;
-      card.onclick = ()=> addToLog(item);
+      card.onclick = ()=> addToLog(item, activeKind);
       card.querySelector(".edit-btn").onclick = (e)=>{
         e.stopPropagation();
-        openEditModal(idx);
+        openEditModal(idx, activeKind);
       };
       gridEl.appendChild(card);
     });
   }
 
+  function setActiveKind(kind){
+    activeKind = kind;
+    document.getElementById("kindDrinkTab").classList.toggle("active", kind==="drink");
+    document.getElementById("kindFoodTab").classList.toggle("active", kind==="food");
+    document.getElementById("itemsSectionTitle").textContent = kind==="drink" ? "My drinks" : "My food";
+    renderGrid();
+  }
+  document.getElementById("kindDrinkTab").onclick = ()=> setActiveKind("drink");
+  document.getElementById("kindFoodTab").onclick = ()=> setActiveKind("food");
+
   function renderLog(){
     dateLabel.textContent = fmtDateLabel(currentDate);
     logEl.innerHTML = "";
     if(log.length === 0){
-      logEl.innerHTML = `<div class="empty-log">Nothing logged yet — tap a drink above to add it.</div>`;
+      logEl.innerHTML = `<div class="empty-log">Nothing logged yet — tap a drink or food above to add it.</div>`;
     } else {
       log.forEach(entry=>{
         const row = document.createElement("div");
@@ -633,7 +717,7 @@
         row.innerHTML = `
           <div class="dot" style="background:${entry.color||'var(--ink-soft)'}"></div>
           <div class="info">
-            <div class="n">${escapeHtml(entry.name)}</div>
+            <div class="n">${entry.kind==="food" ? "🍽 " : "🥤 "}${escapeHtml(entry.name)}</div>
             <div class="s">${escapeHtml(entry.serving)}</div>
           </div>
           <div class="qty-ctrl">
@@ -662,6 +746,7 @@
     const totalCal = Math.round(log.reduce((s,e)=>s+e.cal*e.qty,0));
     const totalCarb = r1(log.reduce((s,e)=>s+e.carb*e.qty,0));
     const totalSugar = r1(log.reduce((s,e)=>s+(e.sugar||0)*e.qty,0));
+    const totalFiber = r1(log.reduce((s,e)=>s+(e.fiber||0)*e.qty,0));
     const totalProtein = r1(log.reduce((s,e)=>s+(e.protein||0)*e.qty,0));
     const totalFat = r1(log.reduce((s,e)=>s+(e.fat||0)*e.qty,0));
     const totalSodium = Math.round(log.reduce((s,e)=>s+(e.sodium||0)*e.qty,0));
@@ -683,6 +768,7 @@
 
     setStat("carb", totalCarb, "g", "carb");
     setStat("sugar", totalSugar, "g", "sugar");
+    setStat("fiber", totalFiber, "g", "fiber");
     setStat("protein", totalProtein, "g", "protein");
     setStat("fat", totalFat, "g", "fat");
     setStat("sodium", totalSodium, "mg", "sodium");
@@ -703,14 +789,14 @@
     renderLog();
   }
 
-  function addToLog(item){
-    const existing = log.find(e=>e.name===item.name && e.serving===item.serving);
+  function addToLog(item, kind){
+    const existing = log.find(e=>e.name===item.name && e.serving===item.serving && e.kind===kind);
     if(existing){ existing.qty++; }
     else {
       log.push({
         name:item.name, serving:item.serving, cal:item.cal, carb:item.carb, sugar:item.sugar||0,
-        protein:item.protein||0, fat:item.fat||0, sodium:item.sodium||0, alcohol:item.alcohol||0,
-        qty:1, color: item.color || "var(--ink-soft)"
+        fiber:item.fiber||0, protein:item.protein||0, fat:item.fat||0, sodium:item.sodium||0,
+        alcohol:item.alcohol||0, qty:1, color: item.color || "var(--ink-soft)", kind: kind || "drink"
       });
     }
     commitLog();
@@ -720,6 +806,7 @@
   function fullMacroLine(entry){
     const q = entry.qty;
     const parts = [`${r1((entry.sugar||0)*q)}g sugar`];
+    if(entry.fiber) parts.push(`${r1(entry.fiber*q)}g fiber`);
     if(entry.protein) parts.push(`${r1(entry.protein*q)}g protein`);
     if(entry.fat) parts.push(`${r1(entry.fat*q)}g fat`);
     if(entry.sodium) parts.push(`${Math.round(entry.sodium*q)}mg sodium`);
@@ -730,6 +817,7 @@
   function secondaryMacroLine(item){
     const parts = [];
     if(item.sugar) parts.push(`<span><b>${item.sugar}</b>g sugar</span>`);
+    if(item.fiber) parts.push(`<span><b>${item.fiber}</b>g fiber</span>`);
     if(item.protein) parts.push(`<span><b>${item.protein}</b>g protein</span>`);
     if(item.fat) parts.push(`<span><b>${item.fat}</b>g fat</span>`);
     if(item.sodium) parts.push(`<span><b>${item.sodium}</b>mg Na</span>`);
@@ -742,6 +830,7 @@
     d.textContent = str;
     return d.innerHTML;
   }
+
 
   function showToast(msg){
     const t = document.getElementById("toast");
@@ -769,13 +858,14 @@
     return dt.getFullYear()+"-"+String(dt.getMonth()+1).padStart(2,"0")+"-"+String(dt.getDate()).padStart(2,"0");
   }
 
-  // ---------- Custom drink modal ----------
+  // ---------- Add/edit item modal (drinks & food share this) ----------
   const customOverlay = document.getElementById("customOverlay");
   const modeServingBtn = document.getElementById("modeServing");
   const modePer100Btn = document.getElementById("modePer100");
   const servingFields = document.getElementById("servingFields");
   const per100Fields = document.getElementById("per100Fields");
   let addMode = "serving";
+  let itemKind = "drink"; // which kind the modal is currently editing/adding: "drink" | "food"
 
   function setAddMode(mode){
     addMode = mode;
@@ -789,19 +879,31 @@
 
   const numVal = (id)=> parseFloat(document.getElementById(id).value) || 0;
 
-  // Full-serving mode: values are entered as totals already; ABV + volume derive alcohol in ml.
+  function applyKindUI(kind){
+    itemKind = kind;
+    document.querySelectorAll("#customOverlay .unit-label").forEach(el=>{
+      el.textContent = kind === "drink" ? el.dataset.ml : el.dataset.g;
+    });
+    document.getElementById("abvFieldWrap").style.display = kind==="drink" ? "" : "none";
+    document.getElementById("fiberFieldWrap").style.display = kind==="drink" ? "none" : "";
+    document.getElementById("abvFieldWrap100").style.display = kind==="drink" ? "" : "none";
+    document.getElementById("fiberFieldWrap100").style.display = kind==="drink" ? "none" : "";
+  }
+
+  // Full-serving mode: values are entered as totals already; ABV + volume derive alcohol in ml (drinks only).
   function updateServingPreview(){
+    const note = document.getElementById("servingPreview");
+    if(itemKind !== "drink"){ note.textContent = ""; return; }
     const vol = numVal("cVolume");
     const abv = numVal("cABV");
     const alcoholMl = r1(vol * (abv/100));
-    document.getElementById("servingPreview").textContent =
-      alcoholMl > 0 ? `= ${alcoholMl}ml pure alcohol in this serving` : "";
+    note.textContent = alcoholMl > 0 ? `= ${alcoholMl}ml pure alcohol in this serving` : "";
   }
   ["cVolume","cABV"].forEach(id=>{
     document.getElementById(id).addEventListener("input", updateServingPreview);
   });
 
-  // Per-100ml mode: values scale with volume; ABV is a concentration so it does NOT scale.
+  // Per-100 mode: values scale with volume/weight; ABV is a concentration so it does NOT scale.
   function updatePer100Preview(){
     const vol = numVal("cVolume100");
     const mult = vol/100;
@@ -811,24 +913,33 @@
     const protein = r1(numVal("cProtein100") * mult);
     const fat = r1(numVal("cFat100") * mult);
     const sodium = Math.round(numVal("cSodium100") * mult);
-    const abv = numVal("cABV100");
-    const alcoholMl = r1(vol * (abv/100));
+    let extra = "";
+    if(itemKind === "drink"){
+      const abv = numVal("cABV100");
+      const alcoholMl = r1(vol * (abv/100));
+      if(alcoholMl > 0) extra = ` · ${alcoholMl}ml alcohol`;
+    } else {
+      const fiber = r1(numVal("cFiber100") * mult);
+      if(fiber > 0) extra = ` · ${fiber}g fiber`;
+    }
     document.getElementById("per100Preview").textContent =
       `= ${cal} kcal · ${carb}g carb (${sugar}g sugar) · ${protein}g protein · ${fat}g fat · ${sodium}mg sodium` +
-      (alcoholMl > 0 ? ` · ${alcoholMl}ml alcohol` : "") + ` for this serving`;
+      extra + ` for this serving`;
   }
-  ["cVolume100","cCal100","cCarb100","cSugar100","cProtein100","cFat100","cSodium100","cABV100"].forEach(id=>{
+  ["cVolume100","cCal100","cCarb100","cSugar100","cProtein100","cFat100","cSodium100","cABV100","cFiber100"].forEach(id=>{
     document.getElementById(id).addEventListener("input", updatePer100Preview);
   });
 
-  const CUSTOM_FIELD_IDS = ["cName","cVolume","cServing","cCal","cCarb","cSugar","cProtein","cFat","cSodium","cABV",
-    "cVolume100","cServing100","cCal100","cCarb100","cSugar100","cProtein100","cFat100","cSodium100","cABV100"];
+  const CUSTOM_FIELD_IDS = ["cName","cVolume","cServing","cCal","cCarb","cSugar","cProtein","cFat","cSodium","cABV","cFiber",
+    "cVolume100","cServing100","cCal100","cCarb100","cSugar100","cProtein100","cFat100","cSodium100","cABV100","cFiber100"];
 
   function openCustomModal(){
+    const kind = activeKind;
+    applyKindUI(kind);
     editingIndex = null;
     CUSTOM_FIELD_IDS.forEach(id=> document.getElementById(id).value = "");
-    document.getElementById("customModalTitle").textContent = "Add your own drink";
-    document.getElementById("cSave").textContent = "Save drink";
+    document.getElementById("customModalTitle").textContent = kind==="drink" ? "Add your own drink" : "Add your own food";
+    document.getElementById("cSave").textContent = kind==="drink" ? "Save drink" : "Save food";
     document.getElementById("modeToggleWrap").style.display = "";
     document.getElementById("cDelete").style.display = "none";
     updateServingPreview();
@@ -841,15 +952,17 @@
   const modeToggleWrap = document.getElementById("modeToggleWrap");
   const cDeleteBtn = document.getElementById("cDelete");
 
-  function openEditModal(idx){
+  function openEditModal(idx, kind){
+    applyKindUI(kind);
     editingIndex = idx;
-    const item = customDrinks[idx];
+    const item = (kind==="drink" ? customDrinks : customFoods)[idx];
     CUSTOM_FIELD_IDS.forEach(id=> document.getElementById(id).value = "");
 
-    document.getElementById("customModalTitle").textContent = "Edit drink";
+    document.getElementById("customModalTitle").textContent = kind==="drink" ? "Edit drink" : "Edit food";
     document.getElementById("cSave").textContent = "Save changes";
     modeToggleWrap.style.display = "none";
     cDeleteBtn.style.display = "block";
+    cDeleteBtn.textContent = kind==="drink" ? "Delete this drink" : "Delete this food";
     setAddMode("serving");
 
     document.getElementById("cName").value = item.name;
@@ -861,8 +974,12 @@
     document.getElementById("cProtein").value = item.protein || "";
     document.getElementById("cFat").value = item.fat || "";
     document.getElementById("cSodium").value = item.sodium || "";
-    const abv = (item.volume && item.alcohol) ? r1((item.alcohol / item.volume) * 100) : "";
-    document.getElementById("cABV").value = abv;
+    if(kind === "drink"){
+      const abv = (item.volume && item.alcohol) ? r1((item.alcohol / item.volume) * 100) : "";
+      document.getElementById("cABV").value = abv;
+    } else {
+      document.getElementById("cFiber").value = item.fiber || "";
+    }
     updateServingPreview();
 
     customOverlay.classList.add("show");
@@ -871,22 +988,25 @@
   document.getElementById("cCancel").onclick = ()=> customOverlay.classList.remove("show");
   document.getElementById("cDelete").onclick = async ()=>{
     if(editingIndex === null) return;
-    customDrinks.splice(editingIndex, 1);
-    await saveCustom();
+    const arr = itemKind === "drink" ? customDrinks : customFoods;
+    const noun = itemKind === "drink" ? "Drink" : "Food";
+    arr.splice(editingIndex, 1);
+    await (itemKind === "drink" ? saveCustom() : saveFoods());
     customOverlay.classList.remove("show");
     renderGrid();
-    showToast("Drink deleted");
+    showToast(`${noun} deleted`);
   };
   document.getElementById("cSave").onclick = async ()=>{
     const name = document.getElementById("cName").value.trim();
     if(!name){ showToast("Give it a name first"); return; }
 
-    let serving, cal, carb, sugar, protein, fat, sodium, alcohol, volume;
+    const unit = itemKind === "drink" ? "ml" : "g";
+    let serving, cal, carb, sugar, protein, fat, sodium, alcohol = 0, fiber = 0, volume;
 
     if(addMode === "serving"){
       const vol = numVal("cVolume");
       const label = document.getElementById("cServing").value.trim();
-      serving = label || (vol ? `${vol}ml` : "1 serving");
+      serving = label || (vol ? `${vol}${unit}` : "1 serving");
       volume = vol;
       cal = Math.round(numVal("cCal"));
       carb = r1(numVal("cCarb"));
@@ -894,13 +1014,14 @@
       protein = r1(numVal("cProtein"));
       fat = r1(numVal("cFat"));
       sodium = Math.round(numVal("cSodium"));
-      alcohol = r1(vol * (numVal("cABV")/100));
+      if(itemKind === "drink"){ alcohol = r1(vol * (numVal("cABV")/100)); }
+      else { fiber = r1(numVal("cFiber")); }
     } else {
       const vol = numVal("cVolume100");
-      if(!vol){ showToast("Enter the serving volume in ml"); return; }
+      if(!vol){ showToast(`Enter the serving ${itemKind==="drink"?"volume":"weight"} in ${unit}`); return; }
       const mult = vol/100;
       const label = document.getElementById("cServing100").value.trim();
-      serving = label || `${vol}ml`;
+      serving = label || `${vol}${unit}`;
       volume = vol;
       cal = Math.round(numVal("cCal100") * mult);
       carb = r1(numVal("cCarb100") * mult);
@@ -908,28 +1029,32 @@
       protein = r1(numVal("cProtein100") * mult);
       fat = r1(numVal("cFat100") * mult);
       sodium = Math.round(numVal("cSodium100") * mult);
-      alcohol = r1(vol * (numVal("cABV100")/100));
+      if(itemKind === "drink"){ alcohol = r1(vol * (numVal("cABV100")/100)); }
+      else { fiber = r1(numVal("cFiber100") * mult); }
     }
 
     if(sugar > carb){ showToast("Sugar can't exceed carbs — check your numbers"); return; }
 
+    const arr = itemKind === "drink" ? customDrinks : customFoods;
+    const noun = itemKind === "drink" ? "Drink" : "Food";
+
     if(editingIndex !== null){
-      const color = customDrinks[editingIndex].color;
-      customDrinks[editingIndex] = {name, serving, cal, carb, sugar, protein, fat, sodium, alcohol, volume, color};
-      showToast("Drink updated");
+      const color = arr[editingIndex].color;
+      arr[editingIndex] = {name, serving, cal, carb, sugar, fiber, protein, fat, sodium, alcohol, volume, color};
+      showToast(`${noun} updated`);
     } else {
-      const color = PALETTE[customDrinks.length % PALETTE.length];
-      customDrinks.push({name, serving, cal, carb, sugar, protein, fat, sodium, alcohol, volume, color});
-      showToast("Drink saved");
+      const color = PALETTE[arr.length % PALETTE.length];
+      arr.push({name, serving, cal, carb, sugar, fiber, protein, fat, sodium, alcohol, volume, color});
+      showToast(`${noun} saved`);
     }
-    await saveCustom();
+    await (itemKind === "drink" ? saveCustom() : saveFoods());
     customOverlay.classList.remove("show");
     renderGrid();
   };
 
   // ---------- Targets modal ----------
   const targetOverlay = document.getElementById("targetOverlay");
-  const TARGET_FIELD_MAP = {tCal:"cal", tCarb:"carb", tSugar:"sugar", tProtein:"protein", tFat:"fat", tSodium:"sodium", tAlcohol:"alcohol"};
+  const TARGET_FIELD_MAP = {tCal:"cal", tCarb:"carb", tSugar:"sugar", tFiber:"fiber", tProtein:"protein", tFat:"fat", tSodium:"sodium", tAlcohol:"alcohol"};
   document.getElementById("settingsBtn").onclick = ()=>{
     Object.keys(TARGET_FIELD_MAP).forEach(id=>{
       document.getElementById(id).value = targets[TARGET_FIELD_MAP[id]];
@@ -980,11 +1105,12 @@
       const count = entries.reduce((s,e)=>s+e.qty,0);
       const carb = r1(entries.reduce((s,e)=>s+e.carb*e.qty,0));
       const sugar = r1(entries.reduce((s,e)=>s+(e.sugar||0)*e.qty,0));
+      const fiber = r1(entries.reduce((s,e)=>s+(e.fiber||0)*e.qty,0));
       const protein = r1(entries.reduce((s,e)=>s+(e.protein||0)*e.qty,0));
       const fat = r1(entries.reduce((s,e)=>s+(e.fat||0)*e.qty,0));
       const sodium = Math.round(entries.reduce((s,e)=>s+(e.sodium||0)*e.qty,0));
       const alcohol = r1(entries.reduce((s,e)=>s+(e.alcohol||0)*e.qty,0));
-      days.push({dstr, count, carb, sugar, protein, fat, sodium, alcohol});
+      days.push({dstr, count, carb, sugar, fiber, protein, fat, sodium, alcohol});
     }
     days.sort((a,b)=> b.dstr.localeCompare(a.dstr));
     allHistoryDays = days;
@@ -1025,6 +1151,7 @@
         <td>${d.count}</td>
         <td>${d.carb}</td>
         <td>${d.sugar}</td>
+        <td>${d.fiber}</td>
         <td>${d.protein}</td>
         <td>${d.fat}</td>
         <td>${d.sodium}</td>
@@ -1036,7 +1163,7 @@
       <table class="summary-table">
         <thead>
           <tr>
-            <th>Date</th><th># Drinks</th><th>Carbs (g)</th><th>Sugar (g)</th>
+            <th>Date</th><th># Items</th><th>Carbs (g)</th><th>Sugar (g)</th><th>Fiber (g)</th>
             <th>Protein (g)</th><th>Fat (g)</th><th>Sodium (mg)</th><th>Alcohol (ml)</th>
           </tr>
         </thead>
@@ -1047,6 +1174,7 @@
             <td>${sumCount}</td>
             <td>${sum("carb")}</td>
             <td>${sum("sugar")}</td>
+            <td>${sum("fiber")}</td>
             <td>${sum("protein")}</td>
             <td>${sum("fat")}</td>
             <td>${sum("sodium")}</td>
@@ -1057,6 +1185,7 @@
             <td>${avgCount}</td>
             <td>${avg("carb")}</td>
             <td>${avg("sugar")}</td>
+            <td>${avg("fiber")}</td>
             <td>${avg("protein")}</td>
             <td>${avg("fat")}</td>
             <td>${avg("sodium")}</td>
@@ -1086,18 +1215,18 @@
 
   function downloadHistoryCsv(){
     if(lastHistoryDays.length === 0){ showToast("Nothing to export yet"); return; }
-    const header = ["Date","Number of drinks","Total carbs (g)","Total sugar (g)","Total protein (g)","Total fat (g)","Total sodium (mg)","Total alcohol (ml)"];
+    const header = ["Date","Number of items","Total carbs (g)","Total sugar (g)","Total fiber (g)","Total protein (g)","Total fat (g)","Total sodium (mg)","Total alcohol (ml)"];
     const csvEscape = (v)=>{
       const s = String(v);
       return /[",\n]/.test(s) ? `"${s.replace(/"/g,'""')}"` : s;
     };
-    const rows = lastHistoryDays.map(d=>[d.dstr, d.count, d.carb, d.sugar, d.protein, d.fat, d.sodium, d.alcohol]);
+    const rows = lastHistoryDays.map(d=>[d.dstr, d.count, d.carb, d.sugar, d.fiber, d.protein, d.fat, d.sodium, d.alcohol]);
     const n = lastHistoryDays.length;
     const sum = (key)=> r1(lastHistoryDays.reduce((s,d)=>s+d[key],0));
     const sumCount = lastHistoryDays.reduce((s,d)=>s+d.count,0);
     const avg = (key)=> r1(sum(key)/n);
-    const sumRow = ["Sum", sumCount, sum("carb"), sum("sugar"), sum("protein"), sum("fat"), sum("sodium"), sum("alcohol")];
-    const avgRow = ["Daily average", r1(sumCount/n), avg("carb"), avg("sugar"), avg("protein"), avg("fat"), avg("sodium"), avg("alcohol")];
+    const sumRow = ["Sum", sumCount, sum("carb"), sum("sugar"), sum("fiber"), sum("protein"), sum("fat"), sum("sodium"), sum("alcohol")];
+    const avgRow = ["Daily average", r1(sumCount/n), avg("carb"), avg("sugar"), avg("fiber"), avg("protein"), avg("fat"), avg("sodium"), avg("alcohol")];
     const csv = [header, ...rows, sumRow, avgRow].map(r=> r.map(csvEscape).join(",")).join("\r\n");
     const blob = new Blob([csv], {type:"text/csv;charset=utf-8;"});
     const url = URL.createObjectURL(blob);
@@ -1165,6 +1294,7 @@
   function buildSyncPayload(){
     return {
       customDrinks,
+      customFoods,
       targets,
       logs: allLogsSnapshot(),
       updatedAt: Date.now()
@@ -1173,8 +1303,10 @@
 
   async function applyPayload(payload){
     customDrinks = payload.customDrinks || [];
+    customFoods = payload.customFoods || [];
     targets = Object.assign({}, DEFAULT_TARGETS, payload.targets || {});
     lsWrite("custom-drinks", JSON.stringify(customDrinks));
+    lsWrite("custom-foods", JSON.stringify(customFoods));
     lsWrite("targets", JSON.stringify(targets));
     lsListKeys("log:").forEach(k=> lsDelete(k));
     Object.keys(payload.logs || {}).forEach(dstr=>{
