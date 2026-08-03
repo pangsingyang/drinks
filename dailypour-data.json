@@ -522,6 +522,21 @@
         "qty": 3,
         "color": "var(--cream)",
         "kind": "food"
+      },
+      {
+        "name": "DTF 小笼包",
+        "serving": "5 pieces",
+        "cal": 305,
+        "carb": 30,
+        "sugar": 0,
+        "fiber": 0,
+        "protein": 15,
+        "fat": 12,
+        "sodium": 0,
+        "alcohol": 0,
+        "qty": 2,
+        "color": "var(--teal)",
+        "kind": "food"
       }
     ],
     "2026-07-28": [
@@ -676,5 +691,5 @@
       }
     ]
   },
-  "updatedAt": 1785740764582
+  "updatedAt": 1785740773838
 }
