@@ -552,6 +552,21 @@
         "qty": 1,
         "color": "var(--amber)",
         "kind": "drink"
+      },
+      {
+        "name": "Carlsberg Pilsner 0.0",
+        "serving": "330ml",
+        "cal": 64,
+        "carb": 13.9,
+        "sugar": 0.2,
+        "fiber": 0,
+        "protein": 1.1,
+        "fat": 0,
+        "sodium": 7,
+        "alcohol": 0.3,
+        "qty": 1,
+        "color": "var(--wine)",
+        "kind": "drink"
       }
     ],
     "2026-07-28": [
@@ -706,5 +721,5 @@
       }
     ]
   },
-  "updatedAt": 1785748102815
+  "updatedAt": 1785754286332
 }
