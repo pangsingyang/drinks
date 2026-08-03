@@ -537,6 +537,21 @@
         "qty": 3,
         "color": "var(--teal)",
         "kind": "food"
+      },
+      {
+        "name": "Heineken 0.0",
+        "serving": "330ml",
+        "cal": 69,
+        "carb": 15.8,
+        "sugar": 4.3,
+        "fiber": 0,
+        "protein": 0,
+        "fat": 0,
+        "sodium": 23,
+        "alcohol": 0,
+        "qty": 1,
+        "color": "var(--amber)",
+        "kind": "drink"
       }
     ],
     "2026-07-28": [
@@ -691,5 +706,5 @@
       }
     ]
   },
-  "updatedAt": 1785742518677
+  "updatedAt": 1785748102815
 }
