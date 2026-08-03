@@ -478,6 +478,23 @@
         "color": "var(--teal)"
       }
     ],
+    "2026-08-03": [
+      {
+        "name": "Asahi Super Dry",
+        "serving": "500ml",
+        "cal": 205,
+        "carb": 14,
+        "sugar": 0,
+        "fiber": 0,
+        "protein": 1.5,
+        "fat": 0,
+        "sodium": 0,
+        "alcohol": 25,
+        "qty": 2,
+        "color": "var(--teal)",
+        "kind": "drink"
+      }
+    ],
     "2026-07-28": [
       {
         "name": "Carlsberg Pilsner 0.0",
@@ -630,5 +647,5 @@
       }
     ]
   },
-  "updatedAt": 1785663470412
+  "updatedAt": 1785719562260
 }
