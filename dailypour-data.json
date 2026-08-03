@@ -552,6 +552,21 @@
         "qty": 1,
         "color": "var(--amber)",
         "kind": "drink"
+      },
+      {
+        "name": "Grouper",
+        "serving": "100g",
+        "cal": 118,
+        "carb": 0,
+        "sugar": 0,
+        "fiber": 0,
+        "protein": 25.5,
+        "fat": 1.3,
+        "sodium": 53,
+        "alcohol": 0,
+        "qty": 1,
+        "color": "var(--amber)",
+        "kind": "food"
       }
     ],
     "2026-07-28": [
@@ -706,5 +721,5 @@
       }
     ]
   },
-  "updatedAt": 1785754291514
+  "updatedAt": 1785754302530
 }
