@@ -366,6 +366,20 @@
       "protein": 4,
       "fat": 29.4,
       "sodium": 14
+    },
+    {
+      "name": "DTF 小笼包",
+      "serving": "5 pieces",
+      "cal": 305,
+      "carb": 30,
+      "sugar": 0,
+      "fiber": 0,
+      "protein": 15,
+      "fat": 12,
+      "sodium": 0,
+      "alcohol": 0,
+      "volume": 0,
+      "color": "var(--teal)"
     }
   ],
   "targets": {
@@ -662,5 +676,5 @@
       }
     ]
   },
-  "updatedAt": 1785740527200
+  "updatedAt": 1785740764582
 }
