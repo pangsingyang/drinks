@@ -534,7 +534,7 @@
         "fat": 12,
         "sodium": 0,
         "alcohol": 0,
-        "qty": 2,
+        "qty": 3,
         "color": "var(--teal)",
         "kind": "food"
       }
@@ -691,5 +691,5 @@
       }
     ]
   },
-  "updatedAt": 1785740773838
+  "updatedAt": 1785742518677
 }
