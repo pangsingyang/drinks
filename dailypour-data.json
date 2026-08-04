@@ -570,6 +570,21 @@
         "qty": 1,
         "color": "var(--ink)",
         "kind": "food"
+      },
+      {
+        "name": "Strong Zero",
+        "serving": "500ml",
+        "cal": 249,
+        "carb": 0,
+        "sugar": 0,
+        "fiber": 0,
+        "protein": 0,
+        "fat": 0,
+        "sodium": 0,
+        "alcohol": 45,
+        "qty": 2,
+        "color": "var(--wine)",
+        "kind": "drink"
       }
     ],
     "2026-07-28": [
@@ -782,5 +797,5 @@
       }
     ]
   },
-  "updatedAt": 1785812930278
+  "updatedAt": 1785823955929
 }
