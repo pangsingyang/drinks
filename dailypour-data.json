@@ -380,6 +380,20 @@
       "alcohol": 0,
       "volume": 0,
       "color": "var(--teal)"
+    },
+    {
+      "name": "EVOO",
+      "serving": "10ml",
+      "cal": 91,
+      "carb": 0,
+      "sugar": 0,
+      "fiber": 0,
+      "protein": 0,
+      "fat": 10,
+      "sodium": 0,
+      "alcohol": 0,
+      "volume": 10,
+      "color": "var(--ink)"
     }
   ],
   "targets": {
@@ -753,5 +767,5 @@
       }
     ]
   },
-  "updatedAt": 1785812851167
+  "updatedAt": 1785812926953
 }
