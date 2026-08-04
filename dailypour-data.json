@@ -393,64 +393,6 @@
     "alcohol": 20
   },
   "logs": {
-    "2026-08-02": [
-      {
-        "name": "Anchor",
-        "serving": "500ml",
-        "cal": 165,
-        "carb": 13,
-        "sugar": 0,
-        "protein": 2,
-        "fat": 0,
-        "sodium": 50,
-        "alcohol": 19,
-        "qty": 2,
-        "color": "var(--cream)"
-      },
-      {
-        "name": "Sapporo",
-        "serving": "500ml",
-        "cal": 210,
-        "carb": 16,
-        "sugar": 1.5,
-        "protein": 2.5,
-        "fat": 0,
-        "sodium": 0,
-        "alcohol": 25,
-        "qty": 2,
-        "color": "var(--ink)"
-      },
-      {
-        "name": "Strong Zero",
-        "serving": "500ml",
-        "cal": 249,
-        "carb": 0,
-        "sugar": 0,
-        "fiber": 0,
-        "protein": 0,
-        "fat": 0,
-        "sodium": 0,
-        "alcohol": 45,
-        "qty": 2,
-        "color": "var(--wine)",
-        "kind": "drink"
-      },
-      {
-        "name": "Heineken 0.0",
-        "serving": "330ml",
-        "cal": 69,
-        "carb": 15.8,
-        "sugar": 4.3,
-        "fiber": 0,
-        "protein": 0,
-        "fat": 0,
-        "sodium": 23,
-        "alcohol": 0,
-        "qty": 1,
-        "color": "var(--amber)",
-        "kind": "drink"
-      }
-    ],
     "2026-07-31": [
       {
         "name": "Heineken 0.0",
@@ -567,6 +509,23 @@
         "qty": 1,
         "color": "var(--teal)",
         "kind": "food"
+      }
+    ],
+    "2026-08-04": [
+      {
+        "name": "Heineken 0.0",
+        "serving": "330ml",
+        "cal": 69,
+        "carb": 15.8,
+        "sugar": 4.3,
+        "fiber": 0,
+        "protein": 0,
+        "fat": 0,
+        "sodium": 23,
+        "alcohol": 0,
+        "qty": 2,
+        "color": "var(--amber)",
+        "kind": "drink"
       }
     ],
     "2026-07-28": [
@@ -719,7 +678,65 @@
         "qty": 2,
         "color": "var(--ink)"
       }
+    ],
+    "2026-08-02": [
+      {
+        "name": "Anchor",
+        "serving": "500ml",
+        "cal": 165,
+        "carb": 13,
+        "sugar": 0,
+        "protein": 2,
+        "fat": 0,
+        "sodium": 50,
+        "alcohol": 19,
+        "qty": 2,
+        "color": "var(--cream)"
+      },
+      {
+        "name": "Sapporo",
+        "serving": "500ml",
+        "cal": 210,
+        "carb": 16,
+        "sugar": 1.5,
+        "protein": 2.5,
+        "fat": 0,
+        "sodium": 0,
+        "alcohol": 25,
+        "qty": 2,
+        "color": "var(--ink)"
+      },
+      {
+        "name": "Strong Zero",
+        "serving": "500ml",
+        "cal": 249,
+        "carb": 0,
+        "sugar": 0,
+        "fiber": 0,
+        "protein": 0,
+        "fat": 0,
+        "sodium": 0,
+        "alcohol": 45,
+        "qty": 2,
+        "color": "var(--wine)",
+        "kind": "drink"
+      },
+      {
+        "name": "Heineken 0.0",
+        "serving": "330ml",
+        "cal": 69,
+        "carb": 15.8,
+        "sugar": 4.3,
+        "fiber": 0,
+        "protein": 0,
+        "fat": 0,
+        "sodium": 23,
+        "alcohol": 0,
+        "qty": 1,
+        "color": "var(--amber)",
+        "kind": "drink"
+      }
     ]
   },
-  "updatedAt": 1785754317185
+  "updatedAt": 1785812795125
 }
