@@ -555,6 +555,21 @@
         "qty": 2,
         "color": "var(--cream)",
         "kind": "food"
+      },
+      {
+        "name": "EVOO",
+        "serving": "10ml",
+        "cal": 91,
+        "carb": 0,
+        "sugar": 0,
+        "fiber": 0,
+        "protein": 0,
+        "fat": 10,
+        "sodium": 0,
+        "alcohol": 0,
+        "qty": 1,
+        "color": "var(--ink)",
+        "kind": "food"
       }
     ],
     "2026-07-28": [
@@ -767,5 +782,5 @@
       }
     ]
   },
-  "updatedAt": 1785812926953
+  "updatedAt": 1785812930278
 }
