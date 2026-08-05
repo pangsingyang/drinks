@@ -540,6 +540,36 @@
         "qty": 1,
         "color": "var(--amber)",
         "kind": "drink"
+      },
+      {
+        "name": "Egg",
+        "serving": "1 egg",
+        "cal": 72,
+        "carb": 0.4,
+        "sugar": 0.2,
+        "fiber": 0,
+        "protein": 6.3,
+        "fat": 4.8,
+        "sodium": 71,
+        "alcohol": 0,
+        "qty": 2,
+        "color": "var(--cream)",
+        "kind": "food"
+      },
+      {
+        "name": "EVOO",
+        "serving": "10ml",
+        "cal": 91,
+        "carb": 0,
+        "sugar": 0,
+        "fiber": 0,
+        "protein": 0,
+        "fat": 10,
+        "sodium": 0,
+        "alcohol": 0,
+        "qty": 1,
+        "color": "var(--ink)",
+        "kind": "food"
       }
     ],
     "2026-08-04": [
@@ -844,5 +874,5 @@
       }
     ]
   },
-  "updatedAt": 1785890899133
+  "updatedAt": 1785890904999
 }
