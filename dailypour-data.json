@@ -329,8 +329,23 @@
         "qty": 4,
         "color": "var(--wine)",
         "kind": "drink"
+      },
+      {
+        "name": "Parmesan cheese",
+        "serving": "100g",
+        "cal": 431,
+        "carb": 4.1,
+        "sugar": 0.9,
+        "fiber": 0,
+        "protein": 38,
+        "fat": 29,
+        "sodium": 1529,
+        "alcohol": 0,
+        "qty": 1,
+        "color": "var(--wine)",
+        "kind": "food"
       }
     ]
   },
-  "updatedAt": 1785986441393
+  "updatedAt": 1785986495627
 }
