@@ -314,23 +314,7 @@
     "alcohol": 20
   },
   "logs": {
-    "2026-08-07": [
-      {
-        "name": "Anchor",
-        "serving": "490ml",
-        "cal": 162,
-        "carb": 12.7,
-        "sugar": 0,
-        "fiber": 0,
-        "protein": 2,
-        "fat": 0,
-        "sodium": 49,
-        "alcohol": 18.6,
-        "qty": 2,
-        "color": "var(--wine)",
-        "kind": "drink"
-      }
-    ],
+    "2026-08-07": [],
     "2026-08-06": [
       {
         "name": "Anchor",
@@ -349,5 +333,5 @@
       }
     ]
   },
-  "updatedAt": 1786094166003
+  "updatedAt": 1786094172795
 }
