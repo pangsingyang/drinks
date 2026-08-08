@@ -421,8 +421,23 @@
         "qty": 1,
         "color": "var(--teal)",
         "kind": "drink"
+      },
+      {
+        "name": "Egg",
+        "serving": "1 egg",
+        "cal": 72,
+        "carb": 0.4,
+        "sugar": 0.2,
+        "fiber": 0,
+        "protein": 6.3,
+        "fat": 4.8,
+        "sodium": 71,
+        "alcohol": 0,
+        "qty": 2,
+        "color": "var(--cream)",
+        "kind": "food"
       }
     ]
   },
-  "updatedAt": 1786151970465
+  "updatedAt": 1786152189935
 }
