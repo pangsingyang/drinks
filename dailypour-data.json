@@ -343,6 +343,20 @@
       "alcohol": 0,
       "volume": 10,
       "color": "var(--teal)"
+    },
+    {
+      "name": "Sourdough Bread slice",
+      "serving": "50g",
+      "cal": 130,
+      "carb": 25,
+      "sugar": 0.5,
+      "fiber": 0,
+      "protein": 4,
+      "fat": 0.5,
+      "sodium": 0,
+      "alcohol": 0,
+      "volume": 50,
+      "color": "var(--ink)"
     }
   ],
   "targets": {
@@ -468,5 +482,5 @@
       }
     ]
   },
-  "updatedAt": 1786152931618
+  "updatedAt": 1786153048897
 }
