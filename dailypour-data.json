@@ -479,8 +479,23 @@
         "qty": 1,
         "color": "var(--teal)",
         "kind": "food"
+      },
+      {
+        "name": "Sourdough Bread slice",
+        "serving": "50g",
+        "cal": 130,
+        "carb": 25,
+        "sugar": 0.5,
+        "fiber": 0,
+        "protein": 4,
+        "fat": 0.5,
+        "sodium": 0,
+        "alcohol": 0,
+        "qty": 1,
+        "color": "var(--ink)",
+        "kind": "food"
       }
     ]
   },
-  "updatedAt": 1786153048897
+  "updatedAt": 1786153055081
 }
