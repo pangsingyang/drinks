@@ -329,6 +329,20 @@
       "protein": 4,
       "fat": 29.4,
       "sodium": 14
+    },
+    {
+      "name": "Iliada EVOO",
+      "serving": "10g",
+      "cal": 82,
+      "carb": 0,
+      "sugar": 0,
+      "fiber": 0,
+      "protein": 0,
+      "fat": 9.1,
+      "sodium": 0,
+      "alcohol": 0,
+      "volume": 10,
+      "color": "var(--teal)"
     }
   ],
   "targets": {
@@ -439,5 +453,5 @@
       }
     ]
   },
-  "updatedAt": 1786152189935
+  "updatedAt": 1786152923773
 }
