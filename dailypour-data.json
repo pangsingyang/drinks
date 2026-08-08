@@ -27,6 +27,20 @@
       "alcohol": 0,
       "volume": 330,
       "color": "var(--amber)"
+    },
+    {
+      "name": "Asahi",
+      "serving": "500ml",
+      "cal": 205,
+      "carb": 14,
+      "sugar": 0,
+      "fiber": 0,
+      "protein": 1.5,
+      "fat": 0,
+      "sodium": 0,
+      "alcohol": 25,
+      "volume": 500,
+      "color": "var(--teal)"
     }
   ],
   "customFoods": [
@@ -395,5 +409,5 @@
       }
     ]
   },
-  "updatedAt": 1786145762276
+  "updatedAt": 1786151964856
 }
