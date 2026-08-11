@@ -598,6 +598,21 @@
         "qty": 2,
         "color": "var(--ink)",
         "kind": "drink"
+      },
+      {
+        "name": "Potato",
+        "serving": "100g",
+        "cal": 93,
+        "carb": 21,
+        "sugar": 1.2,
+        "fiber": 2.2,
+        "protein": 2.5,
+        "fat": 0.1,
+        "sodium": 6,
+        "alcohol": 0,
+        "qty": 1,
+        "color": "var(--teal)",
+        "kind": "food"
       }
     ],
     "2026-08-10": [
@@ -757,5 +772,5 @@
       }
     ]
   },
-  "updatedAt": 1786449497641
+  "updatedAt": 1786449519246
 }
