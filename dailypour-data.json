@@ -628,6 +628,21 @@
         "qty": 1,
         "color": "var(--amber)",
         "kind": "food"
+      },
+      {
+        "name": "Chicken breast",
+        "serving": "100g",
+        "cal": 165,
+        "carb": 0,
+        "sugar": 0,
+        "fiber": 0,
+        "protein": 31,
+        "fat": 3.6,
+        "sodium": 74,
+        "alcohol": 0,
+        "qty": 1,
+        "color": "var(--wine)",
+        "kind": "food"
       }
     ],
     "2026-08-10": [
@@ -787,5 +802,5 @@
       }
     ]
   },
-  "updatedAt": 1786449532897
+  "updatedAt": 1786449543163
 }
