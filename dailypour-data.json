@@ -41,6 +41,20 @@
       "alcohol": 25,
       "volume": 500,
       "color": "var(--teal)"
+    },
+    {
+      "name": "711 Strong Zero",
+      "serving": "500ml",
+      "cal": 265,
+      "carb": 3.5,
+      "sugar": 3.5,
+      "fiber": 0,
+      "protein": 0,
+      "fat": 0,
+      "sodium": 200,
+      "alcohol": 45,
+      "volume": 500,
+      "color": "var(--ink)"
     }
   ],
   "customFoods": [
@@ -728,5 +742,5 @@
       }
     ]
   },
-  "updatedAt": 1786421545101
+  "updatedAt": 1786429450096
 }
