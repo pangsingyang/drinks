@@ -552,21 +552,6 @@
         "qty": 1,
         "color": "var(--cream)",
         "kind": "food"
-      },
-      {
-        "name": "Pasta",
-        "serving": "100g",
-        "cal": 131,
-        "carb": 25,
-        "sugar": 0.6,
-        "fiber": 1.8,
-        "protein": 5,
-        "fat": 1.1,
-        "sodium": 1,
-        "alcohol": 0,
-        "qty": 1,
-        "color": "var(--cream)",
-        "kind": "food"
       }
     ],
     "2026-08-11": [
@@ -1032,5 +1017,5 @@
       }
     ]
   },
-  "updatedAt": 1786627932625
+  "updatedAt": 1786627937282
 }
