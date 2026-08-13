@@ -491,6 +491,21 @@
         "qty": 1,
         "color": "var(--wine)",
         "kind": "food"
+      },
+      {
+        "name": "Asahi",
+        "serving": "500ml",
+        "cal": 205,
+        "carb": 14,
+        "sugar": 0,
+        "fiber": 0,
+        "protein": 1.5,
+        "fat": 0,
+        "sodium": 0,
+        "alcohol": 25,
+        "qty": 1,
+        "color": "var(--teal)",
+        "kind": "drink"
       }
     ],
     "2026-08-11": [
@@ -956,5 +971,5 @@
       }
     ]
   },
-  "updatedAt": 1786610037964
+  "updatedAt": 1786610066373
 }
