@@ -476,6 +476,21 @@
         "qty": 2,
         "color": "var(--cream)",
         "kind": "food"
+      },
+      {
+        "name": "Firm tofu",
+        "serving": "100g",
+        "cal": 144,
+        "carb": 2.8,
+        "sugar": 0.6,
+        "fiber": 2.3,
+        "protein": 15.7,
+        "fat": 8.7,
+        "sodium": 14,
+        "alcohol": 0,
+        "qty": 1,
+        "color": "var(--wine)",
+        "kind": "food"
       }
     ],
     "2026-08-11": [
@@ -941,5 +956,5 @@
       }
     ]
   },
-  "updatedAt": 1786591202240
+  "updatedAt": 1786610037964
 }
