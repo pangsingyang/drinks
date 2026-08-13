@@ -125,17 +125,18 @@
       "color": "var(--cream)"
     },
     {
-      "color": "var(--wine)",
       "name": "Firm tofu",
-      "serving": "100g",
-      "volume": 100,
-      "cal": 144,
-      "carb": 2.8,
-      "sugar": 0.6,
-      "fiber": 2.3,
-      "protein": 15.7,
-      "fat": 8.7,
-      "sodium": 14
+      "serving": "50g",
+      "cal": 72,
+      "carb": 1.4,
+      "sugar": 0.3,
+      "fiber": 1.2,
+      "protein": 8,
+      "fat": 4.3,
+      "sodium": 7,
+      "alcohol": 0,
+      "volume": 50,
+      "color": "var(--wine)"
     },
     {
       "color": "var(--amber)",
@@ -1016,5 +1017,5 @@
       }
     ]
   },
-  "updatedAt": 1786627877000
+  "updatedAt": 1786627926302
 }
