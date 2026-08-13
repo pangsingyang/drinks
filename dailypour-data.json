@@ -371,6 +371,20 @@
       "alcohol": 0,
       "volume": 50,
       "color": "var(--ink)"
+    },
+    {
+      "name": "Red lentils",
+      "serving": "50g",
+      "cal": 175,
+      "carb": 31,
+      "sugar": 0,
+      "fiber": 5,
+      "protein": 12,
+      "fat": 0,
+      "sodium": 3,
+      "alcohol": 0,
+      "volume": 50,
+      "color": "var(--cream)"
     }
   ],
   "targets": {
@@ -986,5 +1000,5 @@
       }
     ]
   },
-  "updatedAt": 1786627663351
+  "updatedAt": 1786627792799
 }
