@@ -111,17 +111,18 @@
       "sodium": 59
     },
     {
-      "color": "var(--cream)",
       "name": "Edamame",
-      "serving": "100g",
-      "volume": 100,
-      "cal": 121,
-      "carb": 10,
-      "sugar": 2.2,
-      "fiber": 5,
-      "protein": 12,
-      "fat": 5,
-      "sodium": 6
+      "serving": "50g",
+      "cal": 60,
+      "carb": 5,
+      "sugar": 1.1,
+      "fiber": 2.5,
+      "protein": 6,
+      "fat": 2.5,
+      "sodium": 3,
+      "alcohol": 0,
+      "volume": 50,
+      "color": "var(--cream)"
     },
     {
       "color": "var(--wine)",
@@ -1015,5 +1016,5 @@
       }
     ]
   },
-  "updatedAt": 1786627797665
+  "updatedAt": 1786627877000
 }
