@@ -705,6 +705,21 @@
         "qty": 2,
         "color": "var(--cream)",
         "kind": "drink"
+      },
+      {
+        "name": "Anchor",
+        "serving": "490ml",
+        "cal": 162,
+        "carb": 12.7,
+        "sugar": 0,
+        "fiber": 0,
+        "protein": 2,
+        "fat": 0,
+        "sodium": 49,
+        "alcohol": 18.6,
+        "qty": 2,
+        "color": "var(--wine)",
+        "kind": "drink"
       }
     ],
     "2026-08-10": [
@@ -1048,5 +1063,5 @@
       }
     ]
   },
-  "updatedAt": 1786696156842
+  "updatedAt": 1786696191059
 }
