@@ -750,6 +750,21 @@
         "qty": 1,
         "color": "var(--teal)",
         "kind": "food"
+      },
+      {
+        "name": "Salmon",
+        "serving": "100g",
+        "cal": 206,
+        "carb": 0,
+        "sugar": 0,
+        "fiber": 0,
+        "protein": 22.1,
+        "fat": 12.4,
+        "sodium": 61,
+        "alcohol": 0,
+        "qty": 1,
+        "color": "var(--teal)",
+        "kind": "food"
       }
     ],
     "2026-08-10": [
@@ -1093,5 +1108,5 @@
       }
     ]
   },
-  "updatedAt": 1786711759982
+  "updatedAt": 1786711763944
 }
