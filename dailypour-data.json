@@ -1213,7 +1213,39 @@
         "color": "var(--ink)",
         "kind": "food"
       }
+    ],
+    "2026-08-16": [
+      {
+        "name": "Asahi",
+        "serving": "500ml",
+        "cal": 205,
+        "carb": 14,
+        "sugar": 0,
+        "fiber": 0,
+        "protein": 1.5,
+        "fat": 0,
+        "sodium": 0,
+        "alcohol": 25,
+        "qty": 2,
+        "color": "var(--teal)",
+        "kind": "drink"
+      },
+      {
+        "name": "Heineken 0.0",
+        "serving": "330ml",
+        "cal": 69,
+        "carb": 15.8,
+        "sugar": 6.3,
+        "fiber": 0,
+        "protein": 0,
+        "fat": 0,
+        "sodium": 0,
+        "alcohol": 0,
+        "qty": 1,
+        "color": "var(--amber)",
+        "kind": "drink"
+      }
     ]
   },
-  "updatedAt": 1786769217624
+  "updatedAt": 1786842333218
 }
