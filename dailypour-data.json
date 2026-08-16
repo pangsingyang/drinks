@@ -861,6 +861,23 @@
         "kind": "drink"
       }
     ],
+    "2026-08-17": [
+      {
+        "name": "Red lentils",
+        "serving": "50g",
+        "cal": 175,
+        "carb": 31,
+        "sugar": 0,
+        "fiber": 5,
+        "protein": 12,
+        "fat": 0,
+        "sodium": 3,
+        "alcohol": 0,
+        "qty": 1,
+        "color": "var(--cream)",
+        "kind": "food"
+      }
+    ],
     "2026-08-09": [
       {
         "name": "Heineken 0.0",
@@ -1277,5 +1294,5 @@
       }
     ]
   },
-  "updatedAt": 1786921695755
+  "updatedAt": 1786923143226
 }
