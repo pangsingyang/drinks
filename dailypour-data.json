@@ -404,14 +404,14 @@
     }
   ],
   "targets": {
-    "cal": 2000,
-    "carb": 135,
-    "sugar": 25,
+    "cal": 1900,
+    "carb": 115,
+    "sugar": 5,
     "fiber": 25,
-    "protein": 105,
-    "fat": 70,
+    "protein": 115,
+    "fat": 88,
     "sodium": 2300,
-    "alcohol": 20
+    "alcohol": 40
   },
   "logs": {
     "2026-08-07": [
@@ -1277,5 +1277,5 @@
       }
     ]
   },
-  "updatedAt": 1786871707176
+  "updatedAt": 1786921635963
 }
