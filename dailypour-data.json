@@ -1244,8 +1244,23 @@
         "qty": 1,
         "color": "var(--amber)",
         "kind": "drink"
+      },
+      {
+        "name": "711 Strong Zero",
+        "serving": "500ml",
+        "cal": 265,
+        "carb": 3.5,
+        "sugar": 3.5,
+        "fiber": 0,
+        "protein": 0,
+        "fat": 0,
+        "sodium": 200,
+        "alcohol": 45,
+        "qty": 1,
+        "color": "var(--ink)",
+        "kind": "drink"
       }
     ]
   },
-  "updatedAt": 1786842333218
+  "updatedAt": 1786849495639
 }
