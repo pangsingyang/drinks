@@ -861,7 +861,23 @@
         "kind": "drink"
       }
     ],
-    "2026-08-17": [],
+    "2026-08-17": [
+      {
+        "name": "Asahi",
+        "serving": "500ml",
+        "cal": 205,
+        "carb": 14,
+        "sugar": 0,
+        "fiber": 0,
+        "protein": 1.5,
+        "fat": 0,
+        "sodium": 0,
+        "alcohol": 25,
+        "qty": 1,
+        "color": "var(--teal)",
+        "kind": "drink"
+      }
+    ],
     "2026-08-09": [
       {
         "name": "Heineken 0.0",
@@ -1278,5 +1294,5 @@
       }
     ]
   },
-  "updatedAt": 1786923146112
+  "updatedAt": 1786925074826
 }
