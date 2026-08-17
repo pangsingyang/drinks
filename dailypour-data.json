@@ -950,6 +950,21 @@
         "qty": 1,
         "color": "var(--teal)",
         "kind": "food"
+      },
+      {
+        "name": "Red lentils",
+        "serving": "50g",
+        "cal": 175,
+        "carb": 31,
+        "sugar": 0,
+        "fiber": 5,
+        "protein": 12,
+        "fat": 0,
+        "sodium": 3,
+        "alcohol": 0,
+        "qty": 1,
+        "color": "var(--cream)",
+        "kind": "food"
       }
     ],
     "2026-08-09": [
@@ -1368,5 +1383,5 @@
       }
     ]
   },
-  "updatedAt": 1786933004134
+  "updatedAt": 1786933021356
 }
