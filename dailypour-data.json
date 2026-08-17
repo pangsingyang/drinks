@@ -935,6 +935,36 @@
         "qty": 1,
         "color": "var(--ink)",
         "kind": "food"
+      },
+      {
+        "name": "Egg",
+        "serving": "1 egg",
+        "cal": 72,
+        "carb": 0.4,
+        "sugar": 0.2,
+        "fiber": 0,
+        "protein": 6.3,
+        "fat": 4.8,
+        "sodium": 71,
+        "alcohol": 0,
+        "qty": 2,
+        "color": "var(--cream)",
+        "kind": "food"
+      },
+      {
+        "name": "Iliada EVOO",
+        "serving": "10g",
+        "cal": 82,
+        "carb": 0,
+        "sugar": 0,
+        "fiber": 0,
+        "protein": 0,
+        "fat": 9.1,
+        "sodium": 0,
+        "alcohol": 0,
+        "qty": 1,
+        "color": "var(--teal)",
+        "kind": "food"
       }
     ],
     "2026-08-09": [
@@ -1353,5 +1383,5 @@
       }
     ]
   },
-  "updatedAt": 1786929901966
+  "updatedAt": 1786929905413
 }
