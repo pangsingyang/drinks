@@ -920,6 +920,21 @@
         "qty": 3,
         "color": "var(--wine)",
         "kind": "food"
+      },
+      {
+        "name": "Squid",
+        "serving": "100g",
+        "cal": 92,
+        "carb": 3.1,
+        "sugar": 0,
+        "fiber": 0,
+        "protein": 15.6,
+        "fat": 1.4,
+        "sodium": 44,
+        "alcohol": 0,
+        "qty": 1,
+        "color": "var(--ink)",
+        "kind": "food"
       }
     ],
     "2026-08-09": [
@@ -1338,5 +1353,5 @@
       }
     ]
   },
-  "updatedAt": 1786929898141
+  "updatedAt": 1786929901966
 }
