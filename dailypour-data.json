@@ -69,6 +69,20 @@
       "alcohol": 25,
       "volume": 500,
       "color": "var(--cream)"
+    },
+    {
+      "name": "Anchor Strong",
+      "serving": "500ml",
+      "cal": 265,
+      "carb": 17,
+      "sugar": 0,
+      "fiber": 0,
+      "protein": 2,
+      "fat": 0,
+      "sodium": 0,
+      "alcohol": 40,
+      "volume": 500,
+      "color": "var(--wine)"
     }
   ],
   "customFoods": [
@@ -1294,5 +1308,5 @@
       }
     ]
   },
-  "updatedAt": 1786925079495
+  "updatedAt": 1786925862568
 }
