@@ -1288,6 +1288,21 @@
         "qty": 1,
         "color": "var(--cream)",
         "kind": "food"
+      },
+      {
+        "name": "Sapporo",
+        "serving": "500ml",
+        "cal": 200,
+        "carb": 12.5,
+        "sugar": 2.5,
+        "fiber": 0,
+        "protein": 2.5,
+        "fat": 0,
+        "sodium": 0,
+        "alcohol": 25,
+        "qty": 1,
+        "color": "var(--cream)",
+        "kind": "drink"
       }
     ],
     "2026-08-08": [
@@ -1430,5 +1445,5 @@
       }
     ]
   },
-  "updatedAt": 1787038453004
+  "updatedAt": 1787038458857
 }
