@@ -1245,21 +1245,6 @@
     ],
     "2026-08-18": [
       {
-        "name": "Sapporo",
-        "serving": "500ml",
-        "cal": 200,
-        "carb": 12.5,
-        "sugar": 2.5,
-        "fiber": 0,
-        "protein": 2.5,
-        "fat": 0,
-        "sodium": 0,
-        "alcohol": 25,
-        "qty": 3,
-        "color": "var(--cream)",
-        "kind": "drink"
-      },
-      {
         "name": "Iliada EVOO",
         "serving": "10g",
         "cal": 82,
@@ -1445,5 +1430,5 @@
       }
     ]
   },
-  "updatedAt": 1787023191149
+  "updatedAt": 1787038453004
 }
