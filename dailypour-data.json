@@ -1243,6 +1243,23 @@
         "kind": "food"
       }
     ],
+    "2026-08-18": [
+      {
+        "name": "Sapporo",
+        "serving": "500ml",
+        "cal": 200,
+        "carb": 12.5,
+        "sugar": 2.5,
+        "fiber": 0,
+        "protein": 2.5,
+        "fat": 0,
+        "sodium": 0,
+        "alcohol": 25,
+        "qty": 3,
+        "color": "var(--cream)",
+        "kind": "drink"
+      }
+    ],
     "2026-08-08": [
       {
         "name": "Anchor",
@@ -1383,5 +1400,5 @@
       }
     ]
   },
-  "updatedAt": 1786933021356
+  "updatedAt": 1787023148737
 }
