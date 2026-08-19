@@ -1243,6 +1243,23 @@
         "kind": "food"
       }
     ],
+    "2026-08-19": [
+      {
+        "name": "Anchor Strong",
+        "serving": "500ml",
+        "cal": 265,
+        "carb": 17,
+        "sugar": 0,
+        "fiber": 0,
+        "protein": 2,
+        "fat": 0,
+        "sodium": 0,
+        "alcohol": 40,
+        "qty": 2,
+        "color": "var(--wine)",
+        "kind": "drink"
+      }
+    ],
     "2026-08-18": [
       {
         "name": "Iliada EVOO",
@@ -1490,5 +1507,5 @@
       }
     ]
   },
-  "updatedAt": 1787063235422
+  "updatedAt": 1787107343774
 }
