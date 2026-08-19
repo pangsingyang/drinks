@@ -1272,7 +1272,7 @@
         "fat": 0,
         "sodium": 0,
         "alcohol": 40,
-        "qty": 2,
+        "qty": 3,
         "color": "var(--wine)",
         "kind": "drink"
       },
@@ -1317,7 +1317,7 @@
         "fat": 0,
         "sodium": 0,
         "alcohol": 25,
-        "qty": 6,
+        "qty": 4,
         "color": "var(--cream)",
         "kind": "drink"
       }
@@ -1569,5 +1569,5 @@
       }
     ]
   },
-  "updatedAt": 1787146160161
+  "updatedAt": 1787146168275
 }
