@@ -87,17 +87,18 @@
   ],
   "customFoods": [
     {
-      "color": "var(--wine)",
       "name": "Chicken breast",
-      "serving": "100g",
-      "volume": 100,
-      "cal": 165,
+      "serving": "50g",
+      "cal": 83,
       "carb": 0,
       "sugar": 0,
       "fiber": 0,
-      "protein": 31,
-      "fat": 3.6,
-      "sodium": 74
+      "protein": 15.5,
+      "fat": 1.8,
+      "sodium": 37,
+      "alcohol": 0,
+      "volume": 50,
+      "color": "var(--wine)"
     },
     {
       "color": "var(--amber)",
@@ -1260,6 +1261,21 @@
         "qty": 2,
         "color": "var(--wine)",
         "kind": "drink"
+      },
+      {
+        "name": "Chicken breast",
+        "serving": "50g",
+        "cal": 83,
+        "carb": 0,
+        "sugar": 0,
+        "fiber": 0,
+        "protein": 15.5,
+        "fat": 1.8,
+        "sodium": 37,
+        "alcohol": 0,
+        "qty": 3,
+        "color": "var(--wine)",
+        "kind": "food"
       }
     ],
     "2026-08-18": [
@@ -1509,5 +1525,5 @@
       }
     ]
   },
-  "updatedAt": 1787110888274
+  "updatedAt": 1787110948867
 }
