@@ -232,17 +232,18 @@
       "sodium": 1529
     },
     {
-      "color": "var(--amber)",
       "name": "Mozzarella cheese",
-      "serving": "100g",
-      "volume": 100,
-      "cal": 254,
-      "carb": 2.8,
-      "sugar": 1,
+      "serving": "10g",
+      "cal": 25,
+      "carb": 0.3,
+      "sugar": 0.1,
       "fiber": 0,
-      "protein": 24,
-      "fat": 16,
-      "sodium": 486
+      "protein": 2.4,
+      "fat": 1.6,
+      "sodium": 49,
+      "alcohol": 0,
+      "volume": 10,
+      "color": "var(--amber)"
     },
     {
       "name": "Salmon",
@@ -1508,5 +1509,5 @@
       }
     ]
   },
-  "updatedAt": 1787110798956
+  "updatedAt": 1787110844525
 }
