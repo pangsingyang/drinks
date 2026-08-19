@@ -245,17 +245,18 @@
       "sodium": 486
     },
     {
-      "color": "var(--teal)",
       "name": "Salmon",
-      "serving": "100g",
-      "volume": 100,
-      "cal": 206,
+      "serving": "50g",
+      "cal": 103,
       "carb": 0,
       "sugar": 0,
       "fiber": 0,
-      "protein": 22.1,
-      "fat": 12.4,
-      "sodium": 61
+      "protein": 11,
+      "fat": 6.1,
+      "sodium": 30,
+      "alcohol": 0,
+      "volume": 50,
+      "color": "var(--teal)"
     },
     {
       "color": "var(--ink)",
@@ -1507,5 +1508,5 @@
       }
     ]
   },
-  "updatedAt": 1787107343774
+  "updatedAt": 1787110798956
 }
