@@ -432,6 +432,20 @@
       "alcohol": 0,
       "volume": 100,
       "color": "var(--wine)"
+    },
+    {
+      "name": "Spanish Mackerel",
+      "serving": "100g",
+      "cal": 158,
+      "carb": 0,
+      "sugar": 0,
+      "fiber": 0,
+      "protein": 23.6,
+      "fat": 6.3,
+      "sodium": 59,
+      "alcohol": 0,
+      "volume": 100,
+      "color": "var(--amber)"
     }
   ],
   "targets": {
@@ -1631,5 +1645,5 @@
       }
     ]
   },
-  "updatedAt": 1787211849556
+  "updatedAt": 1787212036691
 }
