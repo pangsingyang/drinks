@@ -506,6 +506,21 @@
         "qty": 4,
         "color": "var(--cream)",
         "kind": "drink"
+      },
+      {
+        "name": "Pork loin",
+        "serving": "100g",
+        "cal": 147,
+        "carb": 0,
+        "sugar": 0,
+        "fiber": 0,
+        "protein": 26.5,
+        "fat": 4.3,
+        "sodium": 55,
+        "alcohol": 0,
+        "qty": 1,
+        "color": "var(--amber)",
+        "kind": "food"
       }
     ],
     "2026-08-20": [
@@ -1692,5 +1707,5 @@
       }
     ]
   },
-  "updatedAt": 1787286642710
+  "updatedAt": 1787286773882
 }
