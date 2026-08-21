@@ -521,6 +521,36 @@
         "qty": 1,
         "color": "var(--teal)",
         "kind": "food"
+      },
+      {
+        "name": "Anchor Strong",
+        "serving": "500ml",
+        "cal": 265,
+        "carb": 17,
+        "sugar": 0,
+        "fiber": 0,
+        "protein": 2,
+        "fat": 0,
+        "sodium": 0,
+        "alcohol": 40,
+        "qty": 1,
+        "color": "var(--wine)",
+        "kind": "drink"
+      },
+      {
+        "name": "711 Strong Zero",
+        "serving": "500ml",
+        "cal": 265,
+        "carb": 3.5,
+        "sugar": 3.5,
+        "fiber": 0,
+        "protein": 0,
+        "fat": 0,
+        "sodium": 200,
+        "alcohol": 45,
+        "qty": 2,
+        "color": "var(--ink)",
+        "kind": "drink"
       }
     ],
     "2026-08-20": [
@@ -1707,5 +1737,5 @@
       }
     ]
   },
-  "updatedAt": 1787286780722
+  "updatedAt": 1787319233505
 }
