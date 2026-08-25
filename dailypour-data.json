@@ -1505,6 +1505,21 @@
         "qty": 1,
         "color": "var(--wine)",
         "kind": "drink"
+      },
+      {
+        "name": "Chicken thigh",
+        "serving": "100g",
+        "cal": 209,
+        "carb": 0,
+        "sugar": 0,
+        "fiber": 0,
+        "protein": 26,
+        "fat": 10.9,
+        "sodium": 90,
+        "alcohol": 0,
+        "qty": 3,
+        "color": "var(--amber)",
+        "kind": "food"
       }
     ],
     "2026-08-19": [
@@ -1953,5 +1968,5 @@
       }
     ]
   },
-  "updatedAt": 1787635918760
+  "updatedAt": 1787635935797
 }
