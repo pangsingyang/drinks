@@ -1520,6 +1520,21 @@
         "qty": 3,
         "color": "var(--amber)",
         "kind": "food"
+      },
+      {
+        "name": "Ribeye steak",
+        "serving": "100g",
+        "cal": 271,
+        "carb": 0,
+        "sugar": 0,
+        "fiber": 0,
+        "protein": 25,
+        "fat": 19,
+        "sodium": 59,
+        "alcohol": 0,
+        "qty": 1,
+        "color": "var(--ink)",
+        "kind": "food"
       }
     ],
     "2026-08-19": [
@@ -1968,5 +1983,5 @@
       }
     ]
   },
-  "updatedAt": 1787650423816
+  "updatedAt": 1787656757237
 }
