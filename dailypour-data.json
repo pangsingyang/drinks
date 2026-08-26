@@ -1596,6 +1596,21 @@
         "qty": 2,
         "color": "var(--wine)",
         "kind": "food"
+      },
+      {
+        "name": "Anchor Strong",
+        "serving": "500ml",
+        "cal": 265,
+        "carb": 17,
+        "sugar": 0,
+        "fiber": 0,
+        "protein": 2,
+        "fat": 0,
+        "sodium": 0,
+        "alcohol": 40,
+        "qty": 1,
+        "color": "var(--wine)",
+        "kind": "drink"
       }
     ],
     "2026-08-19": [
@@ -2044,5 +2059,5 @@
       }
     ]
   },
-  "updatedAt": 1787734982256
+  "updatedAt": 1787737217075
 }
