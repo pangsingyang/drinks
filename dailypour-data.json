@@ -1566,6 +1566,21 @@
         "qty": 2,
         "color": "var(--ink)",
         "kind": "drink"
+      },
+      {
+        "name": "Chicken wing",
+        "serving": "100g",
+        "cal": 200,
+        "carb": 1,
+        "sugar": 1,
+        "fiber": 0,
+        "protein": 20,
+        "fat": 12,
+        "sodium": 100,
+        "alcohol": 0,
+        "qty": 1,
+        "color": "var(--teal)",
+        "kind": "food"
       }
     ],
     "2026-08-19": [
@@ -2014,5 +2029,5 @@
       }
     ]
   },
-  "updatedAt": 1787715666576
+  "updatedAt": 1787715673370
 }
