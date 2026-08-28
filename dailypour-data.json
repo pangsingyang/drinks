@@ -1119,6 +1119,21 @@
         "qty": 3,
         "color": "var(--wine)",
         "kind": "food"
+      },
+      {
+        "name": "Sirloin steak",
+        "serving": "100g",
+        "cal": 183,
+        "carb": 0,
+        "sugar": 0,
+        "fiber": 0,
+        "protein": 30.9,
+        "fat": 6.5,
+        "sodium": 56,
+        "alcohol": 0,
+        "qty": 1,
+        "color": "var(--teal)",
+        "kind": "food"
       }
     ],
     "2026-08-17": [
@@ -2183,5 +2198,5 @@
       }
     ]
   },
-  "updatedAt": 1787912054613
+  "updatedAt": 1787912061044
 }
