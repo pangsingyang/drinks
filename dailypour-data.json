@@ -287,17 +287,18 @@
       "sodium": 70
     },
     {
-      "color": "var(--wine)",
       "name": "Pomfret",
-      "serving": "100g",
-      "volume": 100,
-      "cal": 130,
+      "serving": "50g",
+      "cal": 70,
       "carb": 0,
       "sugar": 0,
       "fiber": 0,
-      "protein": 19,
-      "fat": 5.5,
-      "sodium": 65
+      "protein": 9.5,
+      "fat": 2.8,
+      "sodium": 33,
+      "alcohol": 0,
+      "volume": 50,
+      "color": "var(--wine)"
     },
     {
       "color": "var(--amber)",
@@ -2198,5 +2199,5 @@
       }
     ]
   },
-  "updatedAt": 1787912656977
+  "updatedAt": 1787964915234
 }
