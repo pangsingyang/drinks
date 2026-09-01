@@ -812,6 +812,21 @@
         "qty": 4,
         "color": "var(--teal)",
         "kind": "drink"
+      },
+      {
+        "name": "Salmon",
+        "serving": "50g",
+        "cal": 103,
+        "carb": 0,
+        "sugar": 0,
+        "fiber": 0,
+        "protein": 11,
+        "fat": 6.1,
+        "sodium": 30,
+        "alcohol": 0,
+        "qty": 2,
+        "color": "var(--teal)",
+        "kind": "food"
       }
     ],
     "2026-08-11": [
@@ -2276,5 +2291,5 @@
       }
     ]
   },
-  "updatedAt": 1788266532837
+  "updatedAt": 1788266563488
 }
