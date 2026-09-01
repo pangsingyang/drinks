@@ -782,6 +782,23 @@
         "kind": "food"
       }
     ],
+    "2026-09-01": [
+      {
+        "name": "711 Strong Zero",
+        "serving": "500ml",
+        "cal": 265,
+        "carb": 3.5,
+        "sugar": 3.5,
+        "fiber": 0,
+        "protein": 0,
+        "fat": 0,
+        "sodium": 200,
+        "alcohol": 45,
+        "qty": 2,
+        "color": "var(--ink)",
+        "kind": "drink"
+      }
+    ],
     "2026-08-11": [
       {
         "name": "Anchor",
@@ -2244,5 +2261,5 @@
       }
     ]
   },
-  "updatedAt": 1787964933740
+  "updatedAt": 1788266520831
 }
