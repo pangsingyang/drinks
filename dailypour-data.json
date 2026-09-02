@@ -1501,6 +1501,21 @@
         "qty": 4,
         "color": "var(--wine)",
         "kind": "food"
+      },
+      {
+        "name": "Dal (Own Cooked)",
+        "serving": "100g",
+        "cal": 180,
+        "carb": 27,
+        "sugar": 0,
+        "fiber": 15,
+        "protein": 10.5,
+        "fat": 6.5,
+        "sodium": 200,
+        "alcohol": 0,
+        "qty": 1,
+        "color": "var(--wine)",
+        "kind": "food"
       }
     ],
     "2026-08-20": [
@@ -2398,5 +2413,5 @@
       }
     ]
   },
-  "updatedAt": 1788344776106
+  "updatedAt": 1788344784182
 }
