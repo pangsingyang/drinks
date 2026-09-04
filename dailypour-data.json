@@ -797,6 +797,38 @@
         "kind": "food"
       }
     ],
+    "2026-09-04": [
+      {
+        "name": "Sapporo",
+        "serving": "500ml",
+        "cal": 200,
+        "carb": 12.5,
+        "sugar": 2.5,
+        "fiber": 0,
+        "protein": 2.5,
+        "fat": 0,
+        "sodium": 0,
+        "alcohol": 25,
+        "qty": 3,
+        "color": "var(--cream)",
+        "kind": "drink"
+      },
+      {
+        "name": "711 Strong Zero",
+        "serving": "500ml",
+        "cal": 265,
+        "carb": 3.5,
+        "sugar": 3.5,
+        "fiber": 0,
+        "protein": 0,
+        "fat": 0,
+        "sodium": 200,
+        "alcohol": 45,
+        "qty": 1,
+        "color": "var(--ink)",
+        "kind": "drink"
+      }
+    ],
     "2026-08-17": [
       {
         "name": "Asahi",
@@ -2550,5 +2582,5 @@
       }
     ]
   },
-  "updatedAt": 1788411293893
+  "updatedAt": 1788509578726
 }
