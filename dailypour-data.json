@@ -2470,6 +2470,21 @@
         "qty": 2,
         "color": "var(--ink)",
         "kind": "drink"
+      },
+      {
+        "name": "Rice noodle",
+        "serving": "100g",
+        "cal": 109,
+        "carb": 24.9,
+        "sugar": 0.1,
+        "fiber": 1,
+        "protein": 0.9,
+        "fat": 0.2,
+        "sodium": 5,
+        "alcohol": 0,
+        "qty": 1,
+        "color": "var(--ink)",
+        "kind": "food"
       }
     ],
     "2026-08-19": [
@@ -2828,5 +2843,5 @@
       }
     ]
   },
-  "updatedAt": 1788836189297
+  "updatedAt": 1788836203897
 }
