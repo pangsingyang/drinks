@@ -463,6 +463,15 @@
       "color": "var(--teal)"
     }
   ],
+  "foodCategories": [
+    "Beef",
+    "Pork",
+    "Chicken",
+    "Duck",
+    "Fish",
+    "Seafood",
+    "Other"
+  ],
   "targets": {
     "cal": 1900,
     "carb": 115,
@@ -2980,5 +2989,5 @@
       }
     ]
   },
-  "updatedAt": 1788946297336
+  "updatedAt": 1788951927412
 }
