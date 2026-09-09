@@ -123,6 +123,18 @@
     color:var(--teal);margin-top:2px;
   }
 
+  .cat-manage-row{display:flex;gap:6px;align-items:center;}
+  .cat-manage-row input{
+    flex:1;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font-size:13.5px;
+    font-family:'Inter',sans-serif;background:var(--paper);
+  }
+  .cat-manage-row button{
+    flex:0 0 auto;width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--paper-raised);
+    cursor:pointer;font-size:13px;color:var(--ink-soft);
+  }
+  .cat-manage-row button:hover{color:var(--ink);border-color:var(--ink-soft);}
+  .cat-manage-row .cat-delete-btn.confirming{background:var(--danger);color:#fff;border-color:var(--danger);font-size:10px;width:auto;padding:0 8px;}
+
   /* Drink grid */
   .drink-grid{
     display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:26px;
@@ -510,6 +522,18 @@
   </div>
 </div>
 
+<!-- Manage food categories modal -->
+<div class="overlay" id="categoryManageOverlay">
+  <div class="modal">
+    <h3>Manage categories</h3>
+    <p style="font-size:12px;color:var(--ink-soft);margin:-8px 0 14px;">Rename a category or delete it — food in a deleted category moves to "Other" instead of being removed.</p>
+    <div id="categoryManageList" style="display:flex;flex-direction:column;gap:8px;max-height:50vh;overflow-y:auto;"></div>
+    <div class="modal-actions">
+      <button class="btn ghost" id="cmClose">Close</button>
+    </div>
+  </div>
+</div>
+
 <!-- Sync modal -->
 <div class="overlay" id="syncOverlay">
   <div class="modal">
@@ -775,12 +799,107 @@
     addChip.textContent = "+ New";
     addChip.onclick = ()=> openCustomModal(true); // true = jump straight into category-add mode
     row.appendChild(addChip);
+
+    const manageChip = document.createElement("button");
+    manageChip.type = "button";
+    manageChip.className = "cat-chip";
+    manageChip.style.marginLeft = "auto";
+    manageChip.textContent = "⚙ Manage";
+    manageChip.onclick = openCategoryManageModal;
+    row.appendChild(manageChip);
   }
 
   function setActiveFoodCategory(cat){
     activeFoodCategory = cat;
     renderCategoryFilterRow();
     renderGrid();
+  }
+
+  // ---------- Manage categories (rename / delete without touching the food itself) ----------
+  const categoryManageOverlay = document.getElementById("categoryManageOverlay");
+
+  function openCategoryManageModal(){
+    renderCategoryManageList();
+    categoryManageOverlay.classList.add("show");
+  }
+  document.getElementById("cmClose").onclick = ()=> categoryManageOverlay.classList.remove("show");
+  categoryManageOverlay.addEventListener("click",(e)=>{ if(e.target===categoryManageOverlay) categoryManageOverlay.classList.remove("show"); });
+
+  function renderCategoryManageList(){
+    const list = document.getElementById("categoryManageList");
+    list.innerHTML = "";
+    foodCategories.forEach(cat=>{
+      const row = document.createElement("div");
+      row.className = "cat-manage-row";
+      row.innerHTML = `
+        <input type="text" value="${escapeHtml(cat)}">
+        <button class="cat-rename-btn" title="Save rename">✓</button>
+        <button class="cat-delete-btn" title="Delete category">🗑</button>
+      `;
+      const input = row.querySelector("input");
+      const renameBtn = row.querySelector(".cat-rename-btn");
+      const deleteBtn = row.querySelector(".cat-delete-btn");
+
+      renameBtn.onclick = ()=>{
+        const newName = input.value.trim();
+        if(!newName){ showToast("Category name can't be empty"); return; }
+        renameCategory(cat, newName);
+      };
+      input.addEventListener("keydown",(e)=>{ if(e.key==="Enter") renameBtn.click(); });
+
+      let confirming = false;
+      let confirmTimer = null;
+      deleteBtn.onclick = ()=>{
+        if(!confirming){
+          confirming = true;
+          deleteBtn.classList.add("confirming");
+          deleteBtn.textContent = "Confirm?";
+          confirmTimer = setTimeout(()=>{
+            confirming = false;
+            deleteBtn.classList.remove("confirming");
+            deleteBtn.textContent = "🗑";
+          }, 3000);
+        } else {
+          clearTimeout(confirmTimer);
+          deleteCategory(cat);
+        }
+      };
+
+      list.appendChild(row);
+    });
+  }
+
+  async function renameCategory(oldName, newName){
+    if(oldName === newName) return;
+    if(foodCategories.some(c=> c.toLowerCase()===newName.toLowerCase() && c!==oldName)){
+      showToast(`"${newName}" already exists`);
+      return;
+    }
+    const idx = foodCategories.indexOf(oldName);
+    if(idx === -1) return;
+    foodCategories[idx] = newName;
+    customFoods.forEach(f=>{ if(f.category === oldName) f.category = newName; });
+    await saveFoodCategories();
+    await saveFoods();
+    if(activeFoodCategory === oldName) activeFoodCategory = newName;
+    renderCategoryManageList();
+    renderCategoryFilterRow();
+    renderGrid();
+    showToast(`Renamed to "${newName}"`);
+  }
+
+  async function deleteCategory(name){
+    if(foodCategories.length <= 1){ showToast("You need at least one category"); return; }
+    const fallback = (name !== "Other" && foodCategories.includes("Other")) ? "Other" : foodCategories.find(c=> c!==name);
+    foodCategories = foodCategories.filter(c=> c!==name);
+    customFoods.forEach(f=>{ if(f.category === name) f.category = fallback; });
+    await saveFoodCategories();
+    await saveFoods();
+    if(activeFoodCategory === name) activeFoodCategory = "All";
+    renderCategoryManageList();
+    renderCategoryFilterRow();
+    renderGrid();
+    showToast(`Deleted "${name}" — its food moved to "${fallback}"`);
   }
 
   function setActiveKind(kind){
