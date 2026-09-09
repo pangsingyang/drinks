@@ -467,7 +467,7 @@
     "4 Legs",
     "Poultry",
     "Fish",
-    "Seafood",
+    "Carb",
     "Other"
   ],
   "targets": {
@@ -2987,5 +2987,5 @@
       }
     ]
   },
-  "updatedAt": 1788965124711
+  "updatedAt": 1788965212689
 }
