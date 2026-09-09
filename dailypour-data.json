@@ -1142,6 +1142,21 @@
         "qty": 1,
         "color": "var(--ink)",
         "kind": "food"
+      },
+      {
+        "name": "Chicken breast",
+        "serving": "50g",
+        "cal": 83,
+        "carb": 0,
+        "sugar": 0,
+        "fiber": 0,
+        "protein": 15.5,
+        "fat": 1.8,
+        "sodium": 37,
+        "alcohol": 0,
+        "qty": 1,
+        "color": "var(--wine)",
+        "kind": "food"
       }
     ],
     "2026-08-09": [
@@ -2989,5 +3004,5 @@
       }
     ]
   },
-  "updatedAt": 1788951927412
+  "updatedAt": 1788951945422
 }
