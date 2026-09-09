@@ -1088,6 +1088,21 @@
         "qty": 3,
         "color": "var(--amber)",
         "kind": "drink"
+      },
+      {
+        "name": "Spanish Mackerel",
+        "serving": "100g",
+        "cal": 158,
+        "carb": 0,
+        "sugar": 0,
+        "fiber": 0,
+        "protein": 23.6,
+        "fat": 6.3,
+        "sodium": 59,
+        "alcohol": 0,
+        "qty": 1,
+        "color": "var(--amber)",
+        "kind": "food"
       }
     ],
     "2026-08-09": [
@@ -2935,5 +2950,5 @@
       }
     ]
   },
-  "updatedAt": 1788944191316
+  "updatedAt": 1788944212482
 }
