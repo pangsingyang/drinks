@@ -109,6 +109,20 @@
   }
   .tab.active{background:var(--ink);color:var(--paper-raised);border-color:var(--ink);}
 
+  .category-filter-row{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:12px;}
+  .cat-chip{
+    flex:0 0 auto;padding:6px 12px;border-radius:999px;border:1px solid var(--line);
+    background:var(--paper-raised);font-size:11.5px;font-weight:600;color:var(--ink-soft);cursor:pointer;
+    white-space:nowrap;
+  }
+  .cat-chip.active{background:var(--teal);color:var(--paper-raised);border-color:var(--teal);}
+  .cat-chip.add-chip{color:var(--teal);border-style:dashed;border-color:var(--teal);}
+
+  .food-cat-tag{
+    display:inline-block;font-size:9.5px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;
+    color:var(--teal);margin-top:2px;
+  }
+
   /* Drink grid */
   .drink-grid{
     display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:26px;
@@ -365,6 +379,7 @@
       <button type="button" class="tab" id="kindFoodTab">Food</button>
     </div>
   </div>
+  <div id="categoryFilterRow" class="category-filter-row" style="display:none;"></div>
   <div class="drink-grid" id="drinkGrid"></div>
 
   <div class="log-section">
@@ -381,6 +396,18 @@
   <div class="modal">
     <h3 id="customModalTitle">Add your own drink</h3>
     <div class="field"><label>Name</label><input id="cName" placeholder="e.g. Kopi-O"></div>
+
+    <div class="field" id="categoryFieldWrap" style="display:none;">
+      <label>Category</label>
+      <div style="display:flex;gap:8px;">
+        <select id="cCategory" style="flex:1;padding:9px 11px;border:1px solid var(--line);border-radius:8px;font-size:14px;font-family:'Inter',sans-serif;background:var(--paper);"></select>
+        <button type="button" class="icon-btn" id="cNewCategoryBtn" style="width:38px;height:38px;flex:0 0 auto;" title="New category">+</button>
+      </div>
+      <div id="newCategoryRow" style="display:none;gap:8px;margin-top:8px;">
+        <input id="cNewCategoryName" placeholder="e.g. Duck" style="flex:1;">
+        <button type="button" class="btn primary" id="cNewCategoryAdd" style="flex:0 0 auto;padding:0 14px;">Add</button>
+      </div>
+    </div>
 
     <div class="field" id="modeToggleWrap">
       <label>How do you want to enter it?</label>
@@ -518,29 +545,30 @@
 
   // Starter foods, seeded into "My food" the first time the app is used (per 100g unless noted).
   // Values are standard reference estimates (cooked/lean where applicable) — edit any of them to match your source.
+  const DEFAULT_CATEGORIES = ["Beef","Pork","Chicken","Duck","Fish","Seafood","Other"];
   const DEFAULT_FOODS = [
-    {name:"Chicken breast", serving:"100g", volume:100, cal:165, carb:0,    sugar:0,   fiber:0,   protein:31,   fat:3.6,  sodium:74},
-    {name:"Chicken thigh",  serving:"100g", volume:100, cal:209, carb:0,    sugar:0,   fiber:0,   protein:26,   fat:10.9, sodium:90},
-    {name:"Sirloin steak",  serving:"100g", volume:100, cal:183, carb:0,    sugar:0,   fiber:0,   protein:30.9, fat:6.5,  sodium:56},
-    {name:"Ribeye steak",   serving:"100g", volume:100, cal:271, carb:0,    sugar:0,   fiber:0,   protein:25,   fat:19,   sodium:59},
-    {name:"Edamame",        serving:"100g", volume:100, cal:121, carb:10,   sugar:2.2, fiber:5,   protein:12,   fat:5,    sodium:6},
-    {name:"Firm tofu",      serving:"100g", volume:100, cal:144, carb:2.8,  sugar:0.6, fiber:2.3, protein:15.7, fat:8.7,  sodium:14},
-    {name:"Pork loin",      serving:"100g", volume:100, cal:147, carb:0,    sugar:0,   fiber:0,   protein:26.5, fat:4.3,  sodium:55},
-    {name:"Potato",         serving:"100g", volume:100, cal:93,  carb:21,   sugar:1.2, fiber:2.2, protein:2.5,  fat:0.1,  sodium:6},
-    {name:"Rice noodle",    serving:"100g", volume:100, cal:109, carb:24.9, sugar:0.1, fiber:1,   protein:0.9,  fat:0.2,  sodium:5},
-    {name:"Pasta",          serving:"100g", volume:100, cal:131, carb:25,   sugar:0.6, fiber:1.8, protein:5,    fat:1.1,  sodium:1},
-    {name:"Parmesan cheese",serving:"100g", volume:100, cal:431, carb:4.1,  sugar:0.9, fiber:0,   protein:38,   fat:29,   sodium:1529},
-    {name:"Mozzarella cheese",serving:"100g", volume:100, cal:254, carb:2.8, sugar:1,  fiber:0,   protein:24,   fat:16,   sodium:486},
-    {name:"Salmon",    serving:"100g", volume:100, cal:206, carb:0,   sugar:0, fiber:0, protein:22.1, fat:12.4, sodium:61},
-    {name:"Sardine",   serving:"100g", volume:100, cal:208, carb:0,   sugar:0, fiber:0, protein:24.6, fat:11.5, sodium:307},
-    {name:"Barramundi",serving:"100g", volume:100, cal:124, carb:0,   sugar:0, fiber:0, protein:20,   fat:4,    sodium:70},
-    {name:"Pomfret",   serving:"100g", volume:100, cal:130, carb:0,   sugar:0, fiber:0, protein:19,   fat:5.5,  sodium:65},
-    {name:"Grouper",   serving:"100g", volume:100, cal:118, carb:0,   sugar:0, fiber:0, protein:25.5, fat:1.3,  sodium:53},
-    {name:"Shrimp",    serving:"100g", volume:100, cal:99,  carb:0.2, sugar:0, fiber:0, protein:20.9, fat:0.3,  sodium:111},
-    {name:"Squid",     serving:"100g", volume:100, cal:92,  carb:3.1, sugar:0, fiber:0, protein:15.6, fat:1.4,  sodium:44},
-    {name:"Egg",             serving:"1 egg",             volume:50,  cal:72,  carb:0.4, sugar:0.2, fiber:0,   protein:6.3, fat:4.8,  sodium:71},
-    {name:"Avocado (small)", serving:"1 small avocado",   volume:100, cal:160, carb:8.5, sugar:0.7, fiber:6.7, protein:2,   fat:14.7, sodium:7},
-    {name:"Avocado (large)", serving:"1 large avocado",   volume:200, cal:320, carb:17,  sugar:1.4, fiber:13.4,protein:4,   fat:29.4, sodium:14},
+    {name:"Chicken breast", category:"Chicken", serving:"100g", volume:100, cal:165, carb:0,    sugar:0,   fiber:0,   protein:31,   fat:3.6,  sodium:74},
+    {name:"Chicken thigh",  category:"Chicken", serving:"100g", volume:100, cal:209, carb:0,    sugar:0,   fiber:0,   protein:26,   fat:10.9, sodium:90},
+    {name:"Sirloin steak",  category:"Beef",    serving:"100g", volume:100, cal:183, carb:0,    sugar:0,   fiber:0,   protein:30.9, fat:6.5,  sodium:56},
+    {name:"Ribeye steak",   category:"Beef",    serving:"100g", volume:100, cal:271, carb:0,    sugar:0,   fiber:0,   protein:25,   fat:19,   sodium:59},
+    {name:"Edamame",        category:"Other",   serving:"100g", volume:100, cal:121, carb:10,   sugar:2.2, fiber:5,   protein:12,   fat:5,    sodium:6},
+    {name:"Firm tofu",      category:"Other",   serving:"100g", volume:100, cal:144, carb:2.8,  sugar:0.6, fiber:2.3, protein:15.7, fat:8.7,  sodium:14},
+    {name:"Pork loin",      category:"Pork",    serving:"100g", volume:100, cal:147, carb:0,    sugar:0,   fiber:0,   protein:26.5, fat:4.3,  sodium:55},
+    {name:"Potato",         category:"Other",   serving:"100g", volume:100, cal:93,  carb:21,   sugar:1.2, fiber:2.2, protein:2.5,  fat:0.1,  sodium:6},
+    {name:"Rice noodle",    category:"Other",   serving:"100g", volume:100, cal:109, carb:24.9, sugar:0.1, fiber:1,   protein:0.9,  fat:0.2,  sodium:5},
+    {name:"Pasta",          category:"Other",   serving:"100g", volume:100, cal:131, carb:25,   sugar:0.6, fiber:1.8, protein:5,    fat:1.1,  sodium:1},
+    {name:"Parmesan cheese",category:"Other",   serving:"100g", volume:100, cal:431, carb:4.1,  sugar:0.9, fiber:0,   protein:38,   fat:29,   sodium:1529},
+    {name:"Mozzarella cheese",category:"Other", serving:"100g", volume:100, cal:254, carb:2.8, sugar:1,  fiber:0,   protein:24,   fat:16,   sodium:486},
+    {name:"Salmon",    category:"Fish",     serving:"100g", volume:100, cal:206, carb:0,   sugar:0, fiber:0, protein:22.1, fat:12.4, sodium:61},
+    {name:"Sardine",   category:"Fish",     serving:"100g", volume:100, cal:208, carb:0,   sugar:0, fiber:0, protein:24.6, fat:11.5, sodium:307},
+    {name:"Barramundi",category:"Fish",     serving:"100g", volume:100, cal:124, carb:0,   sugar:0, fiber:0, protein:20,   fat:4,    sodium:70},
+    {name:"Pomfret",   category:"Fish",     serving:"100g", volume:100, cal:130, carb:0,   sugar:0, fiber:0, protein:19,   fat:5.5,  sodium:65},
+    {name:"Grouper",   category:"Fish",     serving:"100g", volume:100, cal:118, carb:0,   sugar:0, fiber:0, protein:25.5, fat:1.3,  sodium:53},
+    {name:"Shrimp",    category:"Seafood",  serving:"100g", volume:100, cal:99,  carb:0.2, sugar:0, fiber:0, protein:20.9, fat:0.3,  sodium:111},
+    {name:"Squid",     category:"Seafood",  serving:"100g", volume:100, cal:92,  carb:3.1, sugar:0, fiber:0, protein:15.6, fat:1.4,  sodium:44},
+    {name:"Egg",             category:"Other", serving:"1 egg",             volume:50,  cal:72,  carb:0.4, sugar:0.2, fiber:0,   protein:6.3, fat:4.8,  sodium:71},
+    {name:"Avocado (small)", category:"Other", serving:"1 small avocado",   volume:100, cal:160, carb:8.5, sugar:0.7, fiber:6.7, protein:2,   fat:14.7, sodium:7},
+    {name:"Avocado (large)", category:"Other", serving:"1 large avocado",   volume:200, cal:320, carb:17,  sugar:1.4, fiber:13.4,protein:4,   fat:29.4, sodium:14},
   ];
 
   // Round to a max of 1 decimal place (used everywhere numbers are stored or displayed)
@@ -550,6 +578,8 @@
   let currentDate = todayStr();
   let customDrinks = [];
   let customFoods = [];
+  let foodCategories = [];
+  let activeFoodCategory = "All"; // filter chip currently selected in the Food grid
   let activeKind = "drink"; // which tab ("drink" | "food") is currently shown in the item grid
   const DEFAULT_TARGETS = {cal:2000, carb:135, sugar:25, fiber:25, protein:105, fat:70, sodium:2300, alcohol:20};
   let targets = Object.assign({}, DEFAULT_TARGETS);
@@ -607,6 +637,14 @@
     const f = await safeGet("custom-foods");
     customFoods = f ? JSON.parse(f) : [];
 
+    const catRaw = await safeGet("food-categories");
+    foodCategories = catRaw ? JSON.parse(catRaw) : [];
+    let catsChanged = false;
+    DEFAULT_CATEGORIES.forEach(cat=>{
+      if(!foodCategories.includes(cat)){ foodCategories.push(cat); catsChanged = true; }
+    });
+    if(catsChanged) await saveFoodCategories();
+
     // Track which starter foods have already been offered, so newly-added presets
     // (e.g. a later seafood batch) show up for existing users too — without ever
     // resurrecting a starter item someone deliberately deleted.
@@ -644,11 +682,19 @@
   async function saveFoods(){
     await safeSet("custom-foods", JSON.stringify(customFoods));
   }
+  async function saveFoodCategories(){
+    await safeSet("food-categories", JSON.stringify(foodCategories));
+  }
   async function saveTargets(){
     await safeSet("targets", JSON.stringify(targets));
   }
   function activeItems(){
-    return activeKind === "drink" ? customDrinks : customFoods;
+    const items = activeKind === "drink" ? customDrinks : customFoods;
+    const withIdx = items.map((item,idx)=>({item, idx}));
+    if(activeKind === "food" && activeFoodCategory !== "All"){
+      return withIdx.filter(({item})=> (item.category || "Other") === activeFoodCategory);
+    }
+    return withIdx;
   }
 
   // ---------- Rendering ----------
@@ -658,7 +704,7 @@
 
   function renderGrid(){
     gridEl.innerHTML = "";
-    const items = activeItems();
+    const pairs = activeItems();
     const noun = activeKind === "drink" ? "drink" : "food";
 
     const addCard = document.createElement("div");
@@ -667,15 +713,17 @@
     addCard.onclick = openCustomModal;
     gridEl.appendChild(addCard);
 
-    if(items.length === 0){
+    if(pairs.length === 0){
       const hint = document.createElement("div");
       hint.style.cssText = "grid-column:1/-1;color:var(--ink-soft);font-size:12.5px;padding:8px 2px;";
-      hint.textContent = `No ${noun}s saved yet — add your first one to start logging.`;
+      hint.textContent = activeKind === "food" && activeFoodCategory !== "All"
+        ? `No food in "${activeFoodCategory}" yet.`
+        : `No ${noun}s saved yet — add your first one to start logging.`;
       gridEl.appendChild(hint);
       return;
     }
 
-    items.forEach((item,idx)=>{
+    pairs.forEach(({item, idx})=>{
       const card = document.createElement("div");
       card.className = "drink-card";
       card.innerHTML = `
@@ -683,6 +731,7 @@
         <div class="add-plus">+</div>
         <div class="name">${escapeHtml(item.name)}</div>
         <div class="serving">${escapeHtml(item.serving)}</div>
+        ${activeKind==="food" ? `<div class="food-cat-tag">${escapeHtml(item.category || "Other")}</div>` : ""}
         <div class="macros"><span><b>${item.cal}</b> kcal</span><span><b>${item.carb}</b>g carb</span></div>
         ${secondaryMacroLine(item) ? `<div class="macros" style="margin-top:3px;opacity:0.75;">${secondaryMacroLine(item)}</div>` : ""}
       `;
@@ -695,11 +744,52 @@
     });
   }
 
+  function renderCategoryFilterRow(){
+    const row = document.getElementById("categoryFilterRow");
+    if(activeKind !== "food"){
+      row.style.display = "none";
+      return;
+    }
+    row.style.display = "flex";
+    row.innerHTML = "";
+
+    const allChip = document.createElement("button");
+    allChip.type = "button";
+    allChip.className = "cat-chip" + (activeFoodCategory==="All" ? " active" : "");
+    allChip.textContent = "All";
+    allChip.onclick = ()=> setActiveFoodCategory("All");
+    row.appendChild(allChip);
+
+    foodCategories.forEach(cat=>{
+      const chip = document.createElement("button");
+      chip.type = "button";
+      chip.className = "cat-chip" + (activeFoodCategory===cat ? " active" : "");
+      chip.textContent = cat;
+      chip.onclick = ()=> setActiveFoodCategory(cat);
+      row.appendChild(chip);
+    });
+
+    const addChip = document.createElement("button");
+    addChip.type = "button";
+    addChip.className = "cat-chip add-chip";
+    addChip.textContent = "+ New";
+    addChip.onclick = ()=> openCustomModal(true); // true = jump straight into category-add mode
+    row.appendChild(addChip);
+  }
+
+  function setActiveFoodCategory(cat){
+    activeFoodCategory = cat;
+    renderCategoryFilterRow();
+    renderGrid();
+  }
+
   function setActiveKind(kind){
     activeKind = kind;
+    activeFoodCategory = "All";
     document.getElementById("kindDrinkTab").classList.toggle("active", kind==="drink");
     document.getElementById("kindFoodTab").classList.toggle("active", kind==="food");
     document.getElementById("itemsSectionTitle").textContent = kind==="drink" ? "My drinks" : "My food";
+    renderCategoryFilterRow();
     renderGrid();
   }
   document.getElementById("kindDrinkTab").onclick = ()=> setActiveKind("drink");
@@ -888,7 +978,43 @@
     document.getElementById("fiberFieldWrap").style.display = kind==="drink" ? "none" : "";
     document.getElementById("abvFieldWrap100").style.display = kind==="drink" ? "" : "none";
     document.getElementById("fiberFieldWrap100").style.display = kind==="drink" ? "none" : "";
+    document.getElementById("categoryFieldWrap").style.display = kind==="food" ? "" : "none";
+    document.getElementById("newCategoryRow").style.display = "none";
+    document.getElementById("cNewCategoryName").value = "";
+    if(kind === "food") populateCategorySelect();
   }
+
+  function populateCategorySelect(selected){
+    const sel = document.getElementById("cCategory");
+    sel.innerHTML = "";
+    foodCategories.forEach(cat=>{
+      const opt = document.createElement("option");
+      opt.value = cat;
+      opt.textContent = cat;
+      sel.appendChild(opt);
+    });
+    sel.value = selected && foodCategories.includes(selected) ? selected : (foodCategories[0] || "");
+  }
+
+  document.getElementById("cNewCategoryBtn").onclick = ()=>{
+    const row = document.getElementById("newCategoryRow");
+    const showing = row.style.display === "flex";
+    row.style.display = showing ? "none" : "flex";
+    if(!showing) document.getElementById("cNewCategoryName").focus();
+  };
+  document.getElementById("cNewCategoryAdd").onclick = async ()=>{
+    const name = document.getElementById("cNewCategoryName").value.trim();
+    if(!name){ showToast("Give the category a name"); return; }
+    if(!foodCategories.includes(name)){
+      foodCategories.push(name);
+      await saveFoodCategories();
+    }
+    populateCategorySelect(name);
+    document.getElementById("newCategoryRow").style.display = "none";
+    document.getElementById("cNewCategoryName").value = "";
+    renderCategoryFilterRow();
+    showToast(`Category "${name}" added`);
+  };
 
   // Full-serving mode: values are entered as totals already; ABV + volume derive alcohol in ml (drinks only).
   function updateServingPreview(){
@@ -933,7 +1059,7 @@
   const CUSTOM_FIELD_IDS = ["cName","cVolume","cServing","cCal","cCarb","cSugar","cProtein","cFat","cSodium","cABV","cFiber",
     "cVolume100","cServing100","cCal100","cCarb100","cSugar100","cProtein100","cFat100","cSodium100","cABV100","cFiber100"];
 
-  function openCustomModal(){
+  function openCustomModal(jumpToNewCategory){
     const kind = activeKind;
     applyKindUI(kind);
     editingIndex = null;
@@ -946,6 +1072,10 @@
     updatePer100Preview();
     setAddMode("serving");
     customOverlay.classList.add("show");
+    if(jumpToNewCategory === true && kind === "food"){
+      document.getElementById("newCategoryRow").style.display = "flex";
+      setTimeout(()=> document.getElementById("cNewCategoryName").focus(), 50);
+    }
   }
 
   let editingIndex = null;
@@ -979,6 +1109,7 @@
       document.getElementById("cABV").value = abv;
     } else {
       document.getElementById("cFiber").value = item.fiber || "";
+      populateCategorySelect(item.category || "Other");
     }
     updateServingPreview();
 
@@ -1035,21 +1166,23 @@
 
     if(sugar > carb){ showToast("Sugar can't exceed carbs — check your numbers"); return; }
 
+    const category = itemKind === "food" ? (document.getElementById("cCategory").value || "Other") : undefined;
     const arr = itemKind === "drink" ? customDrinks : customFoods;
     const noun = itemKind === "drink" ? "Drink" : "Food";
 
     if(editingIndex !== null){
       const color = arr[editingIndex].color;
-      arr[editingIndex] = {name, serving, cal, carb, sugar, fiber, protein, fat, sodium, alcohol, volume, color};
+      arr[editingIndex] = {name, serving, cal, carb, sugar, fiber, protein, fat, sodium, alcohol, volume, category, color};
       showToast(`${noun} updated`);
     } else {
       const color = PALETTE[arr.length % PALETTE.length];
-      arr.push({name, serving, cal, carb, sugar, fiber, protein, fat, sodium, alcohol, volume, color});
+      arr.push({name, serving, cal, carb, sugar, fiber, protein, fat, sodium, alcohol, volume, category, color});
       showToast(`${noun} saved`);
     }
     await (itemKind === "drink" ? saveCustom() : saveFoods());
     customOverlay.classList.remove("show");
     renderGrid();
+    if(itemKind === "food") renderCategoryFilterRow();
   };
 
   // ---------- Targets modal ----------
@@ -1295,6 +1428,7 @@
     return {
       customDrinks,
       customFoods,
+      foodCategories,
       targets,
       logs: allLogsSnapshot(),
       updatedAt: Date.now()
@@ -1304,9 +1438,11 @@
   async function applyPayload(payload){
     customDrinks = payload.customDrinks || [];
     customFoods = payload.customFoods || [];
+    foodCategories = payload.foodCategories && payload.foodCategories.length ? payload.foodCategories : DEFAULT_CATEGORIES.slice();
     targets = Object.assign({}, DEFAULT_TARGETS, payload.targets || {});
     lsWrite("custom-drinks", JSON.stringify(customDrinks));
     lsWrite("custom-foods", JSON.stringify(customFoods));
+    lsWrite("food-categories", JSON.stringify(foodCategories));
     lsWrite("targets", JSON.stringify(targets));
     lsListKeys("log:").forEach(k=> lsDelete(k));
     Object.keys(payload.logs || {}).forEach(dstr=>{
@@ -1356,6 +1492,7 @@
         const localUpdatedAt = parseInt(lsRead("meta:updatedAt")||"0",10);
         if((payload.updatedAt||0) > localUpdatedAt){
           await applyPayload(payload);
+          renderCategoryFilterRow();
           renderGrid();
           renderLog();
         } else if((payload.updatedAt||0) < localUpdatedAt){
@@ -1449,6 +1586,7 @@
   // ---------- Init ----------
   (async function init(){
     await loadAll();
+    renderCategoryFilterRow();
     renderGrid();
     renderLog();
     const cfg = getGhConfig();
