@@ -324,17 +324,19 @@
       "color": "var(--wine)"
     },
     {
-      "color": "var(--amber)",
       "name": "Grouper",
-      "serving": "100g",
-      "volume": 100,
-      "cal": 118,
+      "serving": "50g",
+      "cal": 60,
       "carb": 0,
       "sugar": 0,
       "fiber": 0,
-      "protein": 25.5,
-      "fat": 1.3,
-      "sodium": 53
+      "protein": 13,
+      "fat": 1,
+      "sodium": 25,
+      "alcohol": 0,
+      "volume": 50,
+      "category": "Sea",
+      "color": "var(--amber)"
     },
     {
       "color": "var(--teal)",
@@ -1617,5 +1619,5 @@
       }
     ]
   },
-  "updatedAt": 1789113949274
+  "updatedAt": 1789114014749
 }
