@@ -354,17 +354,19 @@
       "color": "var(--teal)"
     },
     {
-      "color": "var(--ink)",
       "name": "Squid",
-      "serving": "100g",
-      "volume": 100,
-      "cal": 92,
-      "carb": 3.1,
+      "serving": "50g",
+      "cal": 45,
+      "carb": 1.5,
       "sugar": 0,
       "fiber": 0,
-      "protein": 15.6,
-      "fat": 1.4,
-      "sodium": 44
+      "protein": 7.8,
+      "fat": 0.7,
+      "sodium": 22,
+      "alcohol": 0,
+      "volume": 50,
+      "category": "Sea",
+      "color": "var(--ink)"
     },
     {
       "color": "var(--cream)",
@@ -1621,5 +1623,5 @@
       }
     ]
   },
-  "updatedAt": 1789114049460
+  "updatedAt": 1789114100384
 }
