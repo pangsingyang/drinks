@@ -1112,6 +1112,21 @@
         "qty": 1,
         "color": "var(--cream)",
         "kind": "food"
+      },
+      {
+        "name": "Edamame",
+        "serving": "50g",
+        "cal": 60,
+        "carb": 5,
+        "sugar": 1.1,
+        "fiber": 2.5,
+        "protein": 6,
+        "fat": 2.5,
+        "sodium": 3,
+        "alcohol": 0,
+        "qty": 1,
+        "color": "var(--cream)",
+        "kind": "food"
       }
     ],
     "2026-08-10": [
@@ -1855,5 +1870,5 @@
       }
     ]
   },
-  "updatedAt": 1789126211570
+  "updatedAt": 1789126225053
 }
