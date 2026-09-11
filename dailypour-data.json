@@ -190,17 +190,19 @@
       "color": "var(--amber)"
     },
     {
-      "color": "var(--teal)",
       "name": "Potato",
-      "serving": "100g",
-      "volume": 100,
-      "cal": 93,
-      "carb": 21,
-      "sugar": 1.2,
-      "fiber": 2.2,
-      "protein": 2.5,
-      "fat": 0.1,
-      "sodium": 6
+      "serving": "50g",
+      "cal": 46,
+      "carb": 10,
+      "sugar": 6,
+      "fiber": 1.1,
+      "protein": 1.2,
+      "fat": 0,
+      "sodium": 3,
+      "alcohol": 0,
+      "volume": 50,
+      "category": "Carb",
+      "color": "var(--teal)"
     },
     {
       "color": "var(--ink)",
@@ -1571,5 +1573,5 @@
       }
     ]
   },
-  "updatedAt": 1789113603271
+  "updatedAt": 1789113658366
 }
