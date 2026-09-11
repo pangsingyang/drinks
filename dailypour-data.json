@@ -434,6 +434,7 @@
       "sodium": 0,
       "alcohol": 0,
       "volume": 50,
+      "category": "Carb",
       "color": "var(--ink)"
     },
     {
@@ -1624,5 +1625,5 @@
       }
     ]
   },
-  "updatedAt": 1789114130767
+  "updatedAt": 1789114146134
 }
