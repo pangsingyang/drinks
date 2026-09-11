@@ -466,6 +466,21 @@
       "volume": 100,
       "category": "Carb",
       "color": "var(--wine)"
+    },
+    {
+      "name": "Chicken Wing",
+      "serving": "50g",
+      "cal": 145,
+      "carb": 0,
+      "sugar": 0,
+      "fiber": 0,
+      "protein": 13.5,
+      "fat": 9.6,
+      "sodium": 40,
+      "alcohol": 0,
+      "volume": 50,
+      "category": "Poultry",
+      "color": "var(--amber)"
     }
   ],
   "foodCategories": [
@@ -1633,5 +1648,5 @@
       }
     ]
   },
-  "updatedAt": 1789114515625
+  "updatedAt": 1789114588632
 }
