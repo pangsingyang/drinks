@@ -484,20 +484,20 @@
     }
   ],
   "foodCategories": [
-    "All",
+    "Other",
     "4 Legs",
     "Poultry",
     "Sea",
     "Carb",
-    "Other",
     "Beef",
+    "All",
     "Pork",
     "Chicken",
     "Duck",
     "Fish",
     "Seafood"
   ],
-  "defaultFoodCategory": "All",
+  "defaultFoodCategory": "Other",
   "targets": {
     "cal": 1900,
     "carb": 115,
@@ -1665,5 +1665,5 @@
       }
     ]
   },
-  "updatedAt": 1789115100478
+  "updatedAt": 1789115158781
 }
