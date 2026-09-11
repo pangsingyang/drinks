@@ -493,8 +493,7 @@
     "All",
     "Pork",
     "Chicken",
-    "Duck",
-    "Fish"
+    "Duck"
   ],
   "defaultFoodCategory": "Other",
   "targets": {
@@ -1664,5 +1663,5 @@
       }
     ]
   },
-  "updatedAt": 1789115750695
+  "updatedAt": 1789115752408
 }
