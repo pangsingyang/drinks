@@ -1022,6 +1022,21 @@
         "qty": 2,
         "color": "var(--wine)",
         "kind": "drink"
+      },
+      {
+        "name": "Pomegranate",
+        "serving": "50g",
+        "cal": 42,
+        "carb": 9.4,
+        "sugar": 6.9,
+        "fiber": 2,
+        "protein": 0.9,
+        "fat": 0.6,
+        "sodium": 0,
+        "alcohol": 0,
+        "qty": 3,
+        "color": "var(--teal)",
+        "kind": "food"
       }
     ],
     "2026-08-10": [
@@ -1765,5 +1780,5 @@
       }
     ]
   },
-  "updatedAt": 1789126019046
+  "updatedAt": 1789126025584
 }
