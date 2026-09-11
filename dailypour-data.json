@@ -464,6 +464,7 @@
       "sodium": 200,
       "alcohol": 0,
       "volume": 100,
+      "category": "Carb",
       "color": "var(--wine)"
     }
   ],
@@ -1626,5 +1627,5 @@
       }
     ]
   },
-  "updatedAt": 1789114151235
+  "updatedAt": 1789114173052
 }
