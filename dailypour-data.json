@@ -279,17 +279,19 @@
       "color": "var(--teal)"
     },
     {
-      "color": "var(--ink)",
       "name": "Sardine",
-      "serving": "100g",
-      "volume": 100,
-      "cal": 208,
+      "serving": "50g",
+      "cal": 104,
       "carb": 0,
       "sugar": 0,
       "fiber": 0,
-      "protein": 24.6,
-      "fat": 11.5,
-      "sodium": 307
+      "protein": 12.3,
+      "fat": 5.8,
+      "sodium": 150,
+      "alcohol": 0,
+      "volume": 50,
+      "category": "Sea",
+      "color": "var(--ink)"
     },
     {
       "color": "var(--cream)",
@@ -1596,5 +1598,5 @@
       }
     ]
   },
-  "updatedAt": 1789113830767
+  "updatedAt": 1789113878100
 }
