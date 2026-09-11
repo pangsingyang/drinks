@@ -526,6 +526,21 @@
       "volume": 5,
       "category": "Other",
       "color": "var(--cream)"
+    },
+    {
+      "name": "Ginger",
+      "serving": "5g",
+      "cal": 4,
+      "carb": 1,
+      "sugar": 0,
+      "fiber": 0,
+      "protein": 0.1,
+      "fat": 0,
+      "sodium": 0,
+      "alcohol": 0,
+      "volume": 5,
+      "category": "Other",
+      "color": "var(--wine)"
     }
   ],
   "foodCategories": [
@@ -1705,5 +1720,5 @@
       }
     ]
   },
-  "updatedAt": 1789115942876
+  "updatedAt": 1789115978513
 }
