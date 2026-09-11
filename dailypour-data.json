@@ -275,6 +275,7 @@
       "sodium": 30,
       "alcohol": 0,
       "volume": 50,
+      "category": "Sea",
       "color": "var(--teal)"
     },
     {
@@ -1579,5 +1580,5 @@
       }
     ]
   },
-  "updatedAt": 1789113801246
+  "updatedAt": 1789113825150
 }
