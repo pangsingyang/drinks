@@ -494,8 +494,7 @@
     "Pork",
     "Chicken",
     "Duck",
-    "Fish",
-    "Seafood"
+    "Fish"
   ],
   "defaultFoodCategory": "Other",
   "targets": {
@@ -1665,5 +1664,5 @@
       }
     ]
   },
-  "updatedAt": 1789115741880
+  "updatedAt": 1789115750695
 }
