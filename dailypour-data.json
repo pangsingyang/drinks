@@ -1067,6 +1067,36 @@
         "qty": 4,
         "color": "var(--amber)",
         "kind": "food"
+      },
+      {
+        "name": "Sugar",
+        "serving": "5g",
+        "cal": 20,
+        "carb": 5,
+        "sugar": 5,
+        "fiber": 0,
+        "protein": 0,
+        "fat": 0,
+        "sodium": 0,
+        "alcohol": 0,
+        "qty": 1,
+        "color": "var(--ink)",
+        "kind": "food"
+      },
+      {
+        "name": "Fat",
+        "serving": "5g",
+        "cal": 45,
+        "carb": 0,
+        "sugar": 0,
+        "fiber": 0,
+        "protein": 0,
+        "fat": 5,
+        "sodium": 0,
+        "alcohol": 0,
+        "qty": 1,
+        "color": "var(--teal)",
+        "kind": "food"
       }
     ],
     "2026-08-10": [
@@ -1810,5 +1840,5 @@
       }
     ]
   },
-  "updatedAt": 1789126106397
+  "updatedAt": 1789126124869
 }
