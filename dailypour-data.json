@@ -98,6 +98,7 @@
       "sodium": 37,
       "alcohol": 0,
       "volume": 50,
+      "category": "Poultry",
       "color": "var(--wine)"
     },
     {
@@ -1562,5 +1563,5 @@
       }
     ]
   },
-  "updatedAt": 1789113357609
+  "updatedAt": 1789113409827
 }
