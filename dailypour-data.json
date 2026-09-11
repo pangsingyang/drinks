@@ -490,8 +490,7 @@
     "Sea",
     "Carb",
     "Beef",
-    "All",
-    "Pork"
+    "All"
   ],
   "defaultFoodCategory": "Other",
   "targets": {
@@ -1661,5 +1660,5 @@
       }
     ]
   },
-  "updatedAt": 1789115756128
+  "updatedAt": 1789115757739
 }
