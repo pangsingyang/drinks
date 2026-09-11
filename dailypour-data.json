@@ -205,17 +205,19 @@
       "color": "var(--teal)"
     },
     {
-      "color": "var(--ink)",
       "name": "Rice noodle",
-      "serving": "100g",
-      "volume": 100,
-      "cal": 109,
-      "carb": 24.9,
-      "sugar": 0.1,
-      "fiber": 1,
-      "protein": 0.9,
-      "fat": 0.2,
-      "sodium": 5
+      "serving": "50g",
+      "cal": 55,
+      "carb": 12.5,
+      "sugar": 0,
+      "fiber": 0.5,
+      "protein": 0.4,
+      "fat": 0.1,
+      "sodium": 3,
+      "alcohol": 0,
+      "volume": 50,
+      "category": "Carb",
+      "color": "var(--ink)"
     },
     {
       "color": "var(--cream)",
@@ -1573,5 +1575,5 @@
       }
     ]
   },
-  "updatedAt": 1789113658366
+  "updatedAt": 1789113708559
 }
