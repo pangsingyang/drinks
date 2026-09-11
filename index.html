@@ -137,15 +137,22 @@
 
   .cat-manage-row{display:flex;gap:6px;align-items:center;}
   .cat-manage-row input{
-    flex:1;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font-size:13.5px;
+    flex:1;min-width:0;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font-size:13.5px;
     font-family:'Inter',sans-serif;background:var(--paper);
   }
+  .cat-manage-row input:disabled{opacity:.6;background:var(--paper);}
   .cat-manage-row button{
     flex:0 0 auto;width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--paper-raised);
     cursor:pointer;font-size:13px;color:var(--ink-soft);
   }
   .cat-manage-row button:hover{color:var(--ink);border-color:var(--ink-soft);}
+  .cat-manage-row button:disabled{opacity:.25;cursor:default;}
+  .cat-manage-row button:disabled:hover{color:var(--ink-soft);border-color:var(--line);}
   .cat-manage-row .cat-delete-btn.confirming{background:var(--danger);color:#fff;border-color:var(--danger);font-size:10px;width:auto;padding:0 8px;}
+  .cat-order-btns{display:flex;flex-direction:column;gap:2px;flex:0 0 auto;}
+  .cat-order-btn{width:22px;height:15px;border-radius:4px;font-size:8px;padding:0;line-height:1;}
+  .cat-default-btn{color:var(--ink-soft);font-size:16px;}
+  .cat-default-btn.is-default{color:var(--amber);border-color:var(--amber);}
 
   /* Drink grid */
   .drink-grid{
@@ -543,7 +550,7 @@
 <div class="overlay" id="categoryManageOverlay">
   <div class="modal">
     <h3>Manage categories</h3>
-    <p style="font-size:12px;color:var(--ink-soft);margin:-8px 0 14px;">Rename a category or delete it — food in a deleted category moves to "Other" instead of being removed.</p>
+    <p style="font-size:12px;color:var(--ink-soft);margin:-8px 0 14px;">Reorder with ▲▼, tap ☆ to set which one loads by default, rename, or delete — food in a deleted category moves to "Other" instead of being removed. "All" can be reordered and set default, but not renamed or deleted.</p>
     <div id="categoryManageList" style="display:flex;flex-direction:column;gap:8px;max-height:50vh;overflow-y:auto;"></div>
     <div class="modal-actions">
       <button class="btn ghost" id="cmClose">Close</button>
@@ -586,7 +593,7 @@
 
   // Starter foods, seeded into "My food" the first time the app is used (per 100g unless noted).
   // Values are standard reference estimates (cooked/lean where applicable) — edit any of them to match your source.
-  const DEFAULT_CATEGORIES = ["Beef","Pork","Chicken","Duck","Fish","Seafood","Other"];
+  const DEFAULT_CATEGORIES = ["All","Beef","Pork","Chicken","Duck","Fish","Seafood","Other"];
   const DEFAULT_FOODS = [
     {name:"Chicken breast", category:"Chicken", serving:"100g", volume:100, cal:165, carb:0,    sugar:0,   fiber:0,   protein:31,   fat:3.6,  sodium:74},
     {name:"Chicken thigh",  category:"Chicken", serving:"100g", volume:100, cal:209, carb:0,    sugar:0,   fiber:0,   protein:26,   fat:10.9, sodium:90},
@@ -621,6 +628,7 @@
   let customFoods = [];
   let foodCategories = [];
   let activeFoodCategory = "All"; // filter chip currently selected in the Food grid
+  let defaultFoodCategory = "All"; // which chip is pre-selected whenever the Food tab is (re)opened
   let activeKind = "drink"; // which tab ("drink" | "food") is currently shown in the item grid
   const DEFAULT_TARGETS = {cal:2000, carb:135, sugar:25, fiber:25, protein:105, fat:70, sodium:2300, alcohol:20};
   let targets = Object.assign({}, DEFAULT_TARGETS);
@@ -682,9 +690,17 @@
     foodCategories = catRaw ? JSON.parse(catRaw) : [];
     let catsChanged = false;
     DEFAULT_CATEGORIES.forEach(cat=>{
-      if(!foodCategories.includes(cat)){ foodCategories.push(cat); catsChanged = true; }
+      if(!foodCategories.includes(cat)){
+        if(cat === "All") foodCategories.unshift(cat);
+        else foodCategories.push(cat);
+        catsChanged = true;
+      }
     });
     if(catsChanged) await saveFoodCategories();
+
+    const defCatRaw = await safeGet("default-food-category");
+    defaultFoodCategory = (defCatRaw && foodCategories.includes(defCatRaw)) ? defCatRaw : "All";
+    activeFoodCategory = defaultFoodCategory;
 
     // Track which starter foods have already been offered, so newly-added presets
     // (e.g. a later seafood batch) show up for existing users too — without ever
@@ -725,6 +741,9 @@
   }
   async function saveFoodCategories(){
     await safeSet("food-categories", JSON.stringify(foodCategories));
+  }
+  async function saveDefaultFoodCategory(){
+    await safeSet("default-food-category", defaultFoodCategory);
   }
   async function saveTargets(){
     await safeSet("targets", JSON.stringify(targets));
@@ -794,13 +813,6 @@
     row.style.display = "flex";
     row.innerHTML = "";
 
-    const allChip = document.createElement("button");
-    allChip.type = "button";
-    allChip.className = "cat-chip" + (activeFoodCategory==="All" ? " active" : "");
-    allChip.textContent = "All";
-    allChip.onclick = ()=> setActiveFoodCategory("All");
-    row.appendChild(allChip);
-
     foodCategories.forEach(cat=>{
       const chip = document.createElement("button");
       chip.type = "button";
@@ -845,48 +857,65 @@
   function renderCategoryManageList(){
     const list = document.getElementById("categoryManageList");
     list.innerHTML = "";
-    foodCategories.forEach(cat=>{
+    foodCategories.forEach((cat,idx)=>{
+      const isAll = cat === "All";
+      const isDefault = cat === defaultFoodCategory;
       const row = document.createElement("div");
       row.className = "cat-manage-row";
       row.innerHTML = `
-        <input type="text" value="${escapeHtml(cat)}">
-        <button class="cat-rename-btn" title="Save rename">✓</button>
-        <button class="cat-delete-btn" title="Delete category">🗑</button>
+        <div class="cat-order-btns">
+          <button class="cat-order-btn cat-up" title="Move up" ${idx===0 ? "disabled" : ""}>▲</button>
+          <button class="cat-order-btn cat-down" title="Move down" ${idx===foodCategories.length-1 ? "disabled" : ""}>▼</button>
+        </div>
+        <button class="cat-default-btn ${isDefault ? "is-default" : ""}" title="${isDefault ? "Default on load" : "Set as default on load"}">${isDefault ? "★" : "☆"}</button>
+        <input type="text" value="${escapeHtml(cat)}" ${isAll ? "disabled" : ""}>
+        <button class="cat-rename-btn" title="Save rename" ${isAll ? "disabled style=\"opacity:.3;cursor:default;\"" : ""}>✓</button>
+        <button class="cat-delete-btn" title="Delete category" ${isAll ? "disabled style=\"opacity:.3;cursor:default;\"" : ""}>🗑</button>
       `;
       const input = row.querySelector("input");
       const renameBtn = row.querySelector(".cat-rename-btn");
       const deleteBtn = row.querySelector(".cat-delete-btn");
+      const upBtn = row.querySelector(".cat-up");
+      const downBtn = row.querySelector(".cat-down");
+      const defaultBtn = row.querySelector(".cat-default-btn");
 
-      renameBtn.onclick = ()=>{
-        const newName = input.value.trim();
-        if(!newName){ showToast("Category name can't be empty"); return; }
-        renameCategory(cat, newName);
-      };
-      input.addEventListener("keydown",(e)=>{ if(e.key==="Enter") renameBtn.click(); });
+      upBtn.onclick = ()=> moveCategory(cat, -1);
+      downBtn.onclick = ()=> moveCategory(cat, 1);
+      defaultBtn.onclick = ()=> setDefaultFoodCategory(cat);
 
-      let confirming = false;
-      let confirmTimer = null;
-      deleteBtn.onclick = ()=>{
-        if(!confirming){
-          confirming = true;
-          deleteBtn.classList.add("confirming");
-          deleteBtn.textContent = "Confirm?";
-          confirmTimer = setTimeout(()=>{
-            confirming = false;
-            deleteBtn.classList.remove("confirming");
-            deleteBtn.textContent = "🗑";
-          }, 3000);
-        } else {
-          clearTimeout(confirmTimer);
-          deleteCategory(cat);
-        }
-      };
+      if(!isAll){
+        renameBtn.onclick = ()=>{
+          const newName = input.value.trim();
+          if(!newName){ showToast("Category name can't be empty"); return; }
+          renameCategory(cat, newName);
+        };
+        input.addEventListener("keydown",(e)=>{ if(e.key==="Enter") renameBtn.click(); });
+
+        let confirming = false;
+        let confirmTimer = null;
+        deleteBtn.onclick = ()=>{
+          if(!confirming){
+            confirming = true;
+            deleteBtn.classList.add("confirming");
+            deleteBtn.textContent = "Confirm?";
+            confirmTimer = setTimeout(()=>{
+              confirming = false;
+              deleteBtn.classList.remove("confirming");
+              deleteBtn.textContent = "🗑";
+            }, 3000);
+          } else {
+            clearTimeout(confirmTimer);
+            deleteCategory(cat);
+          }
+        };
+      }
 
       list.appendChild(row);
     });
   }
 
   async function renameCategory(oldName, newName){
+    if(oldName === "All"){ showToast(`"All" can't be renamed`); return; }
     if(oldName === newName) return;
     if(foodCategories.some(c=> c.toLowerCase()===newName.toLowerCase() && c!==oldName)){
       showToast(`"${newName}" already exists`);
@@ -896,6 +925,7 @@
     if(idx === -1) return;
     foodCategories[idx] = newName;
     customFoods.forEach(f=>{ if(f.category === oldName) f.category = newName; });
+    if(defaultFoodCategory === oldName){ defaultFoodCategory = newName; await saveDefaultFoodCategory(); }
     await saveFoodCategories();
     await saveFoods();
     if(activeFoodCategory === oldName) activeFoodCategory = newName;
@@ -906,10 +936,12 @@
   }
 
   async function deleteCategory(name){
-    if(foodCategories.length <= 1){ showToast("You need at least one category"); return; }
-    const fallback = (name !== "Other" && foodCategories.includes("Other")) ? "Other" : foodCategories.find(c=> c!==name);
+    if(name === "All"){ showToast(`"All" can't be deleted`); return; }
+    if(foodCategories.length <= 2){ showToast("You need at least one real category besides \"All\""); return; }
+    const fallback = (name !== "Other" && foodCategories.includes("Other")) ? "Other" : foodCategories.find(c=> c!==name && c!=="All");
     foodCategories = foodCategories.filter(c=> c!==name);
     customFoods.forEach(f=>{ if(f.category === name) f.category = fallback; });
+    if(defaultFoodCategory === name){ defaultFoodCategory = "All"; await saveDefaultFoodCategory(); }
     await saveFoodCategories();
     await saveFoods();
     if(activeFoodCategory === name) activeFoodCategory = "All";
@@ -919,14 +951,34 @@
     showToast(`Deleted "${name}" — its food moved to "${fallback}"`);
   }
 
+  async function moveCategory(name, direction){
+    const idx = foodCategories.indexOf(name);
+    if(idx === -1) return;
+    const newIdx = idx + direction;
+    if(newIdx < 0 || newIdx >= foodCategories.length) return;
+    const arr = foodCategories;
+    [arr[idx], arr[newIdx]] = [arr[newIdx], arr[idx]];
+    await saveFoodCategories();
+    renderCategoryManageList();
+    renderCategoryFilterRow();
+  }
+
+  async function setDefaultFoodCategory(name){
+    defaultFoodCategory = name;
+    await saveDefaultFoodCategory();
+    renderCategoryManageList();
+    showToast(`"${name}" set as default`);
+  }
+
   function setActiveKind(kind){
     activeKind = kind;
-    activeFoodCategory = "All";
+    activeFoodCategory = kind === "food" ? defaultFoodCategory : "All";
     document.getElementById("kindDrinkTab").classList.toggle("active", kind==="drink");
     document.getElementById("kindFoodTab").classList.toggle("active", kind==="food");
     document.getElementById("itemsSectionTitle").textContent = kind==="drink" ? "My drinks" : "My food";
     renderCategoryFilterRow();
     renderGrid();
+    if(kind === "food") maybeBackgroundSync();
   }
   document.getElementById("kindDrinkTab").onclick = ()=> setActiveKind("drink");
   document.getElementById("kindFoodTab").onclick = ()=> setActiveKind("food");
@@ -1117,19 +1169,23 @@
     document.getElementById("categoryFieldWrap").style.display = kind==="food" ? "" : "none";
     document.getElementById("newCategoryRow").style.display = "none";
     document.getElementById("cNewCategoryName").value = "";
-    if(kind === "food") populateCategorySelect();
+    if(kind === "food"){
+      populateCategorySelect();
+      maybeBackgroundSync();
+    }
   }
 
   function populateCategorySelect(selected){
     const sel = document.getElementById("cCategory");
     sel.innerHTML = "";
-    foodCategories.forEach(cat=>{
+    const assignable = foodCategories.filter(c=> c !== "All");
+    assignable.forEach(cat=>{
       const opt = document.createElement("option");
       opt.value = cat;
       opt.textContent = cat;
       sel.appendChild(opt);
     });
-    sel.value = selected && foodCategories.includes(selected) ? selected : (foodCategories[0] || "");
+    sel.value = selected && assignable.includes(selected) ? selected : (assignable[0] || "");
   }
 
   document.getElementById("cNewCategoryBtn").onclick = ()=>{
@@ -1526,6 +1582,19 @@
 
   let ghSha = null;          // last known remote file sha (needed to update without conflict)
   let syncTimer = null;
+  let lastBackgroundPullAt = 0;
+
+  // Opportunistically pull the latest data before showing something staleness would affect
+  // (e.g. the food category list) — throttled so it doesn't spam GitHub on every tap.
+  function maybeBackgroundSync(){
+    const cfg = getGhConfig();
+    if(!cfg || !cfg.token) return;
+    if(syncing) return;
+    const now = Date.now();
+    if(now - lastBackgroundPullAt < 10000) return; // at most once per 10s
+    lastBackgroundPullAt = now;
+    pullFromGitHub();
+  }
   let syncing = false;
   const STALE_SYNC_HOURS = 24;
 
@@ -1619,6 +1688,7 @@
       customDrinks,
       customFoods,
       foodCategories,
+      defaultFoodCategory,
       targets,
       logs: allLogsSnapshot(),
       updatedAt: Date.now()
@@ -1629,10 +1699,14 @@
     customDrinks = payload.customDrinks || [];
     customFoods = payload.customFoods || [];
     foodCategories = payload.foodCategories && payload.foodCategories.length ? payload.foodCategories : DEFAULT_CATEGORIES.slice();
+    if(!foodCategories.includes("All")) foodCategories.unshift("All");
+    defaultFoodCategory = (payload.defaultFoodCategory && foodCategories.includes(payload.defaultFoodCategory)) ? payload.defaultFoodCategory : "All";
+    activeFoodCategory = defaultFoodCategory;
     targets = Object.assign({}, DEFAULT_TARGETS, payload.targets || {});
     lsWrite("custom-drinks", JSON.stringify(customDrinks));
     lsWrite("custom-foods", JSON.stringify(customFoods));
     lsWrite("food-categories", JSON.stringify(foodCategories));
+    lsWrite("default-food-category", defaultFoodCategory);
     lsWrite("targets", JSON.stringify(targets));
     lsListKeys("log:").forEach(k=> lsDelete(k));
     Object.keys(payload.logs || {}).forEach(dstr=>{
@@ -1685,6 +1759,9 @@
           renderCategoryFilterRow();
           renderGrid();
           renderLog();
+          if(customOverlay.classList.contains("show") && itemKind === "food"){
+            populateCategorySelect(document.getElementById("cCategory").value);
+          }
         } else if((payload.updatedAt||0) < localUpdatedAt){
           syncing = false;
           await pushToGitHub();
