@@ -117,17 +117,19 @@
       "color": "var(--amber)"
     },
     {
-      "color": "var(--teal)",
       "name": "Sirloin steak",
-      "serving": "100g",
-      "volume": 100,
-      "cal": 183,
+      "serving": "50g",
+      "cal": 92,
       "carb": 0,
       "sugar": 0,
       "fiber": 0,
-      "protein": 30.9,
-      "fat": 6.5,
-      "sodium": 56
+      "protein": 15.4,
+      "fat": 3.3,
+      "sodium": 28,
+      "alcohol": 0,
+      "volume": 50,
+      "category": "4 Legs",
+      "color": "var(--teal)"
     },
     {
       "color": "var(--ink)",
@@ -1565,5 +1567,5 @@
       }
     ]
   },
-  "updatedAt": 1789113450236
+  "updatedAt": 1789113496241
 }
