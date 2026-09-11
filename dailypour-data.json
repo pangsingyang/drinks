@@ -556,6 +556,21 @@
       "volume": 5,
       "category": "Other",
       "color": "var(--amber)"
+    },
+    {
+      "name": "Pomegranate",
+      "serving": "50g",
+      "cal": 42,
+      "carb": 9.4,
+      "sugar": 6.9,
+      "fiber": 2,
+      "protein": 0.9,
+      "fat": 0.6,
+      "sodium": 0,
+      "alcohol": 0,
+      "volume": 50,
+      "category": "Other",
+      "color": "var(--teal)"
     }
   ],
   "foodCategories": [
@@ -1750,5 +1765,5 @@
       }
     ]
   },
-  "updatedAt": 1789119434095
+  "updatedAt": 1789126019046
 }
