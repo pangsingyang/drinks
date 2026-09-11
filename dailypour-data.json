@@ -854,38 +854,7 @@
         "kind": "food"
       }
     ],
-    "2026-09-11": [
-      {
-        "name": "Sardine",
-        "serving": "100g",
-        "cal": 208,
-        "carb": 0,
-        "sugar": 0,
-        "fiber": 0,
-        "protein": 24.6,
-        "fat": 11.5,
-        "sodium": 307,
-        "alcohol": 0,
-        "qty": 1,
-        "color": "var(--ink)",
-        "kind": "food"
-      },
-      {
-        "name": "Pomfret",
-        "serving": "100g",
-        "cal": 130,
-        "carb": 0,
-        "sugar": 0,
-        "fiber": 0,
-        "protein": 19,
-        "fat": 5.5,
-        "sodium": 65,
-        "alcohol": 0,
-        "qty": 1,
-        "color": "var(--wine)",
-        "kind": "food"
-      }
-    ],
+    "2026-09-11": [],
     "2026-08-10": [
       {
         "name": "Anchor",
@@ -1627,5 +1596,5 @@
       }
     ]
   },
-  "updatedAt": 1789114173052
+  "updatedAt": 1789114216866
 }
