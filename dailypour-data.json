@@ -132,17 +132,19 @@
       "color": "var(--teal)"
     },
     {
-      "color": "var(--ink)",
       "name": "Ribeye steak",
-      "serving": "100g",
-      "volume": 100,
-      "cal": 271,
+      "serving": "50g",
+      "cal": 135,
       "carb": 0,
       "sugar": 0,
       "fiber": 0,
-      "protein": 25,
-      "fat": 19,
-      "sodium": 59
+      "protein": 12.5,
+      "fat": 10,
+      "sodium": 29,
+      "alcohol": 0,
+      "volume": 50,
+      "category": "4 Legs",
+      "color": "var(--ink)"
     },
     {
       "name": "Edamame",
@@ -1567,5 +1569,5 @@
       }
     ]
   },
-  "updatedAt": 1789113496241
+  "updatedAt": 1789113541789
 }
