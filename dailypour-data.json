@@ -439,7 +439,7 @@
     "Poultry",
     "Sea",
     "Carb",
-    "Fish"
+    "Other"
   ],
   "targets": {
     "cal": 1900,
@@ -1578,5 +1578,5 @@
       }
     ]
   },
-  "updatedAt": 1789113336866
+  "updatedAt": 1789113342297
 }
