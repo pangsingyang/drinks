@@ -70,6 +70,18 @@
   .sync-badge.sync-err::before{background:var(--danger);}
   @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
 
+  .sync-warning-banner{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+    background:#FDECEC;border:1px solid var(--danger);color:#7A2020;border-radius:12px;
+    padding:12px 16px;margin-bottom:20px;font-size:13px;
+  }
+  .sync-warning-banner span{flex:1;min-width:200px;line-height:1.4;}
+  .sync-warning-banner button{
+    flex:0 0 auto;border:1px solid var(--danger);background:var(--danger);color:#fff;font-weight:600;
+    border-radius:8px;padding:7px 14px;font-size:12.5px;cursor:pointer;white-space:nowrap;
+  }
+  .sync-warning-banner button:hover{opacity:0.9;}
+
   /* Summary panel */
   .summary{
     display:grid;grid-template-columns:150px 1fr;gap:26px;
@@ -324,6 +336,11 @@
       <button id="syncBadge" class="sync-badge sync-off" title="Tap to connect a GitHub repo for cross-device sync">Sync off</button>
     </div>
   </header>
+
+  <div id="syncWarningBanner" class="sync-warning-banner" style="display:none;">
+    <span id="syncWarningText"></span>
+    <button type="button" id="syncWarningAction">Check connection</button>
+  </div>
 
   <div class="summary">
     <div class="glass-col">
@@ -1510,21 +1527,75 @@
   let ghSha = null;          // last known remote file sha (needed to update without conflict)
   let syncTimer = null;
   let syncing = false;
+  const STALE_SYNC_HOURS = 24;
+
+  function getLastSyncOk(){
+    const raw = lsRead("last-sync-ok");
+    return raw ? parseInt(raw,10) : null;
+  }
+  function recordSyncSuccess(){
+    lsWrite("last-sync-ok", String(Date.now()));
+  }
+
+  function formatRelativeTime(ts){
+    if(!ts) return "";
+    const diffMs = Date.now() - ts;
+    const mins = Math.floor(diffMs/60000);
+    if(mins < 1) return "just now";
+    if(mins < 60) return `${mins}m ago`;
+    const hours = Math.floor(mins/60);
+    if(hours < 24) return `${hours}h ago`;
+    const days = Math.floor(hours/24);
+    return `${days}d ago`;
+  }
+
+  let currentSyncState = "off";
 
   function setSyncBadge(state, detail){
+    currentSyncState = state;
     const badge = document.getElementById("syncBadge");
     if(!badge) return;
+    const lastOk = getLastSyncOk();
     const map = {
-      off:   {text:"Sync off",  cls:"sync-off"},
-      ok:    {text:"Synced",    cls:"sync-ok"},
-      busy:  {text:"Syncing…",  cls:"sync-busy"},
-      err:   {text:"Sync error",cls:"sync-err"},
+      off:  {text:"Sync off", cls:"sync-off"},
+      ok:   {text: lastOk ? `Synced · ${formatRelativeTime(lastOk)}` : "Synced", cls:"sync-ok"},
+      busy: {text:"Syncing…", cls:"sync-busy"},
+      err:  {text: lastOk ? `Sync error · last ok ${formatRelativeTime(lastOk)}` : "Sync error", cls:"sync-err"},
     };
     const s = map[state] || map.off;
     badge.textContent = s.text;
     badge.className = "sync-badge " + s.cls;
-    badge.title = detail || (state==="off" ? "Tap to connect a GitHub repo for cross-device sync" : "");
+    badge.title = detail || (state==="off" ? "Tap to connect a GitHub repo for cross-device sync" : (lastOk ? `Last successful sync: ${new Date(lastOk).toLocaleString()}` : ""));
+    updateSyncWarningBanner();
   }
+
+  function updateSyncWarningBanner(){
+    const banner = document.getElementById("syncWarningBanner");
+    const cfg = getGhConfig();
+    if(!banner || !cfg || !cfg.token){
+      if(banner) banner.style.display = "none";
+      return;
+    }
+    const lastOk = getLastSyncOk();
+    const hoursSince = lastOk ? (Date.now() - lastOk) / 3600000 : Infinity;
+    if(hoursSince > STALE_SYNC_HOURS){
+      const text = lastOk
+        ? `⚠ Sync hasn't succeeded in ${formatRelativeTime(lastOk).replace(" ago","")} — your latest entries may not be backed up.`
+        : `⚠ Sync has never completed successfully — your entries are not backed up yet.`;
+      document.getElementById("syncWarningText").textContent = text;
+      banner.style.display = "flex";
+    } else {
+      banner.style.display = "none";
+    }
+  }
+  document.getElementById("syncWarningAction").onclick = ()=> document.getElementById("syncBadge").click();
+
+  // Re-check staleness periodically even if nothing else triggers a re-render
+  setInterval(()=>{
+    if(currentSyncState !== "busy"){
+      setSyncBadge(currentSyncState);
+    }
+  }, 5*60*1000);
 
   function markDirty(){
     const cfg = getGhConfig();
@@ -1619,6 +1690,7 @@
           await pushToGitHub();
           return;
         }
+        recordSyncSuccess();
         setSyncBadge("ok");
       } else if(res.status === 404){
         syncing = false;
@@ -1653,6 +1725,7 @@
       if(res.ok){
         const data = await res.json();
         ghSha = data.content && data.content.sha;
+        recordSyncSuccess();
         setSyncBadge("ok");
       } else if(res.status === 409){
         syncing = false;
