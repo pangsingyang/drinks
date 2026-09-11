@@ -409,16 +409,17 @@
     },
     {
       "name": "Iliada EVOO",
-      "serving": "10g",
-      "cal": 82,
+      "serving": "5g",
+      "cal": 41,
       "carb": 0,
       "sugar": 0,
       "fiber": 0,
       "protein": 0,
-      "fat": 9.1,
+      "fat": 4.5,
       "sodium": 0,
       "alcohol": 0,
-      "volume": 10,
+      "volume": 5,
+      "category": "Other",
       "color": "var(--teal)"
     },
     {
@@ -1623,5 +1624,5 @@
       }
     ]
   },
-  "updatedAt": 1789114100384
+  "updatedAt": 1789114130767
 }
