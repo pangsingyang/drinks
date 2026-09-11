@@ -496,6 +496,21 @@
       "volume": 5,
       "category": "Other",
       "color": "var(--teal)"
+    },
+    {
+      "name": "Sugar",
+      "serving": "5g",
+      "cal": 20,
+      "carb": 5,
+      "sugar": 5,
+      "fiber": 0,
+      "protein": 0,
+      "fat": 0,
+      "sodium": 0,
+      "alcohol": 0,
+      "volume": 5,
+      "category": "Other",
+      "color": "var(--ink)"
     }
   ],
   "foodCategories": [
@@ -1675,5 +1690,5 @@
       }
     ]
   },
-  "updatedAt": 1789115860328
+  "updatedAt": 1789115875796
 }
