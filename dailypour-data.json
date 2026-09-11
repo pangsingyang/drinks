@@ -533,7 +533,7 @@
       "cal": 4,
       "carb": 1,
       "sugar": 0,
-      "fiber": 0,
+      "fiber": 0.1,
       "protein": 0.1,
       "fat": 0,
       "sodium": 0,
@@ -1735,5 +1735,5 @@
       }
     ]
   },
-  "updatedAt": 1789116037462
+  "updatedAt": 1789116045727
 }
