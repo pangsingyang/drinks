@@ -838,7 +838,23 @@
         "kind": "food"
       }
     ],
-    "2026-09-11": [],
+    "2026-09-11": [
+      {
+        "name": "Sardine",
+        "serving": "100g",
+        "cal": 208,
+        "carb": 0,
+        "sugar": 0,
+        "fiber": 0,
+        "protein": 24.6,
+        "fat": 11.5,
+        "sodium": 307,
+        "alcohol": 0,
+        "qty": 1,
+        "color": "var(--ink)",
+        "kind": "food"
+      }
+    ],
     "2026-08-10": [
       {
         "name": "Anchor",
@@ -1580,5 +1596,5 @@
       }
     ]
   },
-  "updatedAt": 1789113825150
+  "updatedAt": 1789113830767
 }
