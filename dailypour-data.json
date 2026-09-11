@@ -469,7 +469,12 @@
     "Poultry",
     "Fish",
     "Carb",
-    "Other"
+    "Other",
+    "Beef",
+    "Pork",
+    "Chicken",
+    "Duck",
+    "Seafood"
   ],
   "targets": {
     "cal": 1900,
@@ -3003,5 +3008,5 @@
       }
     ]
   },
-  "updatedAt": 1788965287766
+  "updatedAt": 1789105566118
 }
