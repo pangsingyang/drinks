@@ -175,17 +175,19 @@
       "color": "var(--wine)"
     },
     {
-      "color": "var(--amber)",
       "name": "Pork loin",
-      "serving": "100g",
-      "volume": 100,
-      "cal": 147,
+      "serving": "50g",
+      "cal": 73,
       "carb": 0,
       "sugar": 0,
       "fiber": 0,
-      "protein": 26.5,
-      "fat": 4.3,
-      "sodium": 55
+      "protein": 13,
+      "fat": 3.5,
+      "sodium": 28,
+      "alcohol": 0,
+      "volume": 50,
+      "category": "4 Legs",
+      "color": "var(--amber)"
     },
     {
       "color": "var(--teal)",
@@ -1569,5 +1571,5 @@
       }
     ]
   },
-  "updatedAt": 1789113541789
+  "updatedAt": 1789113603271
 }
