@@ -437,7 +437,7 @@
   "foodCategories": [
     "4 Legs",
     "Poultry",
-    "Chicken",
+    "Sea",
     "Duck",
     "Fish"
   ],
@@ -1578,5 +1578,5 @@
       }
     ]
   },
-  "updatedAt": 1789113317689
+  "updatedAt": 1789113322054
 }
