@@ -1097,6 +1097,21 @@
         "qty": 1,
         "color": "var(--teal)",
         "kind": "food"
+      },
+      {
+        "name": "Garlic",
+        "serving": "5g",
+        "cal": 8,
+        "carb": 1.7,
+        "sugar": 0,
+        "fiber": 0.1,
+        "protein": 0.3,
+        "fat": 0,
+        "sodium": 0,
+        "alcohol": 0,
+        "qty": 1,
+        "color": "var(--cream)",
+        "kind": "food"
       }
     ],
     "2026-08-10": [
@@ -1840,5 +1855,5 @@
       }
     ]
   },
-  "updatedAt": 1789126124869
+  "updatedAt": 1789126127690
 }
