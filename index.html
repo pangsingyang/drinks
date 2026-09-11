@@ -687,16 +687,42 @@
     customFoods = f ? JSON.parse(f) : [];
 
     const catRaw = await safeGet("food-categories");
-    foodCategories = catRaw ? JSON.parse(catRaw) : [];
-    let catsChanged = false;
-    DEFAULT_CATEGORIES.forEach(cat=>{
-      if(!foodCategories.includes(cat)){
-        if(cat === "All") foodCategories.unshift(cat);
-        else foodCategories.push(cat);
-        catsChanged = true;
+    if(catRaw === null){
+      // Brand new — seed the full starter category list in order.
+      foodCategories = DEFAULT_CATEGORIES.slice();
+      await saveFoodCategories();
+      await safeSet("seeded-category-names", JSON.stringify(DEFAULT_CATEGORIES.slice()));
+    } else {
+      foodCategories = JSON.parse(catRaw);
+      const seededCatRaw = await safeGet("seeded-category-names");
+      if(seededCatRaw === null){
+        // Upgrading from before this tracking existed. Treat every default category the
+        // user currently doesn't have as a deliberate deletion, not something to resurrect —
+        // just start tracking from here rather than re-adding anything missing.
+        if(!foodCategories.includes("All")) foodCategories.unshift("All"); // structurally required
+        await saveFoodCategories();
+        await safeSet("seeded-category-names", JSON.stringify(DEFAULT_CATEGORIES.slice()));
+      } else {
+        // Normal incremental top-up: only add a default category the very first time it's
+        // ever offered, so a future new preset shows up without resurrecting old deletions.
+        let seededCatNames = JSON.parse(seededCatRaw);
+        let catsChanged = false;
+        DEFAULT_CATEGORIES.forEach(cat=>{
+          if(!seededCatNames.includes(cat)){
+            if(!foodCategories.includes(cat)){
+              if(cat === "All") foodCategories.unshift(cat);
+              else foodCategories.push(cat);
+            }
+            seededCatNames.push(cat);
+            catsChanged = true;
+          }
+        });
+        if(catsChanged){
+          await saveFoodCategories();
+          await safeSet("seeded-category-names", JSON.stringify(seededCatNames));
+        }
       }
-    });
-    if(catsChanged) await saveFoodCategories();
+    }
 
     const defCatRaw = await safeGet("default-food-category");
     defaultFoodCategory = (defCatRaw && foodCategories.includes(defCatRaw)) ? defCatRaw : "All";
