@@ -294,17 +294,19 @@
       "color": "var(--ink)"
     },
     {
-      "color": "var(--cream)",
       "name": "Barramundi",
-      "serving": "100g",
-      "volume": 100,
-      "cal": 124,
+      "serving": "50g",
+      "cal": 62,
       "carb": 0,
       "sugar": 0,
       "fiber": 0,
-      "protein": 20,
-      "fat": 4,
-      "sodium": 70
+      "protein": 10,
+      "fat": 2,
+      "sodium": 35,
+      "alcohol": 0,
+      "volume": 50,
+      "category": "Sea",
+      "color": "var(--cream)"
     },
     {
       "color": "var(--wine)",
@@ -1598,5 +1600,5 @@
       }
     ]
   },
-  "updatedAt": 1789113878100
+  "updatedAt": 1789113905947
 }
