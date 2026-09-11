@@ -481,6 +481,21 @@
       "volume": 50,
       "category": "Poultry",
       "color": "var(--amber)"
+    },
+    {
+      "name": "Fat",
+      "serving": "5g",
+      "cal": 45,
+      "carb": 0,
+      "sugar": 0,
+      "fiber": 0,
+      "protein": 0,
+      "fat": 5,
+      "sodium": 0,
+      "alcohol": 0,
+      "volume": 5,
+      "category": "Other",
+      "color": "var(--teal)"
     }
   ],
   "foodCategories": [
@@ -1660,5 +1675,5 @@
       }
     ]
   },
-  "updatedAt": 1789115800639
+  "updatedAt": 1789115851558
 }
