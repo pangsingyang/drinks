@@ -439,9 +439,7 @@
     "Pork",
     "Chicken",
     "Duck",
-    "Fish",
-    "Seafood",
-    "Other"
+    "Fish"
   ],
   "targets": {
     "cal": 1900,
@@ -1580,5 +1578,5 @@
       }
     ]
   },
-  "updatedAt": 1789113091881
+  "updatedAt": 1789113166573
 }
