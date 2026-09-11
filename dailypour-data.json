@@ -438,7 +438,7 @@
     "4 Legs",
     "Poultry",
     "Sea",
-    "Duck",
+    "Carb",
     "Fish"
   ],
   "targets": {
@@ -1578,5 +1578,5 @@
       }
     ]
   },
-  "updatedAt": 1789113322054
+  "updatedAt": 1789113336866
 }
