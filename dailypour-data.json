@@ -468,15 +468,15 @@
       "color": "var(--wine)"
     },
     {
-      "name": "Chicken Wing",
+      "name": "Chicken Wing w Bone",
       "serving": "50g",
-      "cal": 145,
+      "cal": 60,
       "carb": 0,
       "sugar": 0,
       "fiber": 0,
-      "protein": 13.5,
-      "fat": 9.6,
-      "sodium": 40,
+      "protein": 5.5,
+      "fat": 4.5,
+      "sodium": 25,
       "alcohol": 0,
       "volume": 50,
       "category": "Poultry",
@@ -1648,5 +1648,5 @@
       }
     ]
   },
-  "updatedAt": 1789114588632
+  "updatedAt": 1789114741243
 }
