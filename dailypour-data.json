@@ -491,9 +491,7 @@
     "Carb",
     "Beef",
     "All",
-    "Pork",
-    "Chicken",
-    "Duck"
+    "Pork"
   ],
   "defaultFoodCategory": "Other",
   "targets": {
@@ -1663,5 +1661,5 @@
       }
     ]
   },
-  "updatedAt": 1789115752408
+  "updatedAt": 1789115756128
 }
