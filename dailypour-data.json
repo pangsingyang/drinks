@@ -339,17 +339,19 @@
       "color": "var(--amber)"
     },
     {
-      "color": "var(--teal)",
       "name": "Shrimp",
-      "serving": "100g",
-      "volume": 100,
-      "cal": 99,
-      "carb": 0.2,
+      "serving": "50g",
+      "cal": 50,
+      "carb": 0.1,
       "sugar": 0,
       "fiber": 0,
-      "protein": 20.9,
-      "fat": 0.3,
-      "sodium": 111
+      "protein": 10.5,
+      "fat": 0.2,
+      "sodium": 55,
+      "alcohol": 0,
+      "volume": 50,
+      "category": "Sea",
+      "color": "var(--teal)"
     },
     {
       "color": "var(--ink)",
@@ -1619,5 +1621,5 @@
       }
     ]
   },
-  "updatedAt": 1789114014749
+  "updatedAt": 1789114049460
 }
