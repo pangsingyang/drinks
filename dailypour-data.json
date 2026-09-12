@@ -1927,6 +1927,21 @@
         "qty": 1,
         "color": "var(--amber)",
         "kind": "food"
+      },
+      {
+        "name": "Sugar",
+        "serving": "5g",
+        "cal": 20,
+        "carb": 5,
+        "sugar": 5,
+        "fiber": 0,
+        "protein": 0,
+        "fat": 0,
+        "sodium": 0,
+        "alcohol": 0,
+        "qty": 1,
+        "color": "var(--ink)",
+        "kind": "food"
       }
     ],
     "2026-08-16": [
@@ -1992,5 +2007,5 @@
       }
     ]
   },
-  "updatedAt": 1789193493745
+  "updatedAt": 1789193507789
 }
