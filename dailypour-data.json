@@ -579,7 +579,6 @@
     "Poultry",
     "Sea",
     "Carb",
-    "Beef",
     "All"
   ],
   "defaultFoodCategory": "Other",
@@ -2159,5 +2158,5 @@
       }
     ]
   },
-  "updatedAt": 1789304377107
+  "updatedAt": 1789304398614
 }
