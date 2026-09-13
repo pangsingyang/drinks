@@ -867,6 +867,21 @@
         "qty": 1,
         "color": "var(--wine)",
         "kind": "food"
+      },
+      {
+        "name": "Potato",
+        "serving": "50g",
+        "cal": 46,
+        "carb": 10,
+        "sugar": 6,
+        "fiber": 1.1,
+        "protein": 1.2,
+        "fat": 0,
+        "sodium": 3,
+        "alcohol": 0,
+        "qty": 1,
+        "color": "var(--teal)",
+        "kind": "food"
       }
     ],
     "2026-08-11": [
@@ -2158,5 +2173,5 @@
       }
     ]
   },
-  "updatedAt": 1789304398614
+  "updatedAt": 1789304414484
 }
