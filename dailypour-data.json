@@ -625,6 +625,23 @@
         "kind": "drink"
       }
     ],
+    "2026-09-14": [
+      {
+        "name": "Iliada EVOO",
+        "serving": "5g",
+        "cal": 41,
+        "carb": 0,
+        "sugar": 0,
+        "fiber": 0,
+        "protein": 0,
+        "fat": 4.5,
+        "sodium": 0,
+        "alcohol": 0,
+        "qty": 1,
+        "color": "var(--teal)",
+        "kind": "food"
+      }
+    ],
     "2026-08-13": [
       {
         "name": "Anchor",
@@ -2218,5 +2235,5 @@
       }
     ]
   },
-  "updatedAt": 1789304484258
+  "updatedAt": 1789342213676
 }
