@@ -685,6 +685,21 @@
         "qty": 2,
         "color": "var(--cream)",
         "kind": "food"
+      },
+      {
+        "name": "Chicken Wing w Bone",
+        "serving": "50g",
+        "cal": 60,
+        "carb": 0,
+        "sugar": 0,
+        "fiber": 0,
+        "protein": 5.5,
+        "fat": 4.5,
+        "sodium": 25,
+        "alcohol": 0,
+        "qty": 3,
+        "color": "var(--amber)",
+        "kind": "food"
       }
     ],
     "2026-08-13": [
@@ -2280,5 +2295,5 @@
       }
     ]
   },
-  "updatedAt": 1789374416416
+  "updatedAt": 1789374423109
 }
