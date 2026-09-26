@@ -762,6 +762,21 @@
         "qty": 1,
         "color": "var(--cream)",
         "kind": "food"
+      },
+      {
+        "name": "Rice noodle",
+        "serving": "50g",
+        "cal": 55,
+        "carb": 12.5,
+        "sugar": 0,
+        "fiber": 0.5,
+        "protein": 0.4,
+        "fat": 0.1,
+        "sodium": 3,
+        "alcohol": 0,
+        "qty": 1,
+        "color": "var(--ink)",
+        "kind": "food"
       }
     ],
     "2026-08-13": [
@@ -2511,5 +2526,5 @@
       }
     ]
   },
-  "updatedAt": 1790387229108
+  "updatedAt": 1790403380994
 }
