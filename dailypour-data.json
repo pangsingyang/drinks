@@ -822,6 +822,51 @@
         "qty": 2,
         "color": "var(--cream)",
         "kind": "drink"
+      },
+      {
+        "name": "Ribeye steak",
+        "serving": "50g",
+        "cal": 135,
+        "carb": 0,
+        "sugar": 0,
+        "fiber": 0,
+        "protein": 12.5,
+        "fat": 10,
+        "sodium": 29,
+        "alcohol": 0,
+        "qty": 4,
+        "color": "var(--ink)",
+        "kind": "food"
+      },
+      {
+        "name": "Pork loin",
+        "serving": "50g",
+        "cal": 73,
+        "carb": 0,
+        "sugar": 0,
+        "fiber": 0,
+        "protein": 13,
+        "fat": 3.5,
+        "sodium": 28,
+        "alcohol": 0,
+        "qty": 1,
+        "color": "var(--amber)",
+        "kind": "food"
+      },
+      {
+        "name": "Fat",
+        "serving": "5g",
+        "cal": 45,
+        "carb": 0,
+        "sugar": 0,
+        "fiber": 0,
+        "protein": 0,
+        "fat": 5,
+        "sodium": 0,
+        "alcohol": 0,
+        "qty": 2,
+        "color": "var(--teal)",
+        "kind": "food"
       }
     ],
     "2026-08-13": [
@@ -2571,5 +2616,5 @@
       }
     ]
   },
-  "updatedAt": 1790424355733
+  "updatedAt": 1790424409659
 }
