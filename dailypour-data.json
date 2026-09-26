@@ -717,6 +717,21 @@
         "qty": 1,
         "color": "var(--amber)",
         "kind": "drink"
+      },
+      {
+        "name": "Iliada EVOO",
+        "serving": "5g",
+        "cal": 41,
+        "carb": 0,
+        "sugar": 0,
+        "fiber": 0,
+        "protein": 0,
+        "fat": 4.5,
+        "sodium": 0,
+        "alcohol": 0,
+        "qty": 1,
+        "color": "var(--teal)",
+        "kind": "food"
       }
     ],
     "2026-08-13": [
@@ -2466,5 +2481,5 @@
       }
     ]
   },
-  "updatedAt": 1790384791837
+  "updatedAt": 1790387207068
 }
