@@ -1173,6 +1173,23 @@
         "kind": "drink"
       }
     ],
+    "2026-09-27": [
+      {
+        "name": "711 Strong Zero",
+        "serving": "500ml",
+        "cal": 265,
+        "carb": 3.5,
+        "sugar": 3.5,
+        "fiber": 0,
+        "protein": 0,
+        "fat": 0,
+        "sodium": 200,
+        "alcohol": 45,
+        "qty": 2,
+        "color": "var(--ink)",
+        "kind": "drink"
+      }
+    ],
     "2026-09-11": [
       {
         "name": "Heineken 0.0",
@@ -2616,5 +2633,5 @@
       }
     ]
   },
-  "updatedAt": 1790424493981
+  "updatedAt": 1790472698786
 }
